@@ -1,7 +1,7 @@
 {
-  "name": "ninja-keys",
+  "name": "konnors-ninja-keys",
   "version": "1.2.2",
-  "description": "Ninja Keys",
+  "description": "Konnors Ninja Keys",
   "main": "src/ninja-keys.js",
   "module": "src/ninja-keys.js",
   "type": "module",
@@ -20,7 +20,7 @@
     "start": "npm run serve",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "clean": "rimraf dist/",
+    "clean": "rimraf dist/ types/",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
