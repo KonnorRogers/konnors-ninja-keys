@@ -5,7 +5,7 @@ import replace from '@rollup/plugin-replace';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 
 export default {
-  input: 'dist/ninja-keys.js',
+  input: 'src/ninja-keys.js',
   output: {
     file: 'dist/ninja-keys.bundled.js',
     format: 'esm',
