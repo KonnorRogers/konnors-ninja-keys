@@ -1,12 +1,17 @@
-import {html, css, TemplateResult} from 'lit';
-import {property} from 'lit/decorators.js';
+import {html, css} from 'lit';
 import {ref, createRef} from 'lit/directives/ref.js';
 import {BaseElement} from './base-element';
 import {componentReset} from './base-styles';
 
+/**
+ * @class
+ */
 export class NinjaHeader extends BaseElement {
-  static override baseName = 'ninja-header';
-  static override styles = [
+  /** @override */
+  static baseName = 'ninja-header';
+
+  /** @override */
+  static styles = [
     componentReset,
     css`
       :host {
@@ -60,38 +65,76 @@ export class NinjaHeader extends BaseElement {
     `,
   ];
 
-  @property()
-  placeholder = '';
+  static properties = {
+    placeholder: {},
+    hideBreadcrumbs: {type: Boolean},
+    breadcrumbHome: {},
+    placeholder: {},
+    expanded: {type: Boolean},
+    controls: {},
+    searchLabel: {},
+    activeDescendant: {},
+    breadcrumbs: {type: Array},
+  };
 
-  @property({type: Boolean})
-  hideBreadcrumbs = false;
+  /**
+   * @constructor
+   */
+  constructor() {
+    super();
 
-  @property()
-  breadcrumbHome = 'Home';
+    /** @type {string} */
+    this.placeholder = '';
 
-  /** Maps to `aria-expanded` */
-  @property({type: Boolean})
-  expanded = false;
+    /** @type {boolean} */
+    this.hideBreadcrumbs = false;
 
-  /** Maps to `aria-controls` */
-  @property()
-  controls = '';
+    /** @type {string} */
+    this.breadcrumbHome = 'Home';
 
-  /** Maps to `aria-labelledby` on <input> */
-  @property()
-  searchLabel = '';
+    /**
+     * Maps to `aria-expanded`
+     * @type {boolean}
+     */
+    this.expanded = false;
 
-  /** Maps to `aria-activedescendant` */
-  @property()
-  activeDescendant = '';
+    /**
+     * Maps to `aria-controls`
+     * @type {string}
+     */
+    this.controls = '';
 
-  @property({type: Array})
-  breadcrumbs: string[] = [];
+    /**
+     * Maps to `aria-labelledby` on <input>
+     * @type {string}
+     */
+    this.searchLabel = '';
 
-  private _inputRef = createRef<HTMLInputElement>();
+    /**
+     * Maps to `aria-activedescendant`
+     * @type {string}
+     */
+    this.activeDescendant = '';
 
-  override render() {
-    let breadcrumbs: TemplateResult<1> | '' = '';
+    /**
+     * Array of breadcrumb strings
+     * @type {string[]}
+     */
+    this.breadcrumbs = [];
+
+    /**
+     * @private
+     * @type {import("lit/directives/ref").Ref<HTMLInputElement>}
+     */
+    this._inputRef = createRef();
+  }
+
+  /**
+   * @override
+   */
+  render() {
+    /** @type {import("lit").TemplateResult<1> | ''} */
+    let breadcrumbs = '';
     if (!this.hideBreadcrumbs) {
       const itemTemplates = [];
       for (const breadcrumb of this.breadcrumbs) {
@@ -147,18 +190,26 @@ export class NinjaHeader extends BaseElement {
     `;
   }
 
-  setSearch(value: string) {
+  /**
+   * @param {string} value
+   */
+  setSearch(value) {
     if (this._inputRef.value) {
       this._inputRef.value.value = value;
     }
   }
 
   focusSearch() {
-    requestAnimationFrame(() => this._inputRef.value!.focus());
+    requestAnimationFrame(() => this._inputRef.value?.focus());
   }
 
-  private _handleInput(event: Event) {
-    const input = event.target as HTMLInputElement;
+  /**
+   * @private
+   * @param {Event} event
+   */
+  _handleInput(event) {
+    /** @type {HTMLInputElement} */
+    const input = event.target;
     this.dispatchEvent(
       new CustomEvent('change', {
         detail: {search: input.value},
@@ -168,7 +219,11 @@ export class NinjaHeader extends BaseElement {
     );
   }
 
-  private selectParent(breadcrumb?: string) {
+  /**
+   * @private
+   * @param {string} [breadcrumb]
+   */
+  selectParent(breadcrumb) {
     this.dispatchEvent(
       new CustomEvent('setParent', {
         detail: {parent: breadcrumb},
@@ -178,7 +233,10 @@ export class NinjaHeader extends BaseElement {
     );
   }
 
-  override firstUpdated() {
+  /**
+   * @override
+   */
+  firstUpdated() {
     this.focusSearch();
   }
 
@@ -190,9 +248,3 @@ export class NinjaHeader extends BaseElement {
 }
 
 NinjaHeader.define();
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'ninja-header': NinjaHeader;
-  }
-}

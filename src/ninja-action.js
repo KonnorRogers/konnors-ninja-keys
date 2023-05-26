@@ -1,17 +1,24 @@
+// @ts-check
 import {html, css} from 'lit';
-import {property} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {join} from 'lit/directives/join.js';
 import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
-
-import {INinjaAction} from './interfaces/ininja-action.js';
 import {BaseElement} from './base-element.js';
 
+/**
+ * @class
+ */
 export class NinjaAction extends BaseElement {
-  static override baseName = 'ninja-action';
-  static override styles = [
+  /**
+   * @override
+   */
+  static baseName = 'ninja-action';
+  /**
+   * @override
+   */
+  static styles = [
     componentReset,
     css`
       :host {
@@ -85,17 +92,44 @@ export class NinjaAction extends BaseElement {
     `,
   ];
 
-  @property({type: Object})
-  action!: INinjaAction;
-
-  @property({type: Boolean})
-  selected = false;
+  /**
+   * @override
+   */
+  static properties = {
+    action: {type: Object},
+    selected: {type: Boolean},
+    hotKeysJoinedView: {type: Boolean},
+  };
 
   /**
-   * Display hotkey as separate buttons on UI or as is
+   * @constructor
    */
-  @property({type: Boolean})
-  hotKeysJoinedView = true;
+  constructor() {
+    super();
+
+    /** @type {import('.').INinjaAction} */
+    this.action = {};
+
+    /**
+     * @type {boolean}
+     */
+    this.selected = false;
+
+    /**
+     * Display hotkey as separate buttons on UI or as is
+     * @type {boolean}
+     */
+    this.hotKeysJoinedView = true;
+  }
+
+  /**
+   * @override
+   */
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.addEventListener('click', this.click);
+  }
 
   /**
    * Scroll to show element
@@ -104,7 +138,10 @@ export class NinjaAction extends BaseElement {
     requestAnimationFrame(() => this.scrollIntoView({block: 'nearest'}));
   }
 
-  override click() {
+  /**
+   * @override
+   */
+  click() {
     this.dispatchEvent(
       new CustomEvent('actionsSelected', {
         detail: this.action,
@@ -114,12 +151,12 @@ export class NinjaAction extends BaseElement {
     );
   }
 
-  constructor() {
-    super();
-    this.addEventListener('click', this.click);
-  }
-
-  override updated(changedProperties: Map<string, unknown>) {
+  /**
+   * @override
+   * @param {Map<string, unknown>} changedProperties
+   * @returns {void}
+   */
+  updated(changedProperties) {
     if (changedProperties.has('selected')) {
       if (this.selected) {
         this.ensureInView();
@@ -127,7 +164,10 @@ export class NinjaAction extends BaseElement {
     }
   }
 
-  override render() {
+  /**
+   * @override
+   */
+  render() {
     let icon;
     if (this.action.mdIcon) {
       icon = html`<mwc-icon part="ninja-icon" class="ninja-icon"
@@ -185,9 +225,3 @@ export class NinjaAction extends BaseElement {
 }
 
 NinjaAction.define();
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'ninja-action': NinjaAction;
-  }
-}
