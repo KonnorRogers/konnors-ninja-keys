@@ -28,7 +28,7 @@ export const componentReset = css`
     white-space: nowrap !important;
     padding: 0 !important;
   }
-`
+`;
 
 export const baseStyles = css`
   :host {

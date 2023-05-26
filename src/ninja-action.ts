@@ -7,80 +7,83 @@ import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 
 import {INinjaAction} from './interfaces/ininja-action.js';
-import { BaseElement } from './base-element.js';
+import {BaseElement} from './base-element.js';
 
 export class NinjaAction extends BaseElement {
-  static override baseName = "ninja-action"
-  static override styles = [componentReset, css`
-    :host {
-      display: flex;
-      width: 100%;
-    }
-    .ninja-action {
-      padding: 0.75em 1em;
-      display: flex;
-      border-left: 2px solid transparent;
-      align-items: center;
-      justify-content: start;
-      outline: none;
-      transition: color 0s ease 0s;
-      width: 100%;
-    }
-    .ninja-action.selected {
-      cursor: pointer;
-      color: var(--ninja-selected-text-color);
-      background-color: var(--ninja-selected-background);
-      border-left: 2px solid var(--ninja-accent-color);
-      outline: none;
-    }
-    .ninja-action.selected .ninja-icon {
-      color: var(--ninja-selected-text-color);
-    }
-    .ninja-icon {
-      font-size: var(--ninja-icon-size);
-      max-width: var(--ninja-icon-size);
-      max-height: var(--ninja-icon-size);
-      margin-right: 1em;
-      color: var(--ninja-icon-color);
-      margin-right: 1em;
-      position: relative;
-    }
+  static override baseName = 'ninja-action';
+  static override styles = [
+    componentReset,
+    css`
+      :host {
+        display: flex;
+        width: 100%;
+      }
+      .ninja-action {
+        padding: 0.75em 1em;
+        display: flex;
+        border-left: 2px solid transparent;
+        align-items: center;
+        justify-content: start;
+        outline: none;
+        transition: color 0s ease 0s;
+        width: 100%;
+      }
+      .ninja-action.selected {
+        cursor: pointer;
+        color: var(--ninja-selected-text-color);
+        background-color: var(--ninja-selected-background);
+        border-left: 2px solid var(--ninja-accent-color);
+        outline: none;
+      }
+      .ninja-action.selected .ninja-icon {
+        color: var(--ninja-selected-text-color);
+      }
+      .ninja-icon {
+        font-size: var(--ninja-icon-size);
+        max-width: var(--ninja-icon-size);
+        max-height: var(--ninja-icon-size);
+        margin-right: 1em;
+        color: var(--ninja-icon-color);
+        margin-right: 1em;
+        position: relative;
+      }
 
-    .ninja-title {
-      flex-shrink: 0.01;
-      margin-right: 0.5em;
-      flex-grow: 1;
-      font-size: 0.8125em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .ninja-hotkeys {
-      flex-shrink: 0;
-      width: min-content;
-      display: flex;
-    }
+      .ninja-title {
+        flex-shrink: 0.01;
+        margin-right: 0.5em;
+        flex-grow: 1;
+        font-size: 0.8125em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .ninja-hotkeys {
+        flex-shrink: 0;
+        width: min-content;
+        display: flex;
+      }
 
-    .ninja-hotkeys kbd {
-      font-family: inherit;
-    }
-    .ninja-hotkey {
-      background: var(--ninja-secondary-background-color);
-      padding: 0.06em 0.25em;
-      border-radius: var(--ninja-key-border-radius);
-      text-transform: capitalize;
-      color: var(--ninja-secondary-text-color);
-      font-size: 0.75em;
-      font-family: inherit;
-    }
+      .ninja-hotkeys kbd {
+        font-family: inherit;
+      }
+      .ninja-hotkey {
+        background: var(--ninja-secondary-background-color);
+        padding: 0.06em 0.25em;
+        border-radius: var(--ninja-key-border-radius);
+        text-transform: capitalize;
+        color: var(--ninja-secondary-text-color);
+        font-size: 0.75em;
+        font-family: inherit;
+      }
 
-    .ninja-hotkey + .ninja-hotkey {
-      margin-left: 0.5em;
-    }
-    .ninja-hotkeys + .ninja-hotkeys {
-      margin-left: 1em;
-    }
-  `];
+      .ninja-hotkey + .ninja-hotkey {
+        margin-left: 0.5em;
+      }
+      .ninja-hotkeys + .ninja-hotkeys {
+        margin-left: 1em;
+      }
+    `,
+  ];
 
   @property({type: Object})
   action!: INinjaAction;
@@ -181,7 +184,7 @@ export class NinjaAction extends BaseElement {
   }
 }
 
-NinjaAction.define()
+NinjaAction.define();
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -8,10 +8,8 @@
 - fix: add additional padding to the bottom of header.
 - feat: change the default width to: max(96vw, 640px) to allow some padding on small screens.
 
-
 ## 1.2.0 (2022-04-21)
 
 - Clean up hotkeys on disconnect #20. Thanks to @excid3
 
 - Export css variable of content `zIndex` #21
-

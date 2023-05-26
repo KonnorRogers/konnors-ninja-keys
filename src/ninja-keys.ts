@@ -1,4 +1,4 @@
-import { BaseElement } from "./base-element.js"
+import {BaseElement} from './base-element.js';
 import {html, TemplateResult, PropertyValues} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {repeat} from 'lit/directives/repeat.js';
@@ -16,7 +16,7 @@ import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
 export class NinjaKeys extends BaseElement {
-  static override baseName = "ninja-keys"
+  static override baseName = 'ninja-keys';
   static override styles = [componentReset, baseStyles];
 
   /**
@@ -30,10 +30,10 @@ export class NinjaKeys extends BaseElement {
   @property({type: Boolean}) disableHotkeys = false;
 
   /** Maps to `aria-labelledby` for search input */
-  @property({attribute: "search-label"}) searchLabel = "Search for actions"
+  @property({attribute: 'search-label'}) searchLabel = 'Search for actions';
 
   /** Maps to `aria-labelledby` for listbox */
-  @property({attribute: "listbox-label"}) listboxLabel = "List of actions"
+  @property({attribute: 'listbox-label'}) listboxLabel = 'List of actions';
 
   /**
    * Show or hide breadcrumbs on header
@@ -106,20 +106,19 @@ export class NinjaKeys extends BaseElement {
   open(options: {parent?: string} = {}) {
     this._bump = true;
     this.visible = true;
-    const header = this._headerRef.value
+    const header = this._headerRef.value;
     if (header) {
       header.focusSearch();
-      header.expanded = true
-      header.controls = "actions-list"
+      header.expanded = true;
+      header.controls = 'actions-list';
     }
-
 
     if (this._actionMatches.length > 0) {
       this._selected = this._actionMatches[0];
 
-      const header = this._headerRef.value
+      const header = this._headerRef.value;
       if (header && this._selected) {
-        header.activeDescendant = this._selected.id
+        header.activeDescendant = this._selected.id;
       }
     }
     this.setParent(options.parent);
@@ -132,9 +131,9 @@ export class NinjaKeys extends BaseElement {
     this._bump = false;
     this.visible = false;
 
-    const header = this._headerRef.value
+    const header = this._headerRef.value;
     if (header) {
-      header.expanded = false
+      header.expanded = false;
     }
   }
 
@@ -195,23 +194,23 @@ export class NinjaKeys extends BaseElement {
     return path.reverse();
   }
 
-  private __selected__?: null | undefined | INinjaAction
+  private __selected__?: null | undefined | INinjaAction;
   /**
    * @private
    */
   @state()
-  get _selected (): null | undefined | INinjaAction {
-    return this.__selected__
+  get _selected(): null | undefined | INinjaAction {
+    return this.__selected__;
   }
 
   set _selected(action: null | undefined | INinjaAction) {
-    const header = this._headerRef.value
+    const header = this._headerRef.value;
     if (header && action) {
-      header.activeDescendant = action.id
+      header.activeDescendant = action.id;
     }
-    const prevSelection = this.__selected__
-    this.__selected__ = action
-    this.requestUpdate("_selected", prevSelection)
+    const prevSelection = this.__selected__;
+    this.__selected__ = action;
+    this.requestUpdate('_selected', prevSelection);
   }
 
   override connectedCallback() {
@@ -338,8 +337,7 @@ export class NinjaKeys extends BaseElement {
           return;
         }
 
-
-        e.preventDefault()
+        e.preventDefault();
         this.close();
       });
     }
@@ -347,30 +345,29 @@ export class NinjaKeys extends BaseElement {
 
   private _unregisterInternalHotkeys() {
     if (this.openHotkey) {
-      hotkeys.unbind(this.openHotkey)
+      hotkeys.unbind(this.openHotkey);
     }
 
     if (this.selectHotkey) {
-      hotkeys.unbind(this.selectHotkey)
+      hotkeys.unbind(this.selectHotkey);
     }
 
     if (this.goBackHotkey) {
-      hotkeys.unbind(this.goBackHotkey)
+      hotkeys.unbind(this.goBackHotkey);
     }
 
     if (this.navigationDownHotkey) {
-      hotkeys.unbind(this.navigationDownHotkey)
+      hotkeys.unbind(this.navigationDownHotkey);
     }
 
     if (this.navigationUpHotkey) {
-      hotkeys.unbind(this.navigationUpHotkey)
+      hotkeys.unbind(this.navigationUpHotkey);
     }
 
     if (this.closeHotkey) {
-      hotkeys.unbind(this.closeHotkey)
+      hotkeys.unbind(this.closeHotkey);
     }
   }
-
 
   private _actionFocused(index: INinjaAction, $event: MouseEvent) {
     // this.selectedIndex = index;
@@ -490,7 +487,8 @@ export class NinjaKeys extends BaseElement {
                 <span>${this.listboxLabel}</span>
               </slot>
             </div>
-          <slot name="footer"> ${footerHtml} </slot>
+            <slot name="footer"> ${footerHtml} </slot>
+          </div>
         </div>
       </div>
     `;
@@ -555,7 +553,7 @@ export class NinjaKeys extends BaseElement {
   }
 }
 
-NinjaKeys.define()
+NinjaKeys.define();
 
 declare global {
   interface HTMLElementTagNameMap {
