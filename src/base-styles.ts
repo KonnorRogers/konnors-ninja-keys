@@ -163,10 +163,10 @@ export const baseStyles = css`
   }
 
   .group-header {
-    height: 1.375em;
     line-height: 1.375em;
     padding-left: 1.25em;
     padding-top: 0.5em;
+    padding-bottom: 0.5em;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

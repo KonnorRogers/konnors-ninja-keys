@@ -5,6 +5,7 @@
 - fix: pressing "escape" key now calls `preventDefault()` to prevent the browser minimizing in Firefox.
 - fix: add accessibility attributes for combobox as well as visually hidden labels.
 - fix: check if the element has been defined before calling `define()` to prevent errors.
+- fix: add additional padding to the bottom of header.
 - feat: change the default width to: max(96vw, 640px) to allow some padding on small screens.
 
 
