@@ -1,6 +1,5 @@
 import {BaseElement} from './base-element.js';
-import {html, TemplateResult, PropertyValues} from 'lit';
-import {property, state} from 'lit/decorators.js';
+import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {live} from 'lit/directives/live.js';
 import {createRef, ref} from 'lit-html/directives/ref.js';
@@ -9,92 +8,205 @@ import hotkeys from 'hotkeys-js';
 
 import './ninja-header.js';
 import './ninja-action.js';
-import {INinjaAction} from './interfaces/ininja-action.js';
-import {NinjaHeader} from './ninja-header.js';
-import {NinjaAction} from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
+/** @typedef {import(".").INinjaAction} INinjaAction */
+/** @typedef {import(".").NinjaHeader} NinjaHeader */
+
+/**
+ * @class
+ */
 export class NinjaKeys extends BaseElement {
-  static override baseName = 'ninja-keys';
-  static override styles = [componentReset, baseStyles];
+  /**
+   * @override
+   */
+  static baseName = 'ninja-keys';
 
   /**
-   * Search placeholder text
+   * @override
    */
-  @property({type: String}) placeholder = 'Type a command or search...';
+  static styles = [componentReset, baseStyles];
 
-  /**
-   * If true will register all hotkey for all actions
-   */
-  @property({type: Boolean}) disableHotkeys = false;
-
-  /** Maps to `aria-labelledby` for search input */
-  @property({attribute: 'search-label'}) searchLabel = 'Search for actions';
-
-  /** Maps to `aria-labelledby` for listbox */
-  @property({attribute: 'listbox-label'}) listboxLabel = 'List of actions';
-
-  /**
-   * Show or hide breadcrumbs on header
-   */
-  @property({type: Boolean}) hideBreadcrumbs = false;
-
-  /**
-   * Open or hide shorcut
-   */
-  @property() openHotkey = 'cmd+k,ctrl+k';
-
-  /**
-   * Navigation Up hotkey
-   */
-  @property() navigationUpHotkey = 'up,shift+tab';
-
-  /**
-   * Navigation Down hotkey
-   */
-  @property() navigationDownHotkey = 'down,tab';
-
-  /**
-   * Close hotkey
-   */
-  @property() closeHotkey = 'esc';
-
-  /**
-   * Go back on one level if has parent menu
-   */
-  @property() goBackHotkey = 'backspace';
-
-  /**
-   * Select action and execute handler or open submenu
-   */
-  @property() selectHotkey = 'enter'; // enter,space
-
-  /**
-   * Show or hide breadcrumbs on header
-   */
-  @property({type: Boolean}) hotKeysJoinedView = false;
-
-  /**
-   * Disable load material icons font on connect
-   * If you use custom icons.
-   * Set this attribute to prevent load default icons font
-   */
-  @property({type: Boolean}) noAutoLoadMdIcons = false;
-
-  /**
-   * Array of actions
-   */
-  @property({
-    type: Array,
-    hasChanged() {
-      // Forced to trigger changed event always.
-      // Because of a lot of framework pattern wrap object with an Observer, like vue2.
-      // That's why object passed to web component always same and no render triggered. Issue #9
-      return true;
+  static properties = {
+    placeholder: {type: String},
+    disableHotkeys: {type: Boolean},
+    searchLabel: {attribute: 'search-label'},
+    listboxLabel: {attribute: 'listbox-label'},
+    hideBreadcrumbs: {type: Boolean},
+    openHotkey: {},
+    navigationUpHotkey: {},
+    navigationDownHotkey: {},
+    closeHotkey: {},
+    goBackHotkey: {},
+    selectHotkey: {},
+    hotKeysJoinedView: {type: Boolean},
+    noAutoLoadMdIcons: {type: Boolean},
+    data: {
+      type: Array,
+      hasChanged() {
+        // Forced to trigger changed event always.
+        // Because of a lot of framework pattern wrap object with an Observer, like vue2.
+        // That's why object passed to web component always same and no render triggered. Issue #9
+        return true;
+      },
     },
-  })
-  data = [] as Array<INinjaAction>;
+
+    // State
+    __selected__: {state: true},
+    visible: {state: true},
+    _bump: {state: true},
+    _actionMatches: {state: true},
+    _search: {state: true},
+    _currentRoot: {state: true},
+    _flatData: {state: true},
+    breadcrumbs: {state: true},
+  };
+
+  /**
+   * @constructor
+   */
+  constructor() {
+    super();
+
+    /**
+     * @type {import("lit/directives/ref").Ref<NinjaHeader>}
+     */
+    this._headerRef = createRef();
+
+    /**
+     * Search placeholder text
+     * @type {string}
+     */
+    this.placeholder = 'Type a command or search...';
+
+    /**
+     * If true will register all hotkey for all actions
+     * @type {boolean}
+     */
+    this.disableHotkeys = false;
+
+    /**
+     * Maps to `aria-labelledby` for search input
+     * @type {string}
+     */
+    this.searchLabel = 'Search for actions';
+
+    /**
+     * Maps to `aria-labelledby` for listbox
+     * @type {string}
+     */
+    this.listboxLabel = 'List of actions';
+
+    /**
+     * Show or hide breadcrumbs on header
+     * @type {boolean}
+     */
+    this.hideBreadcrumbs = false;
+
+    /**
+     * Open or hide shorcut
+     * @type {string}
+     */
+    this.openHotkey = 'cmd+k,ctrl+k';
+
+    /**
+     * Navigation Up hotkey
+     * @type {string}
+     */
+    this.navigationUpHotkey = 'up,shift+tab';
+
+    /**
+     * Navigation Down hotkey
+     * @type {string}
+     */
+    this.navigationDownHotkey = 'down,tab';
+
+    /**
+     * Close hotkey
+     * @type {string}
+     */
+    this.closeHotkey = 'esc';
+
+    /**
+     * Go back on one level if has parent menu
+     * @type {string}
+     */
+    this.goBackHotkey = 'backspace';
+
+    /**
+     * Select action and execute handler or open submenu
+     * @type {string}
+     */
+    this.selectHotkey = 'enter'; // enter,space
+
+    /**
+     * Show or hide breadcrumbs on header
+     * @type {boolean}
+     */
+    this.hotKeysJoinedView = false;
+
+    /**
+     * Disable load material icons font on connect
+     * If you use custom icons.
+     * Set this attribute to prevent load default icons font
+     * @type {boolean}
+     */
+    this.noAutoLoadMdIcons = false;
+
+    /**
+     * Array of actions
+     * @type {Array<INinjaAction>}
+     */
+    this.data = [];
+
+    /**
+     * Private
+     */
+
+    /**
+     * @private
+     * @type {import('.').Maybe<INinjaAction>}
+     */
+    this.__selected__ = null;
+
+    /**
+     * Show or hide element
+     * @type {boolean}
+     */
+    this.visible = false;
+
+    /**
+     * Temporarily used for animation effect. TODO: change to animate logic
+     * @private
+     * @type {boolean}
+     */
+    this._bump = true;
+
+    /**
+     * @private
+     * @type {Array<INinjaAction>}
+     */
+    this._actionMatches = [];
+
+    /**
+     * @private
+     * @type {string}
+     */
+    this._search = '';
+
+    /**
+     * @private
+     * @type {undefined | string}
+     */
+    this._currentRoot = undefined;
+
+    /**
+     * Array of actions in flat structure
+     * @type {Array<INinjaAction>}
+     */
+    this._flatData = [];
+  }
 
   /**
    * Public methods
@@ -102,8 +214,9 @@ export class NinjaKeys extends BaseElement {
 
   /**
    * Show a modal
+   * @param {{ parent?: string }} [options={}]
    */
-  open(options: {parent?: string} = {}) {
+  open(options = {}) {
     this._bump = true;
     this.visible = true;
     const header = this._headerRef.value;
@@ -139,9 +252,9 @@ export class NinjaKeys extends BaseElement {
 
   /**
    * Navigate to group of actions
-   * @param parent id of parent group/action
+   * @param {string} [parent] - parent id of parent group/action
    */
-  setParent(parent?: string) {
+  setParent(parent) {
     if (!parent) {
       this._currentRoot = undefined;
       // this.breadcrumbs = [];
@@ -150,36 +263,14 @@ export class NinjaKeys extends BaseElement {
     }
     this._selected = undefined;
     this._search = '';
-    this._headerRef.value!.setSearch('');
+    this._headerRef.value?.setSearch('');
   }
 
   /**
-   * Show or hide element
+   * @private
    */
-  @state() visible = false;
-  /**
-   * Temproray used for animation effect. TODO: change to animate logic
-   */
-  @state()
-  private _bump = true;
-
-  @state()
-  private _actionMatches = [] as Array<INinjaAction>;
-
-  @state()
-  private _search = '';
-
-  @state()
-  private _currentRoot?: string;
-
-  /**
-   * Array of actions in flat structure
-   */
-  @state() _flatData = [] as Array<INinjaAction>;
-
-  @state()
-  private get breadcrumbs() {
-    const path: string[] = [];
+  get breadcrumbs() {
+    const path = [];
     let parentAction = this._selected?.parent;
     if (parentAction) {
       path.push(parentAction);
@@ -194,16 +285,18 @@ export class NinjaKeys extends BaseElement {
     return path.reverse();
   }
 
-  private __selected__?: null | undefined | INinjaAction;
   /**
    * @private
+   * @returns {import(".").Maybe<INinjaAction>}
    */
-  @state()
-  get _selected(): null | undefined | INinjaAction {
+  get _selected() {
     return this.__selected__;
   }
 
-  set _selected(action: null | undefined | INinjaAction) {
+  /**
+   * @param {import(".").Maybe<INinjaAction>} action
+   */
+  set _selected(action) {
     const header = this._headerRef.value;
     if (header && action) {
       header.activeDescendant = action.id;
@@ -213,7 +306,10 @@ export class NinjaKeys extends BaseElement {
     this.requestUpdate('_selected', prevSelection);
   }
 
-  override connectedCallback() {
+  /**
+   * @override
+   */
+  connectedCallback() {
     super.connectedCallback();
 
     if (!this.noAutoLoadMdIcons) {
@@ -223,13 +319,24 @@ export class NinjaKeys extends BaseElement {
     this._registerInternalHotkeys();
   }
 
-  override disconnectedCallback() {
+  /**
+   * @override
+   */
+  disconnectedCallback() {
     super.disconnectedCallback();
     this._unregisterInternalHotkeys();
   }
 
-  private _flattern(members: INinjaAction[], parent?: string): INinjaAction[] {
-    let children = [] as Array<any>;
+  /**
+   * @private
+   * @param {INinjaAction[]} members
+   * @param {string} [parent]
+   * @returns {INinjaAction[]}
+   */
+  _flattern(members, parent) {
+    /** @type any[] */
+    let children = [];
+
     if (!members) {
       members = [];
     }
@@ -237,7 +344,7 @@ export class NinjaKeys extends BaseElement {
       .map((mem) => {
         const alreadyFlatternByUser =
           mem.children &&
-          mem.children.some((value: any) => {
+          mem.children.some((value) => {
             return typeof value == 'string';
           });
         const m = {...mem, parent: mem.parent || parent};
@@ -248,21 +355,25 @@ export class NinjaKeys extends BaseElement {
             parent = mem.id;
             children = [...children, ...m.children];
           }
-          m.children = m.children ? m.children.map((c: any) => c.id) : [];
+          m.children = m.children ? m.children.map((c) => c.id) : [];
           return m;
         }
       })
       .concat(children.length ? this._flattern(children, parent) : children);
   }
 
-  override update(changedProperties: PropertyValues<this>) {
+  /**
+   * @override
+   * @param {import("lit").PropertyValues<this>} changedProperties
+   */
+  update(changedProperties) {
     if (changedProperties.has('data') && !this.disableHotkeys) {
       this._flatData = this._flattern(this.data);
 
       this._flatData
         .filter((action) => !!action.hotkey)
         .forEach((action) => {
-          hotkeys(action.hotkey!, (event) => {
+          hotkeys(action.hotkey, (event) => {
             event.preventDefault();
             if (action.handler) {
               action.handler(action);
@@ -273,7 +384,10 @@ export class NinjaKeys extends BaseElement {
     super.update(changedProperties);
   }
 
-  private _registerInternalHotkeys() {
+  /**
+   * @private
+   */
+  _registerInternalHotkeys() {
     if (this.openHotkey) {
       hotkeys(this.openHotkey, (event) => {
         event.preventDefault();
@@ -343,7 +457,10 @@ export class NinjaKeys extends BaseElement {
     }
   }
 
-  private _unregisterInternalHotkeys() {
+  /**
+   * @private
+   */
+  _unregisterInternalHotkeys() {
     if (this.openHotkey) {
       hotkeys.unbind(this.openHotkey);
     }
@@ -369,17 +486,28 @@ export class NinjaKeys extends BaseElement {
     }
   }
 
-  private _actionFocused(index: INinjaAction, $event: MouseEvent) {
+  /**
+   * @private
+   * @param {INinjaAction} index
+   * @param {MouseEvent} $event
+   */
+  _actionFocused(index, $event) {
     // this.selectedIndex = index;
     this._selected = index;
-    ($event.target as NinjaAction).ensureInView();
+    /** @type {import(".").NinjaAction} */
+    const target = $event.target;
+    target.ensureInView();
   }
 
-  private _onTransitionEnd() {
+  /** @private */
+  _onTransitionEnd() {
     this._bump = false;
   }
 
-  private _goBack() {
+  /**
+   * @private
+   */
+  _goBack() {
     const parent =
       this.breadcrumbs.length > 1
         ? this.breadcrumbs[this.breadcrumbs.length - 2]
@@ -387,9 +515,10 @@ export class NinjaKeys extends BaseElement {
     this.setParent(parent);
   }
 
-  private _headerRef = createRef<NinjaHeader>();
-
-  override render() {
+  /**
+   * @override
+   */
+  render() {
     const classes = {
       bump: this._bump,
       'modal-content': true,
@@ -428,7 +557,10 @@ export class NinjaKeys extends BaseElement {
       this._selected = undefined;
     }
 
-    const actionsList = (actions: INinjaAction[]) =>
+    /**
+     * @param {INinjaAction[]} actions
+     */
+    const actionsList = (actions) =>
       html` ${repeat(
         actions,
         (action) => action.id,
@@ -439,15 +571,20 @@ export class NinjaKeys extends BaseElement {
             aria-selected=${live(action.id === this._selected?.id)}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}
-            @mouseover=${(event: MouseEvent) =>
-              this._actionFocused(action, event)}
-            @actionsSelected=${(event: CustomEvent<INinjaAction>) =>
-              this._actionSelected(event.detail)}
+            @mouseover=${(/** @type {MouseEvent} */ event) => {
+              this._actionFocused(action, event);
+            }}
+            @actionsSelected=${(
+              /** @type {CustomEvent<INinjaAction>}*/ event
+            ) => this._actionSelected(event.detail)}
             .action=${action}
           ></ninja-action>`
       )}`;
 
-    const itemTemplates: TemplateResult[] = [];
+    /**
+     * @type {import("lit").TemplateResult[]}
+     */
+    const itemTemplates = [];
     sections.forEach((actions, section) => {
       const header = section
         ? html`<div class="group-header">${section}</div>`
@@ -466,7 +603,7 @@ export class NinjaKeys extends BaseElement {
             .breadcrumbs=${this.breadcrumbs}
             searchLabel=${this.searchLabel}
             @change=${this._handleInput}
-            @setParent=${(event: CustomEvent<INinjaAction>) =>
+            @setParent=${(/** @type {CustomEvent<INinjaAction>} */ event) =>
               this.setParent(event.detail.parent)}
             @close=${this.close}
           >
@@ -494,14 +631,22 @@ export class NinjaKeys extends BaseElement {
     `;
   }
 
-  private get _selectedIndex(): number {
+  /**
+   * @private
+   * @returns {number}
+   */
+  get _selectedIndex() {
     if (!this._selected) {
       return -1;
     }
     return this._actionMatches.indexOf(this._selected);
   }
 
-  private _actionSelected(action?: INinjaAction) {
+  /**
+   * @private
+   * @param {INinjaAction} [action]
+   */
+  _actionSelected(action) {
     // fire selected event even when action is empty/not selected,
     // so possible handle api search for example
     this.dispatchEvent(
@@ -521,8 +666,8 @@ export class NinjaKeys extends BaseElement {
       this._search = '';
     }
 
-    this._headerRef.value!.setSearch('');
-    this._headerRef.value!.focusSearch();
+    this._headerRef.value?.setSearch('');
+    this._headerRef.value?.focusSearch();
 
     if (action.handler) {
       const result = action.handler(action);
@@ -534,7 +679,11 @@ export class NinjaKeys extends BaseElement {
     this._bump = true;
   }
 
-  private async _handleInput(event: CustomEvent<{search: string}>) {
+  /**
+   * @private
+   * @param {CustomEvent<{search: string}>} search
+   */
+  async _handleInput(event) {
     this._search = event.detail.search;
     await this.updateComplete;
     this.dispatchEvent(
@@ -546,17 +695,17 @@ export class NinjaKeys extends BaseElement {
     );
   }
 
-  private _overlayClick(event: Event) {
-    if ((event.target as HTMLElement)?.classList.contains('modal')) {
+  /**
+   * @private
+   * @param {Event} event
+   */
+  _overlayClick(event) {
+    /** @type {HTMLElement} */
+    const target = event.target;
+    if (target?.classList.contains('modal')) {
       this.close();
     }
   }
 }
 
 NinjaKeys.define();
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'ninja-keys': NinjaKeys;
-  }
-}

@@ -1,3 +1,4 @@
+// @ts-check
 import {html} from 'lit';
 
 export const footerHtml = html` <div class="modal-footer" slot="footer">

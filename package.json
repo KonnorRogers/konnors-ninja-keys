@@ -2,15 +2,22 @@
   "name": "ninja-keys",
   "version": "1.2.2",
   "description": "Ninja Keys",
-  "main": "dist/ninja-keys.js",
-  "module": "dist/ninja-keys.js",
+  "main": "src/ninja-keys.js",
+  "module": "src/ninja-keys.js",
   "type": "module",
   "exports": {
-    ".": "./dist/ninja-keys.js",
-    "./ninja-header": "./dist/ninja-header.js"
+		"./package.json": "./package.json",
+		".": {
+			"import": "./src/ninja-keys.js",
+			"types": "./types/ninja-keys.d.ts"
+		},
+    "./ninja-header": {
+			"import": "./src/ninja-header.js",
+			"types": "./types/ninja-header.d.ts"
+    }
   },
   "scripts": {
-    "start": "npm run build && concurrently -k -r  \"npm run serve\" \"npm run build:watch\"",
+    "start": "npm run serve",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "clean": "rimraf dist/",
@@ -42,12 +49,12 @@
     "keypress",
     "hotkey"
   ],
-  "author": "Serhii Slieptsov <hey@sergei.ws>",
+  "author": "Konnor Rogers <konnor5456@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/ssleptsov/ninja-keys",
+  "homepage": "https://github.com/konnorrogers/konnors-ninja-keys",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ssleptsov/ninja-keys.git"
+    "url": "git@github.com:konnorrogers/konnors-ninja-keys.git"
   },
   "clean-publish": {
     "files": [
@@ -59,6 +66,7 @@
   },
   "dependencies": {
     "@material/mwc-icon": "0.25.3",
+    "@types/node": "^20.2.4",
     "hotkeys-js": "3.8.7",
     "lit": "2.2.6"
   },
@@ -72,7 +80,6 @@
     "@web/dev-server-rollup": "^0.3.9",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "clean-publish": "3.4.2",
-    "concurrently": "6.3.0",
     "eslint": "^7.32.0",
     "lit-analyzer": "^1.1.10",
     "prettier": "^2.3.2",

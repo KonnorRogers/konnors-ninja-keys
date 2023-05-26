@@ -1,3 +1,4 @@
+// @ts-check
 import {css} from 'lit';
 
 export const componentReset = css`

@@ -1,15 +1,19 @@
+// @ts-check
 import {LitElement} from 'lit';
 
-type Maybe<T> = null | undefined | T;
-
 export class BaseElement extends LitElement {
+  /** @type {CustomElementRegistry} */
   static customElementRegistry = window.customElements;
+
+  /** @type {string} */
   static baseName = '';
-  static define(
-    name?: Maybe<string>,
-    ctor?: Maybe<CustomElementConstructor>,
-    options?: ElementDefinitionOptions | undefined
-  ) {
+
+  /**
+   * @param {import('.').Maybe<string>} [name=this.baseName]
+   * @param {import('.').Maybe<CustomElementConstructor>} [ctor=this]
+   * @param {ElementDefinitionOptions | undefined} [options]
+   */
+  static define(name = this.baseName, ctor = this, options) {
     if (!name) name = this.baseName;
     if (!ctor) ctor = this;
 
