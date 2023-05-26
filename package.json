@@ -6,14 +6,14 @@
   "module": "src/ninja-keys.js",
   "type": "module",
   "exports": {
-		"./package.json": "./package.json",
-		".": {
-			"import": "./src/ninja-keys.js",
-			"types": "./types/ninja-keys.d.ts"
-		},
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./src/ninja-keys.js",
+      "types": "./types/ninja-keys.d.ts"
+    },
     "./ninja-header": {
-			"import": "./src/ninja-header.js",
-			"types": "./types/ninja-header.d.ts"
+      "import": "./src/ninja-header.js",
+      "types": "./types/ninja-header.d.ts"
     }
   },
   "scripts": {
