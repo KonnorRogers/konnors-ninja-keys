@@ -1,6 +1,6 @@
 {
   "name": "konnors-ninja-keys",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Konnors Ninja Keys",
   "main": "src/ninja-keys.js",
   "module": "src/ninja-keys.js",
