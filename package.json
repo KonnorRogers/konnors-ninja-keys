@@ -5,6 +5,7 @@
   "main": "src/ninja-keys.js",
   "module": "src/ninja-keys.js",
   "type": "module",
+  "types": "./types/ninja-keys.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {

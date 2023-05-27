@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.3.3
+
+- fix: issues with types.
+
 ## 1.3.0
 
 - fix: pressing "escape" key now calls `preventDefault()` to prevent the browser minimizing in Firefox.
