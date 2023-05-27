@@ -34,9 +34,18 @@
     "bundle": "npm run build && rollup -c --file dist/ninja-keys.bundled.js",
     "checksize": "rollup -c ; cat dist/ninja-keys.bundled.js | gzip -9 | wc -c ; rm dist/ninja-keys.bundled.js",
     "prepublish": "npm run clean && npm run build",
-    "publish": "clean-publish",
-    "publish-test": "rimraf package && clean-publish --without-publish --temp-dir package"
+    "deploy": "clean-publish",
+    "deploy-test": "rimraf package && clean-publish --without-publish --temp-dir package"
   },
+  "files": [
+    "src",
+    "types",
+    "custom-elements.json",
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "CHANGELOG.md"
+  ],
   "keywords": [
     "web-components",
     "lit-element",
