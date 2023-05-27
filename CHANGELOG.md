@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.1
+
+- fix: move @types/node to devDependencies
+
 ## 1.4.0
 
 - fix: issues with types.
