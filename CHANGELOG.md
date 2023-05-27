@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.4.2
+
+- fix: change the default width to: clamp(100px, 96vw, 640px) to allow some padding on small screens.
+
 ## 1.4.1
 
 - fix: move @types/node to devDependencies

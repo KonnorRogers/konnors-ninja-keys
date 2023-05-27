@@ -33,7 +33,7 @@ export const componentReset = css`
 
 export const baseStyles = css`
   :host {
-    --ninja-width: max(96vw, 640px);
+    --ninja-width: clamp(100px, 96vw, 640px);
     --ninja-backdrop-filter: none;
     --ninja-overflow-background: rgba(255, 255, 255, 0.5);
     --ninja-text-color: rgb(60, 65, 73);
