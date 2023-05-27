@@ -1,6 +1,6 @@
 # Change Log
 
-## 1.3.3
+## 1.4.0
 
 - fix: issues with types.
 
