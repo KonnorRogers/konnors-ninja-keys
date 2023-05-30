@@ -3,7 +3,7 @@
 ## 1.5.0
 
 - feat: export all elements and types
-- feat: only auto-register on parent level import. importing from "ninja-keys/ninja-keys" will not auto-register the element.
+- feat: only auto-register on parent level import. importing from "ninja-keys/ninja-keys.js" will not auto-register the element.
 - feat: update ninja-keys to use scoped element registry .
 - fix: duplicate "placeholder" value in `<ninja-header>`
 
