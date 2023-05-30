@@ -402,8 +402,5 @@ npm run lint
 
 ## License
 
-Copyright (c) [Sergei Sleptsov](https://sergei.ws) <hey@sergei.ws>
-
 Licensed under [the MIT license](./LICENSE).
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fssleptsov%2Fninja-keys.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fssleptsov%2Fninja-keys?ref=badge_large)

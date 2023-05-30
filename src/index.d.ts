@@ -1,10 +1,12 @@
-import type {NinjaAction} from './ninja-action';
-import type {NinjaHeader} from './ninja-header';
-import type {NinjaKeys} from './ninja-keys';
+import {NinjaAction} from './ninja-action';
+import {NinjaHeader} from './ninja-header';
+import {NinjaKeys} from './ninja-keys';
 
-export type {NinjaAction} from './ninja-action';
-export type {NinjaHeader} from './ninja-header';
-export type {NinjaKeys} from './ninja-keys';
+export {
+  NinjaAction,
+  NinjaHeader,
+  NinjaKeys
+}
 
 export type Maybe<T> = null | undefined | T;
 
