@@ -1,24 +1,6 @@
 // @ts-check
-import {LitElement} from 'lit';
+import { LitElement } from "lit";
+import { DefineableMixin } from "web-component-define";
+import { ScopedElementsMixin } from "@open-wc/scoped-elements"
 
-export class BaseElement extends LitElement {
-  /** @type {CustomElementRegistry} */
-  static customElementRegistry = window.customElements;
-
-  /** @type {string} */
-  static baseName = '';
-
-  /**
-   * @param {import('.').Maybe<string>} [name=this.baseName]
-   * @param {import('.').Maybe<CustomElementConstructor>} [ctor=this]
-   * @param {ElementDefinitionOptions | undefined} [options]
-   */
-  static define(name = this.baseName, ctor = this, options) {
-    if (!name) name = this.baseName;
-    if (!ctor) ctor = this;
-
-    if (!this.customElementRegistry.get(name)) {
-      this.customElementRegistry.define(name, ctor, options);
-    }
-  }
-}
+export class BaseElement extends ScopedElementsMixin(DefineableMixin(LitElement)) {}

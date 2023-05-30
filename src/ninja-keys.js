@@ -6,8 +6,8 @@ import {createRef, ref} from 'lit-html/directives/ref.js';
 import {classMap} from 'lit/directives/class-map.js';
 import hotkeys from 'hotkeys-js';
 
-import './ninja-header.js';
-import './ninja-action.js';
+import { NinjaHeader } from './ninja-header.js';
+import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
@@ -22,6 +22,13 @@ export class NinjaKeys extends BaseElement {
    * @override
    */
   static baseName = 'ninja-keys';
+
+  static get scopedElements() {
+    return {
+      'ninja-action': NinjaAction,
+      'ninja-header': NinjaHeader,
+    };
+  }
 
   /**
    * @override
@@ -190,7 +197,6 @@ export class NinjaKeys extends BaseElement {
     this._actionMatches = [];
 
     /**
-     * @private
      * @type {string}
      */
     this._search = '';
@@ -508,11 +514,13 @@ export class NinjaKeys extends BaseElement {
    * @private
    */
   _goBack() {
-    const parent =
-      this.breadcrumbs.length > 1
-        ? this.breadcrumbs[this.breadcrumbs.length - 2]
-        : undefined;
-    this.setParent(parent);
+    if (this.breadcrumbs) {
+      const parent =
+        this.breadcrumbs.length > 1
+          ? this.breadcrumbs[this.breadcrumbs.length - 2]
+          : undefined;
+      this.setParent(parent);
+    }
   }
 
   /**
@@ -707,5 +715,3 @@ export class NinjaKeys extends BaseElement {
     }
   }
 }
-
-NinjaKeys.define();

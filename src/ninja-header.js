@@ -69,7 +69,6 @@ export class NinjaHeader extends BaseElement {
     placeholder: {},
     hideBreadcrumbs: {type: Boolean},
     breadcrumbHome: {},
-    placeholder: {},
     expanded: {type: Boolean},
     controls: {},
     searchLabel: {},
@@ -137,16 +136,18 @@ export class NinjaHeader extends BaseElement {
     let breadcrumbs = '';
     if (!this.hideBreadcrumbs) {
       const itemTemplates = [];
-      for (const breadcrumb of this.breadcrumbs) {
-        itemTemplates.push(
-          html`<button
-            tabindex="-1"
-            @click=${() => this.selectParent(breadcrumb)}
-            class="breadcrumb"
-          >
-            ${breadcrumb}
-          </button>`
-        );
+      if (this.breadcrumbs) {
+        for (const breadcrumb of this.breadcrumbs) {
+          itemTemplates.push(
+            html`<button
+              tabindex="-1"
+              @click=${() => this.selectParent(breadcrumb)}
+              class="breadcrumb"
+            >
+              ${breadcrumb}
+            </button>`
+          );
+        }
       }
       breadcrumbs = html`<div class="breadcrumb-list" id="breadcrumb-list">
         <button
@@ -246,5 +247,3 @@ export class NinjaHeader extends BaseElement {
     );
   }
 }
-
-NinjaHeader.define();

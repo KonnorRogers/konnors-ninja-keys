@@ -158,8 +158,10 @@ export class NinjaAction extends BaseElement {
    */
   updated(changedProperties) {
     if (changedProperties.has('selected')) {
+      this.setAttribute("aria-selected", "true")
       if (this.selected) {
         this.ensureInView();
+        this.setAttribute("aria-selected", "true")
       }
     }
   }
@@ -223,5 +225,3 @@ export class NinjaAction extends BaseElement {
     `;
   }
 }
-
-NinjaAction.define();

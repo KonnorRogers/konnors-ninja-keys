@@ -5,14 +5,18 @@
   "main": "src/ninja-keys.js",
   "module": "src/ninja-keys.js",
   "type": "module",
-  "types": "./types/ninja-keys.d.ts",
+  "types": "./src/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
+      "import": "./src/index.js",
+      "types": "./src/index.d.ts"
+    },
+    "./ninja-keys.js": {
       "import": "./src/ninja-keys.js",
       "types": "./types/ninja-keys.d.ts"
     },
-    "./ninja-header": {
+    "./ninja-header.js": {
       "import": "./src/ninja-header.js",
       "types": "./types/ninja-header.d.ts"
     }
@@ -76,16 +80,18 @@
   },
   "dependencies": {
     "@material/mwc-icon": "0.25.3",
+    "@open-wc/scoped-elements": "^2.1.5",
     "hotkeys-js": "3.8.7",
-    "lit": "2.2.6"
+    "lit": "^2.7.4",
+    "web-component-define": "^2.0.3"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.5.3",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-replace": "^3.0.0",
+    "@types/node": "^20.2.4",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.30.0",
-    "@types/node": "^20.2.4",
     "@web/dev-server": "0.1.25",
     "@web/dev-server-rollup": "^0.3.9",
     "@webcomponents/webcomponentsjs": "^2.6.0",

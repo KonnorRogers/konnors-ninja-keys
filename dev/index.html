@@ -10,7 +10,7 @@
     <title>&lt;ninja-keys> Demo</title>
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
-    <script type="module" src="../src/ninja-keys.js"></script>
+    <script type="module" src="../src/index.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
     <link
       rel="preload"
@@ -155,6 +155,21 @@
           ],
         },
       ];
+      // ninja.data = [
+      // {
+      //   id: 'Theme',
+      //   title: 'Change theme...',
+      //   icon: 'desktop-windows',
+      //   children: ['Light Theme', 'Dark Theme', 'System Theme'],
+      //   hotkey: 'ctrl+T',
+      //   handler: () => {
+      //     // open menu if closed. Because you can open directly that menu from it's hotkey
+      //     this.open({ parent: 'Theme' });
+      //     // if menu opened that prevent it from closing on select that action, no need if you don't have child actions
+      //     return {keepOpen: true};
+      //   },
+      // },
+      // ]
       // ninja.data = [
       //   //
       //   {
