@@ -28,23 +28,38 @@ export class NinjaAction extends BaseElement {
       .ninja-action {
         padding: 0.75em 1em;
         display: flex;
+        flex-directon: column;
         border-left: 2px solid transparent;
         align-items: center;
         justify-content: start;
-        outline: none;
+        outline: transparent;
         transition: color 0s ease 0s;
         width: 100%;
       }
+
       .ninja-action.selected {
         cursor: pointer;
         color: var(--ninja-selected-text-color);
         background-color: var(--ninja-selected-background);
         border-left: 2px solid var(--ninja-accent-color);
-        outline: none;
+        outline: transparent;
       }
+
+      .ninja-action__header {
+        display: flex;
+        justify-content: start;
+        width: 100%;
+      }
+
+      .ninja-action__content {
+        width: 100%;
+        max-height: 60px;
+      }
+
       .ninja-action.selected .ninja-icon {
         color: var(--ninja-selected-text-color);
       }
+
       .ninja-icon {
         font-size: var(--ninja-icon-size);
         max-width: var(--ninja-icon-size);
@@ -99,6 +114,7 @@ export class NinjaAction extends BaseElement {
     action: {type: Object},
     selected: {type: Boolean},
     hotKeysJoinedView: {type: Boolean},
+    content: {}
   };
 
   /**
@@ -107,7 +123,7 @@ export class NinjaAction extends BaseElement {
   constructor() {
     super();
 
-    /** @type {import('.').INinjaAction} */
+    /** @type {import('./index.js').INinjaAction} */
     this.action = {};
 
     /**
@@ -120,6 +136,9 @@ export class NinjaAction extends BaseElement {
      * @type {boolean}
      */
     this.hotKeysJoinedView = true;
+
+    /** @type {string} */
+    this.content = ""
   }
 
   /**
@@ -218,9 +237,14 @@ export class NinjaAction extends BaseElement {
         part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
         class=${classMap(classes)}
       >
-        ${icon}
-        <div class="ninja-title">${this.action.title}</div>
-        ${hotkey}
+        <div class="ninja-action__header">
+          ${icon}
+          <div class="ninja-title">${this.action.title}</div>
+          ${hotkey}
+        </div>
+        <div class="ninja-action__content">
+          ${this.content}
+        </div>
       </div>
     `;
   }

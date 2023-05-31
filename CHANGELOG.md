@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.6.0
+
+- feat: add block content to allow for more than just a title to be displayed.
+
 ## 1.5.1
 
 - upgrade TS version

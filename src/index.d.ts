@@ -1,6 +1,6 @@
-import {NinjaAction} from './ninja-action';
-import {NinjaHeader} from './ninja-header';
-import {NinjaKeys} from './ninja-keys';
+import {NinjaAction} from './ninja-action.js';
+import {NinjaHeader} from './ninja-header.js';
+import {NinjaKeys} from './ninja-keys.js';
 
 export {
   NinjaAction,
@@ -21,6 +21,7 @@ export interface INinjaAction {
   keywords?: string;
   children?: string[];
   section?: string;
+  content?: string;
 }
 
 declare global {
