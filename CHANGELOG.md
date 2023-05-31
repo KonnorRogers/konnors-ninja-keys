@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.5.1
+
+- upgrade TS version
+- upgrade web-component-define version
+
 ## 1.5.0
 
 - feat: export all elements and types
