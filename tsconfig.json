@@ -12,7 +12,7 @@
     "allowJs": true,
     "rootDir": "./src",
     "strict": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
