@@ -24,14 +24,14 @@ specifiers:
   rollup-plugin-summary: ^1.2.3
   rollup-plugin-terser: ^7.0.2
   typescript: ~5.0.0
-  web-component-define: ^2.0.5
+  web-component-define: ^2.0.6
 
 dependencies:
   '@material/mwc-icon': 0.25.3
   '@open-wc/scoped-elements': 2.1.5
   hotkeys-js: 3.8.7
   lit: 2.7.4
-  web-component-define: 2.0.5
+  web-component-define: 2.0.6
 
 devDependencies:
   '@custom-elements-manifest/analyzer': 0.5.7
@@ -3310,8 +3310,8 @@ packages:
       yargs: 15.4.1
     dev: true
 
-  /web-component-define/2.0.5:
-    resolution: {integrity: sha512-/Az+61MlAavQA2xtucq7cpAZ18F6BFy3wZG06D0WPJ1HX1GYP3vcGVNMFAyZlpgP78dZ+brcWpGuIN+nXsRepw==}
+  /web-component-define/2.0.6:
+    resolution: {integrity: sha512-zOThbzWy8ZXF8JS7ls3XGZIejC+PbUhOfXiCJTYGtP+KBz54/9pl48kALR5XpN+4btsmfVbGGcuXCBzqaEVNbg==}
     dependencies:
       '@lit/reactive-element': 1.6.1
       '@open-wc/dedupe-mixin': 1.3.1

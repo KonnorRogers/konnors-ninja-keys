@@ -7,9 +7,6 @@ import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 
-/**
- * @class
- */
 export class NinjaAction extends BaseElement {
   /**
    * @override

@@ -1,6 +1,8 @@
 // @ts-check
 import { LitElement } from "lit";
 import { DefineableMixin } from "web-component-define";
-import { ScopedElementsMixin } from "@open-wc/scoped-elements"
+import { LitScopedElementsMixin } from "web-component-define/exports/lit.js"
 
-export class BaseElement extends ScopedElementsMixin(DefineableMixin(LitElement)) {}
+export class BaseElement extends DefineableMixin(LitElement) {}
+
+const base = new BaseElement()

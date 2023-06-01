@@ -24,10 +24,10 @@ export interface INinjaAction {
   content?: string;
 }
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'ninja-keys': NinjaKeys;
-    'ninja-header': NinjaHeader;
-    'ninja-action': NinjaAction;
-  }
-}
+// declare global {
+//   interface HTMLElementTagNameMap {
+//     'ninja-keys': NinjaKeys;
+//     'ninja-header': NinjaHeader;
+//     'ninja-action': NinjaAction;
+//   }
+// }
