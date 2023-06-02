@@ -79,7 +79,7 @@
     ]
   },
   "dependencies": {
-    "@material/mwc-icon": "0.25.3",
+    "@material/mwc-icon": "^0.25.3",
     "@open-wc/scoped-elements": "^2.1.5",
     "hotkeys-js": "3.8.7",
     "lit": "^2.7.4",
