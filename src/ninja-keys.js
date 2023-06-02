@@ -2,7 +2,7 @@ import {BaseElement} from './base-element.js';
 import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {live} from 'lit/directives/live.js';
-import {createRef, ref} from 'lit-html/directives/ref.js';
+import {createRef, ref} from 'lit/directives/ref.js';
 import {classMap} from 'lit/directives/class-map.js';
 import hotkeys from 'hotkeys-js';
 
@@ -575,7 +575,7 @@ export class NinjaKeys extends BaseElement {
         (action) =>
           html`<ninja-action
             role="option"
-            exportparts="ninja-action,ninja-selected,ninja-icon"
+            exportparts="ninja-action,ninja-selected,ninja-icon,ninja-content"
             aria-selected=${live(action.id === this._selected?.id)}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}

@@ -6,6 +6,7 @@ import {join} from 'lit/directives/join.js';
 import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
+import { when } from 'lit/directives/when.js';
 
 export class NinjaAction extends BaseElement {
   /**
@@ -25,20 +26,21 @@ export class NinjaAction extends BaseElement {
       .ninja-action {
         padding: 0.75em 1em;
         display: flex;
-        flex-directon: column;
-        border-left: 2px solid transparent;
+        flex-direction: column;
+        border-inline-end: 2px solid transparent;
         align-items: center;
         justify-content: start;
         outline: transparent;
         transition: color 0s ease 0s;
         width: 100%;
+        row-gap: 8px;
       }
 
       .ninja-action.selected {
         cursor: pointer;
         color: var(--ninja-selected-text-color);
         background-color: var(--ninja-selected-background);
-        border-left: 2px solid var(--ninja-accent-color);
+        border-inline-end: 2px solid var(--ninja-accent-color);
         outline: transparent;
       }
 
@@ -46,11 +48,19 @@ export class NinjaAction extends BaseElement {
         display: flex;
         justify-content: start;
         width: 100%;
+        align-items: center;
       }
 
       .ninja-action__content {
         width: 100%;
-        max-height: 60px;
+        max-width: 100%;
+        overflow: hidden;
+        /** This has surprisingly good browser support. */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .ninja-action.selected .ninja-icon {
@@ -61,15 +71,13 @@ export class NinjaAction extends BaseElement {
         font-size: var(--ninja-icon-size);
         max-width: var(--ninja-icon-size);
         max-height: var(--ninja-icon-size);
-        margin-right: 1em;
         color: var(--ninja-icon-color);
-        margin-right: 1em;
         position: relative;
+        margin-inline-end: 0.5em;
       }
 
       .ninja-title {
         flex-shrink: 0.01;
-        margin-right: 0.5em;
         flex-grow: 1;
         font-size: 0.8125em;
         white-space: nowrap;
@@ -96,10 +104,10 @@ export class NinjaAction extends BaseElement {
       }
 
       .ninja-hotkey + .ninja-hotkey {
-        margin-left: 0.5em;
+        margin-inline-end: 0.5em;
       }
       .ninja-hotkeys + .ninja-hotkeys {
-        margin-left: 1em;
+        margin-inline-end: 1em;
       }
     `,
   ];
@@ -133,9 +141,6 @@ export class NinjaAction extends BaseElement {
      * @type {boolean}
      */
     this.hotKeysJoinedView = true;
-
-    /** @type {string} */
-    this.content = ""
   }
 
   /**
@@ -239,9 +244,11 @@ export class NinjaAction extends BaseElement {
           <div class="ninja-title">${this.action.title}</div>
           ${hotkey}
         </div>
-        <div class="ninja-action__content">
-          ${this.content}
-        </div>
+
+        ${when(this.action.content, () =>
+          html`<div class="ninja-action__content">
+            ${this.action.content}
+          </div>`)}
       </div>
     `;
   }
