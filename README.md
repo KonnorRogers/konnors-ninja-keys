@@ -204,6 +204,7 @@ Array of `INinjaAction` - interface properties below
 | keywords | string(optional) | Keywords to use for search |
 | children | Array<string>(optional) | If using flat structure then ids of child menu actions. Not required on tree structure |
 | section | string(optional) | Section text. Like a header will be group with other same sections |
+| content | string(optional) | Content text. Allows you to display additional info besides just a title. |
 
 ## Methods
 
@@ -309,6 +310,7 @@ It's supported by [all modern browsers](https://caniuse.com/mdn-css_selectors_pa
 | ninja-selected      | Selected action                                        |
 | ninja-input         | Input element                                          |
 | ninja-input-wrapper | Wrapper element around div, useful for advanced styles |
+| ninja-content       | Wrapper element around content                         |
 
 #### Example style using parts
 
