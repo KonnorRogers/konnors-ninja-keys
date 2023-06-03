@@ -23,12 +23,14 @@ export class NinjaAction extends BaseElement {
       :host {
         display: flex;
         width: 100%;
+        padding: 0 4px;
       }
       .ninja-action {
         padding: 0.75em 1em;
         display: flex;
         flex-direction: column;
         border-inline-end: 2px solid transparent;
+        border-inline-start: 2px solid transparent;
         align-items: center;
         justify-content: start;
         outline: transparent;
@@ -44,6 +46,7 @@ export class NinjaAction extends BaseElement {
         color: var(--ninja-selected-text-color);
         background-color: var(--ninja-selected-background);
         border-inline-end: 2px solid var(--ninja-accent-color);
+        border-inline-start: 2px solid var(--ninja-accent-color);
         outline: transparent;
       }
 

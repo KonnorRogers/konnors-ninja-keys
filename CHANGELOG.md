@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.6.1
+
+- fix: change focus styling and add 4px of X padding to ninja-action for more obvious focus.
+
 ## 1.6.0
 
 - feat: add block content to allow for more than just a title to be displayed.
