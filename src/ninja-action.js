@@ -7,6 +7,7 @@ import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 import { when } from 'lit/directives/when.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 export class NinjaAction extends BaseElement {
   /**
@@ -34,6 +35,8 @@ export class NinjaAction extends BaseElement {
         transition: color 0s ease 0s;
         width: 100%;
         row-gap: 8px;
+        text-decoration: none;
+        color: currentColor;
       }
 
       .ninja-action.selected {
@@ -161,15 +164,24 @@ export class NinjaAction extends BaseElement {
 
   /**
    * @override
+   * @param {boolean} [shouldDispatchEvent]
    */
-  click() {
-    this.dispatchEvent(
-      new CustomEvent('actionsSelected', {
-        detail: this.action,
-        bubbles: true,
-        composed: true,
-      })
-    );
+  click(shouldDispatchEvent) {
+    if (shouldDispatchEvent) {
+      this.dispatchEvent(
+        new CustomEvent('actionsSelected', {
+          detail: this.action,
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+
+    const anchor = this.shadowRoot?.querySelector("a")
+
+    if (anchor) {
+      anchor.click()
+    }
   }
 
   /**
@@ -187,22 +199,95 @@ export class NinjaAction extends BaseElement {
     }
   }
 
+
+
   /**
    * @override
    */
   render() {
+    // const hotkey = this.action.hotkey
+    //   ? html`<div class="ninja-hotkey">${this.action.hotkey}</div>`
+    //   : '';
+    const classes = {
+      selected: this.selected,
+      'ninja-action': true,
+    };
+
+    // Render a link
+    if (this.action.href) {
+      return this.renderAsLink(classes)
+    }
+
+    return html`
+      <div
+        class="ninja-action"
+        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
+        class=${classMap(classes)}
+      >
+        ${this.renderBody()}
+      </div>
+    `;
+  }
+
+  /** @param {Record<string, boolean>} classes */
+  renderAsLink (classes) {
+    const attributes = this.action.attributes || {}
+
+    const {
+      download,
+      hreflang,
+      ping,
+      referrerpolicy,
+      rel,
+      target,
+      type,
+    } = attributes
+
+    return html`
+      <a
+        class="ninja-action"
+        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
+        class=${classMap(classes)}
+        href=${this.action.href}
+        download=${ifDefined(download)}
+        hreflang=${ifDefined(hreflang)}
+        ping=${ifDefined(ping)}
+        referrerpolicy=${ifDefined(referrerpolicy)}
+        rel=${ifDefined(rel)}
+        target=${ifDefined(target)}
+        type=${ifDefined(type)}
+      >
+        ${this.renderBody()}
+      </a>
+    `
+  }
+
+  renderBody () {
     let icon;
     if (this.action.mdIcon) {
-      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon"
-        >${this.action.mdIcon}</mwc-icon
-      >`;
+      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon">
+        ${this.action.mdIcon}
+      </mwc-icon>`;
     } else if (this.action.icon) {
       icon = unsafeHTML(this.action.icon || '');
     }
 
-    // const hotkey = this.action.hotkey
-    //   ? html`<div class="ninja-hotkey">${this.action.hotkey}</div>`
-    //   : '';
+    return html`
+        <div class="ninja-action__header">
+          ${icon}
+          <div class="ninja-title">${this.action.title}</div>
+          ${this.renderHotkey()}
+        </div>
+
+        ${when(this.action.content, () =>
+          html`<div class="ninja-action__content">
+            ${this.action.content}
+          </div>`
+        )}
+    `
+  }
+
+  renderHotkey () {
     let hotkey;
     if (this.action.hotkey) {
       if (this.hotKeysJoinedView) {
@@ -228,28 +313,6 @@ export class NinjaAction extends BaseElement {
       }
     }
 
-    const classes = {
-      selected: this.selected,
-      'ninja-action': true,
-    };
-
-    return html`
-      <div
-        class="ninja-action"
-        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
-        class=${classMap(classes)}
-      >
-        <div class="ninja-action__header">
-          ${icon}
-          <div class="ninja-title">${this.action.title}</div>
-          ${hotkey}
-        </div>
-
-        ${when(this.action.content, () =>
-          html`<div class="ninja-action__content">
-            ${this.action.content}
-          </div>`)}
-      </div>
-    `;
+    return hotkey
   }
 }
