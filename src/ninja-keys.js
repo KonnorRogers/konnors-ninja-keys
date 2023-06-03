@@ -696,7 +696,7 @@ export class NinjaKeys extends BaseElement {
       }
     } else {
       // Default behavior for links
-      this.findActionElement(this._selectedIndex)?.click(false)
+      this.findActionElement(this._selectedIndex)?.forceClick()
     }
     this._bump = true;
   }

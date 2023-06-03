@@ -164,21 +164,24 @@ export class NinjaAction extends BaseElement {
 
   /**
    * @override
-   * @param {boolean} [shouldDispatchEvent]
    */
-  click(shouldDispatchEvent) {
-    if (shouldDispatchEvent) {
-      this.dispatchEvent(
-        new CustomEvent('actionsSelected', {
-          detail: this.action,
-          bubbles: true,
-          composed: true,
-        })
-      );
-    }
+  click() {
+    this.dispatchEvent(
+      new CustomEvent('actionsSelected', {
+        detail: this.action,
+        bubbles: true,
+        composed: true,
+      })
+    );
 
     const anchor = this.shadowRoot?.querySelector("a")
+    if (anchor) {
+      anchor.click()
+    }
+  }
 
+  forceClick () {
+    const anchor = this.shadowRoot?.querySelector("a")
     if (anchor) {
       anchor.click()
     }
