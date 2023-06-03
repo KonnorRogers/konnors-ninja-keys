@@ -534,6 +534,27 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
+   * Iterates over flatData to find a match. Override this if you want to implement your own matcher.
+   * If you're using search from a different place and adding / removing results, just return
+   * the flatData.
+   * @param {Array<INinjaAction>} flatData
+   */
+  findMatches (flatData) {
+    return flatData.filter((action) => {
+      const regex = new RegExp(this._search, 'gi');
+      const matcher =
+        action.title.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
+
+      if (!this._currentRoot && this._search) {
+        // global search for items on root
+        return matcher;
+      }
+
+      return action.parent === this._currentRoot && matcher;
+    });
+  }
+
+  /**
    * @override
    */
   render() {
@@ -547,20 +568,12 @@ export class NinjaKeys extends BaseElement {
       modal: true,
     };
 
-    const actionMatches = this._flatData.filter((action) => {
-      const regex = new RegExp(this._search, 'gi');
-      const matcher =
-        action.title.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
+    let sections
+    let actionMatches = this._flatData
 
-      if (!this._currentRoot && this._search) {
-        // global search for items on root
-        return matcher;
-      }
+    actionMatches = this.findMatches(actionMatches)
 
-      return action.parent === this._currentRoot && matcher;
-    });
-
-    const sections = actionMatches.reduce(
+    sections = actionMatches.reduce(
       (entryMap, e) =>
         entryMap.set(e.section, [...(entryMap.get(e.section) || []), e]),
       new Map()
@@ -590,7 +603,7 @@ export class NinjaKeys extends BaseElement {
             aria-selected=${live(action.id === this._selected?.id)}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}
-            @mouseover=${(/** @type {MouseEvent} */ event) => {
+            @mousemove=${(/** @type {MouseEvent} */ event) => {
               this._actionFocused(action, event);
             }}
             @actionsSelected=${(

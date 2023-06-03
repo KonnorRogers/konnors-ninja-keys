@@ -66,7 +66,6 @@ export class NinjaAction extends BaseElement {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         text-overflow: ellipsis;
-        white-space: nowrap;
       }
 
       .ninja-action.selected .ninja-icon {
