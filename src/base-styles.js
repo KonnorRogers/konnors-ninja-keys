@@ -181,6 +181,10 @@ export const baseStyles = css`
     background: var(--ninja-footer-background);
     padding: 0.5em 1em;
     display: flex;
+    flex-wrap: wrap;
+    /* vertical gap when wrapping */
+    row-gap: 8px;
+    column-gap: 16px;
     /* font-size: 0.75em; */
     border-top: var(--ninja-separate-border);
     color: var(--ninja-secondary-text-color);
@@ -188,7 +192,6 @@ export const baseStyles = css`
 
   .modal-footer .help {
     display: flex;
-    margin-right: 1em;
     align-items: center;
     font-size: 0.75em;
   }

@@ -6,10 +6,9 @@ import {join} from 'lit/directives/join.js';
 import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
+import { when } from 'lit/directives/when.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
-/**
- * @class
- */
 export class NinjaAction extends BaseElement {
   /**
    * @override
@@ -28,36 +27,60 @@ export class NinjaAction extends BaseElement {
       .ninja-action {
         padding: 0.75em 1em;
         display: flex;
-        border-left: 2px solid transparent;
+        flex-direction: column;
+        border-inline-end: 2px solid transparent;
         align-items: center;
         justify-content: start;
-        outline: none;
+        outline: transparent;
         transition: color 0s ease 0s;
         width: 100%;
+        row-gap: 8px;
+        text-decoration: none;
+        color: currentColor;
       }
+
       .ninja-action.selected {
         cursor: pointer;
         color: var(--ninja-selected-text-color);
         background-color: var(--ninja-selected-background);
-        border-left: 2px solid var(--ninja-accent-color);
-        outline: none;
+        border-inline-end: 2px solid var(--ninja-accent-color);
+        outline: transparent;
       }
+
+      .ninja-action__header {
+        display: flex;
+        justify-content: start;
+        width: 100%;
+        align-items: center;
+      }
+
+      .ninja-action__content {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        /** This has surprisingly good browser support. */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
       .ninja-action.selected .ninja-icon {
         color: var(--ninja-selected-text-color);
       }
+
       .ninja-icon {
         font-size: var(--ninja-icon-size);
         max-width: var(--ninja-icon-size);
         max-height: var(--ninja-icon-size);
-        margin-right: 1em;
         color: var(--ninja-icon-color);
-        margin-right: 1em;
         position: relative;
+        margin-inline-end: 0.5em;
       }
 
       .ninja-title {
         flex-shrink: 0.01;
-        margin-right: 0.5em;
         flex-grow: 1;
         font-size: 0.8125em;
         white-space: nowrap;
@@ -84,10 +107,10 @@ export class NinjaAction extends BaseElement {
       }
 
       .ninja-hotkey + .ninja-hotkey {
-        margin-left: 0.5em;
+        margin-inline-end: 0.5em;
       }
       .ninja-hotkeys + .ninja-hotkeys {
-        margin-left: 1em;
+        margin-inline-end: 1em;
       }
     `,
   ];
@@ -99,6 +122,7 @@ export class NinjaAction extends BaseElement {
     action: {type: Object},
     selected: {type: Boolean},
     hotKeysJoinedView: {type: Boolean},
+    content: {}
   };
 
   /**
@@ -107,7 +131,7 @@ export class NinjaAction extends BaseElement {
   constructor() {
     super();
 
-    /** @type {import('.').INinjaAction} */
+    /** @type {import('./index.js').INinjaAction} */
     this.action = {};
 
     /**
@@ -140,15 +164,24 @@ export class NinjaAction extends BaseElement {
 
   /**
    * @override
+   * @param {boolean} [shouldDispatchEvent]
    */
-  click() {
-    this.dispatchEvent(
-      new CustomEvent('actionsSelected', {
-        detail: this.action,
-        bubbles: true,
-        composed: true,
-      })
-    );
+  click(shouldDispatchEvent) {
+    if (shouldDispatchEvent) {
+      this.dispatchEvent(
+        new CustomEvent('actionsSelected', {
+          detail: this.action,
+          bubbles: true,
+          composed: true,
+        })
+      );
+    }
+
+    const anchor = this.shadowRoot?.querySelector("a")
+
+    if (anchor) {
+      anchor.click()
+    }
   }
 
   /**
@@ -166,22 +199,95 @@ export class NinjaAction extends BaseElement {
     }
   }
 
+
+
   /**
    * @override
    */
   render() {
+    // const hotkey = this.action.hotkey
+    //   ? html`<div class="ninja-hotkey">${this.action.hotkey}</div>`
+    //   : '';
+    const classes = {
+      selected: this.selected,
+      'ninja-action': true,
+    };
+
+    // Render a link
+    if (this.action.href) {
+      return this.renderAsLink(classes)
+    }
+
+    return html`
+      <div
+        class="ninja-action"
+        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
+        class=${classMap(classes)}
+      >
+        ${this.renderBody()}
+      </div>
+    `;
+  }
+
+  /** @param {Record<string, boolean>} classes */
+  renderAsLink (classes) {
+    const attributes = this.action.attributes || {}
+
+    const {
+      download,
+      hreflang,
+      ping,
+      referrerpolicy,
+      rel,
+      target,
+      type,
+    } = attributes
+
+    return html`
+      <a
+        class="ninja-action"
+        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
+        class=${classMap(classes)}
+        href=${this.action.href}
+        download=${ifDefined(download)}
+        hreflang=${ifDefined(hreflang)}
+        ping=${ifDefined(ping)}
+        referrerpolicy=${ifDefined(referrerpolicy)}
+        rel=${ifDefined(rel)}
+        target=${ifDefined(target)}
+        type=${ifDefined(type)}
+      >
+        ${this.renderBody()}
+      </a>
+    `
+  }
+
+  renderBody () {
     let icon;
     if (this.action.mdIcon) {
-      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon"
-        >${this.action.mdIcon}</mwc-icon
-      >`;
+      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon">
+        ${this.action.mdIcon}
+      </mwc-icon>`;
     } else if (this.action.icon) {
       icon = unsafeHTML(this.action.icon || '');
     }
 
-    // const hotkey = this.action.hotkey
-    //   ? html`<div class="ninja-hotkey">${this.action.hotkey}</div>`
-    //   : '';
+    return html`
+        <div class="ninja-action__header">
+          ${icon}
+          <div class="ninja-title">${this.action.title}</div>
+          ${this.renderHotkey()}
+        </div>
+
+        ${when(this.action.content, () =>
+          html`<div class="ninja-action__content">
+            ${this.action.content}
+          </div>`
+        )}
+    `
+  }
+
+  renderHotkey () {
     let hotkey;
     if (this.action.hotkey) {
       if (this.hotKeysJoinedView) {
@@ -207,21 +313,6 @@ export class NinjaAction extends BaseElement {
       }
     }
 
-    const classes = {
-      selected: this.selected,
-      'ninja-action': true,
-    };
-
-    return html`
-      <div
-        class="ninja-action"
-        part="ninja-action ${this.selected ? 'ninja-selected' : ''}"
-        class=${classMap(classes)}
-      >
-        ${icon}
-        <div class="ninja-title">${this.action.title}</div>
-        ${hotkey}
-      </div>
-    `;
+    return hotkey
   }
 }

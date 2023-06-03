@@ -2,7 +2,7 @@ import {BaseElement} from './base-element.js';
 import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {live} from 'lit/directives/live.js';
-import {createRef, ref} from 'lit-html/directives/ref.js';
+import {createRef, ref} from 'lit/directives/ref.js';
 import {classMap} from 'lit/directives/class-map.js';
 import hotkeys from 'hotkeys-js';
 
@@ -407,7 +407,7 @@ export class NinjaKeys extends BaseElement {
           return;
         }
         event.preventDefault();
-        this._actionSelected(this._actionMatches[this._selectedIndex]);
+        this._actionSelected(this._actionMatches[this._selectedIndex], event);
       });
     }
 
@@ -523,6 +523,16 @@ export class NinjaKeys extends BaseElement {
     }
   }
 
+  findActionElement (index = this._selectedIndex) {
+    const id = this._actionMatches[index]?.id
+
+    if (id == null) return null
+
+    const query = "#ninja-action__" + id
+
+    return this.shadowRoot.querySelector(query)
+  }
+
   /**
    * @override
    */
@@ -540,7 +550,7 @@ export class NinjaKeys extends BaseElement {
     const actionMatches = this._flatData.filter((action) => {
       const regex = new RegExp(this._search, 'gi');
       const matcher =
-        action.title.match(regex) || action.keywords?.match(regex);
+        action.title.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
 
       if (!this._currentRoot && this._search) {
         // global search for items on root
@@ -574,8 +584,9 @@ export class NinjaKeys extends BaseElement {
         (action) => action.id,
         (action) =>
           html`<ninja-action
+            id=${"ninja-action__" + action.id}
             role="option"
-            exportparts="ninja-action,ninja-selected,ninja-icon"
+            exportparts="ninja-action,ninja-selected,ninja-icon,ninja-content"
             aria-selected=${live(action.id === this._selected?.id)}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}
@@ -584,7 +595,7 @@ export class NinjaKeys extends BaseElement {
             }}
             @actionsSelected=${(
               /** @type {CustomEvent<INinjaAction>}*/ event
-            ) => this._actionSelected(event.detail)}
+            ) => this._actionSelected(event.detail, event)}
             .action=${action}
           ></ninja-action>`
       )}`;
@@ -653,8 +664,9 @@ export class NinjaKeys extends BaseElement {
   /**
    * @private
    * @param {INinjaAction} [action]
+   * @param {CustomEvent<INinjaAction>} [event]
    */
-  _actionSelected(action) {
+  _actionSelected(action, event) {
     // fire selected event even when action is empty/not selected,
     // so possible handle api search for example
     this.dispatchEvent(
@@ -678,12 +690,14 @@ export class NinjaKeys extends BaseElement {
     this._headerRef.value?.focusSearch();
 
     if (action.handler) {
-      const result = action.handler(action);
+      const result = action.handler(action, event);
       if (!result?.keepOpen) {
         this.close();
       }
+    } else {
+      // Default behavior for links
+      this.findActionElement(this._selectedIndex)?.click(false)
     }
-
     this._bump = true;
   }
 

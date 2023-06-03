@@ -104,7 +104,7 @@ Add the tag to your HTML.
       hotkey: 'ctrl+N',
       icon: 'apps',
       section: 'Projects',
-      handler: () => {
+      handler: (_data, _event) => {
         // it's auto register above hotkey with this handler
         alert('Your logic to handle');
       },
@@ -197,13 +197,16 @@ Array of `INinjaAction` - interface properties below
 | id | string | Unique id/text. Will be displayed as breadcrumb in multimenu |
 | title | string | Title of action |
 | hotkey | string(optional) | Shortcut to display and register |
-| handler | Function(optional) | Function to execute on select |
+| handler | (data, event) => void (optional) | Function to execute on select |
 | mdIcon | string(optional) | Material Design font icon name |
 | icon | string(optional) | Html to render as custom icon |
 | parent | string(optional) | If using flat structure use id of actions to make a multilevel menu |
 | keywords | string(optional) | Keywords to use for search |
 | children | Array<string>(optional) | If using flat structure then ids of child menu actions. Not required on tree structure |
 | section | string(optional) | Section text. Like a header will be group with other same sections |
+| content | string(optional) | Content text. Allows you to display additional info besides just a title. |
+| href    | string(optional) | When an href is set, under the hood it will render an `<a>` tag.
+| attributes | {}(optional)  | additional attributes to add when using "href". Typically `rel` and `target`.
 
 ## Methods
 
@@ -309,6 +312,7 @@ It's supported by [all modern browsers](https://caniuse.com/mdn-css_selectors_pa
 | ninja-selected      | Selected action                                        |
 | ninja-input         | Input element                                          |
 | ninja-input-wrapper | Wrapper element around div, useful for advanced styles |
+| ninja-content       | Wrapper element around content                         |
 
 #### Example style using parts
 
