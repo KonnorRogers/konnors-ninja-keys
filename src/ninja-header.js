@@ -1,11 +1,9 @@
+// @ts-check
 import {html, css} from 'lit';
 import {ref, createRef} from 'lit/directives/ref.js';
-import {BaseElement} from './base-element';
-import {componentReset} from './base-styles';
+import {BaseElement} from './base-element.js';
+import {componentReset} from './base-styles.js';
 
-/**
- * @class
- */
 export class NinjaHeader extends BaseElement {
   /** @override */
   static baseName = 'ninja-header';
@@ -65,6 +63,9 @@ export class NinjaHeader extends BaseElement {
     `,
   ];
 
+  /**
+   * @override
+   */
   static properties = {
     placeholder: {},
     hideBreadcrumbs: {type: Boolean},
@@ -123,7 +124,7 @@ export class NinjaHeader extends BaseElement {
 
     /**
      * @private
-     * @type {import("lit/directives/ref").Ref<HTMLInputElement>}
+     * @type {import("lit/directives/ref.js").Ref<HTMLInputElement>}
      */
     this._inputRef = createRef();
   }
@@ -209,15 +210,16 @@ export class NinjaHeader extends BaseElement {
    * @param {Event} event
    */
   _handleInput(event) {
-    /** @type {HTMLInputElement} */
     const input = event.target;
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        detail: {search: input.value},
-        bubbles: false,
-        composed: false,
-      })
-    );
+    if (input instanceof HTMLInputElement) {
+      this.dispatchEvent(
+        new CustomEvent('change', {
+          detail: {search: input.value},
+          bubbles: false,
+          composed: false,
+        })
+      );
+    }
   }
 
   /**

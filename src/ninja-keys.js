@@ -1,21 +1,25 @@
+// @ts-check
 import {BaseElement} from './base-element.js';
 import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
 import {live} from 'lit/directives/live.js';
 import {createRef, ref} from 'lit/directives/ref.js';
 import {classMap} from 'lit/directives/class-map.js';
-import hotkeys from 'hotkeys-js';
+import _hotkeys from 'hotkeys-js';
 
 import { NinjaHeader } from './ninja-header.js';
 import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
-/** @typedef {import(".").INinjaAction} INinjaAction */
-/** @typedef {import(".").NinjaHeader} NinjaHeader */
+
+const hotkeys = _hotkeys.default
+
+/** @typedef {import("./index.js").INinjaAction} INinjaAction */
+/** @typedef {import("./index.js").NinjaHeader} NinjaHeaderElement */
 
 /**
- * @class
+ * @type BaseElement
  */
 export class NinjaKeys extends BaseElement {
   /**
@@ -23,6 +27,9 @@ export class NinjaKeys extends BaseElement {
    */
   static baseName = 'ninja-keys';
 
+  /**
+   * @override
+   */
   static get scopedElements() {
     return {
       'ninja-action': NinjaAction,
@@ -35,6 +42,9 @@ export class NinjaKeys extends BaseElement {
    */
   static styles = [componentReset, baseStyles];
 
+  /**
+   * @override
+   */
   static properties = {
     placeholder: {type: String},
     disableHotkeys: {type: Boolean},
@@ -77,7 +87,7 @@ export class NinjaKeys extends BaseElement {
     super();
 
     /**
-     * @type {import("lit/directives/ref").Ref<NinjaHeader>}
+     * @type {import("lit/directives/ref.js").Ref<NinjaHeaderElement>}
      */
     this._headerRef = createRef();
 
@@ -173,7 +183,7 @@ export class NinjaKeys extends BaseElement {
 
     /**
      * @private
-     * @type {import('.').Maybe<INinjaAction>}
+     * @type {import('./index.js').Maybe<INinjaAction>}
      */
     this.__selected__ = null;
 
@@ -236,7 +246,7 @@ export class NinjaKeys extends BaseElement {
       this._selected = this._actionMatches[0];
 
       const header = this._headerRef.value;
-      if (header && this._selected) {
+      if (header && this._selected && this._selected.id) {
         header.activeDescendant = this._selected.id;
       }
     }
@@ -292,19 +302,18 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
-   * @private
-   * @returns {import(".").Maybe<INinjaAction>}
+   * @returns {import("./index.js").Maybe<INinjaAction>}
    */
   get _selected() {
     return this.__selected__;
   }
 
   /**
-   * @param {import(".").Maybe<INinjaAction>} action
+   * @param {import("./index.js").Maybe<INinjaAction>} action
    */
   set _selected(action) {
     const header = this._headerRef.value;
-    if (header && action) {
+    if (header && action && action.id) {
       header.activeDescendant = action.id;
     }
     const prevSelection = this.__selected__;
@@ -361,6 +370,8 @@ export class NinjaKeys extends BaseElement {
             parent = mem.id;
             children = [...children, ...m.children];
           }
+
+          // @ts-expect-error ...weird.
           m.children = m.children ? m.children.map((c) => c.id) : [];
           return m;
         }
@@ -377,12 +388,13 @@ export class NinjaKeys extends BaseElement {
       this._flatData = this._flattern(this.data);
 
       this._flatData
-        .filter((action) => !!action.hotkey)
         .forEach((action) => {
+          if (!action.hotkey) return
+
           hotkeys(action.hotkey, (event) => {
             event.preventDefault();
             if (action.handler) {
-              action.handler(action);
+              action.handler(action, event);
             }
           });
         });
@@ -500,7 +512,9 @@ export class NinjaKeys extends BaseElement {
   _actionFocused(index, $event) {
     // this.selectedIndex = index;
     this._selected = index;
-    /** @type {import(".").NinjaAction} */
+
+    /** @type {import("./index.js").NinjaAction} */
+    // @ts-expect-error
     const target = $event.target;
     target.ensureInView();
   }
@@ -523,6 +537,9 @@ export class NinjaKeys extends BaseElement {
     }
   }
 
+  /**
+   * @returns {NinjaAction | null | undefined}
+   */
   findActionElement (index = this._selectedIndex) {
     const id = this._actionMatches[index]?.id
 
@@ -530,7 +547,7 @@ export class NinjaKeys extends BaseElement {
 
     const query = "#ninja-action__" + id
 
-    return this.shadowRoot.querySelector(query)
+    return this.shadowRoot?.querySelector(query)
   }
 
   /**
@@ -543,7 +560,7 @@ export class NinjaKeys extends BaseElement {
     return flatData.filter((action) => {
       const regex = new RegExp(this._search, 'gi');
       const matcher =
-        action.title.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
+        action.title?.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
 
       if (!this._currentRoot && this._search) {
         // global search for items on root
@@ -677,7 +694,7 @@ export class NinjaKeys extends BaseElement {
   /**
    * @private
    * @param {INinjaAction} [action]
-   * @param {CustomEvent<INinjaAction>} [event]
+   * @param {KeyboardEvent | CustomEvent<INinjaAction>} [event]
    */
   _actionSelected(action, event) {
     // fire selected event even when action is empty/not selected,
@@ -716,7 +733,7 @@ export class NinjaKeys extends BaseElement {
 
   /**
    * @private
-   * @param {CustomEvent<{search: string}>} search
+   * @param {CustomEvent<{search: string}>} event
    */
   async _handleInput(event) {
     this._search = event.detail.search;
@@ -735,10 +752,12 @@ export class NinjaKeys extends BaseElement {
    * @param {Event} event
    */
   _overlayClick(event) {
-    /** @type {HTMLElement} */
     const target = event.target;
-    if (target?.classList.contains('modal')) {
-      this.close();
+
+    if (target instanceof Element) {
+      if (target?.classList.contains('modal')) {
+        this.close();
+      }
     }
   }
 }
