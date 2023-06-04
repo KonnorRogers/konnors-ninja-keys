@@ -1,3 +1,4 @@
+// @ts-check
 import { NinjaKeys } from './ninja-keys';
 
 export {NinjaAction} from './ninja-action';

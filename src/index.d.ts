@@ -14,7 +14,7 @@ export interface INinjaAction {
   id?: string;
   title?: string;
   hotkey?: string;
-  handler?: (action: NinjaAction, event: CustomEvent<NinjaAction>) => void;
+  handler?: (action?: INinjaAction, event?: KeyboardEvent | CustomEvent<INinjaAction>) => undefined | null | { keepOpen?: boolean };
   mdIcon?: string;
   icon?: string;
   parent?: string;
