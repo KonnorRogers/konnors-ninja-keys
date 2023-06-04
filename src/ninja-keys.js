@@ -13,7 +13,9 @@ import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
 
-const hotkeys = _hotkeys.default
+/** @type {import("hotkeys-js").Hotkeys} */
+// @ts-expect-error
+const hotkeys = _hotkeys
 
 /** @typedef {import("./index.js").INinjaAction} INinjaAction */
 /** @typedef {import("./index.js").NinjaHeader} NinjaHeaderElement */
