@@ -26,7 +26,7 @@ export class NinjaAction extends BaseElement {
         padding: 0 4px;
       }
       .ninja-action {
-        padding: 0.75em 1em;
+        padding: 0.75em 8px;
         display: flex;
         flex-direction: column;
         border-inline-end: 2px solid transparent;
@@ -274,7 +274,11 @@ export class NinjaAction extends BaseElement {
         ${this.action.mdIcon}
       </mwc-icon>`;
     } else if (this.action.icon) {
-      icon = unsafeHTML(this.action.icon || '');
+      icon = unsafeHTML(`
+        <div class="ninja-icon" part="ninja-icon">
+          ${this.action.icon}
+        </div>
+      `);
     }
 
     return html`
