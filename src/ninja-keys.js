@@ -79,7 +79,6 @@ export class NinjaKeys extends BaseElement {
     _search: {state: true},
     currentRoot: {state: true},
     _flatData: {state: true},
-    breadcrumbs: {state: true},
   };
 
   /**
@@ -275,7 +274,6 @@ export class NinjaKeys extends BaseElement {
   setParent(parent) {
     if (!parent) {
       this.currentRoot = undefined;
-      // this.breadcrumbs = [];
     } else {
       this.currentRoot = parent;
     }
@@ -287,7 +285,7 @@ export class NinjaKeys extends BaseElement {
   /**
    * @private
    */
-  get breadcrumbs() {
+  getBreadcrumbs() {
     const path = [];
     let parentAction = this._selected?.parent;
     if (parentAction) {
@@ -527,26 +525,22 @@ export class NinjaKeys extends BaseElement {
     this._bump = false;
   }
 
+  get breadcrumbs () {
+    return this.getBreadcrumbs()
+  }
+
   /**
    * @private
    */
   _goBack() {
-    if (this.breadcrumbs) {
+    const breadcrumbs = this.getBreadcrumbs()
+    if (breadcrumbs) {
       const parent =
-        this.breadcrumbs.length > 1
-          ? this.breadcrumbs[this.breadcrumbs.length - 2]
+        breadcrumbs.length > 1
+          ? breadcrumbs[breadcrumbs.length - 2]
           : undefined;
       this.setParent(parent);
       return
-    }
-
-
-    const selectedParent = this._selected?.parent
-    if (selectedParent) {
-      const parentOfSelectedParent = this._flatData.find((data) => data.id === selectedParent)
-      this.setParent(parentOfSelectedParent?.parent)
-    } else {
-      this.setParent(undefined)
     }
   }
 
@@ -664,7 +658,7 @@ export class NinjaKeys extends BaseElement {
             ${ref(this._headerRef)}
             .placeholder=${this.placeholder}
             .hideBreadcrumbs=${this.hideBreadcrumbs}
-            .breadcrumbs=${this.breadcrumbs}
+            .breadcrumbs=${this.getBreadcrumbs()}
             searchLabel=${this.searchLabel}
             @change=${this._handleInput}
             @setParent=${(/** @type {CustomEvent<INinjaAction>} */ event) =>
