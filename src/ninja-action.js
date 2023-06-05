@@ -88,6 +88,7 @@ export class NinjaAction extends BaseElement {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-wdith: 100%;
       }
       .ninja-hotkeys {
         flex-shrink: 0;

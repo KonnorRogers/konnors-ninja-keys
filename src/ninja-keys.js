@@ -77,7 +77,7 @@ export class NinjaKeys extends BaseElement {
     _bump: {state: true},
     _actionMatches: {state: true},
     _search: {state: true},
-    _currentRoot: {state: true},
+    currentRoot: {state: true},
     _flatData: {state: true},
     breadcrumbs: {state: true},
   };
@@ -214,10 +214,10 @@ export class NinjaKeys extends BaseElement {
     this._search = '';
 
     /**
-     * @private
+     * @public
      * @type {undefined | string}
      */
-    this._currentRoot = undefined;
+    this.currentRoot = undefined;
 
     /**
      * Array of actions in flat structure
@@ -274,10 +274,10 @@ export class NinjaKeys extends BaseElement {
    */
   setParent(parent) {
     if (!parent) {
-      this._currentRoot = undefined;
+      this.currentRoot = undefined;
       // this.breadcrumbs = [];
     } else {
-      this._currentRoot = parent;
+      this.currentRoot = parent;
     }
     this._selected = undefined;
     this._search = '';
@@ -430,6 +430,7 @@ export class NinjaKeys extends BaseElement {
         if (!this.visible) {
           return;
         }
+
         if (!this._search) {
           event.preventDefault();
           this._goBack();
@@ -536,6 +537,16 @@ export class NinjaKeys extends BaseElement {
           ? this.breadcrumbs[this.breadcrumbs.length - 2]
           : undefined;
       this.setParent(parent);
+      return
+    }
+
+
+    const selectedParent = this._selected?.parent
+    if (selectedParent) {
+      const parentOfSelectedParent = this._flatData.find((data) => data.id === selectedParent)
+      this.setParent(parentOfSelectedParent?.parent)
+    } else {
+      this.setParent(undefined)
     }
   }
 
@@ -560,16 +571,18 @@ export class NinjaKeys extends BaseElement {
    */
   findMatches (flatData) {
     return flatData.filter((action) => {
-      const regex = new RegExp(this._search, 'gi');
+      // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
+      const sanitizedSearch = this._search.replace(/\\/g, "\\\\")
+      const regex = new RegExp(sanitizedSearch, 'gi');
       const matcher =
         action.title?.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
 
-      if (!this._currentRoot && this._search) {
+      if (!this.currentRoot && this._search) {
         // global search for items on root
         return matcher;
       }
 
-      return action.parent === this._currentRoot && matcher;
+      return action.parent === this.currentRoot && matcher;
     });
   }
 
@@ -714,7 +727,7 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (action.children && action.children?.length > 0) {
-      this._currentRoot = action.id;
+      this.currentRoot = action.id;
       this._search = '';
     }
 
