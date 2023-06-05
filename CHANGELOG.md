@@ -4,6 +4,7 @@
 
 - fix: issue with RegExp and using `\` and `/` in searches.
 - fix: issue with extending ninja-keys and breadcrumbs not appearing.
+- fix: overflowing titles now have a max-width of 100% to truncate.
 
 ## 1.7.0
 

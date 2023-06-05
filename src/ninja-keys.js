@@ -525,6 +525,10 @@ export class NinjaKeys extends BaseElement {
     this._bump = false;
   }
 
+  /**
+   * This is a convenience function to align with the previous API.
+   * Don't use this to pass to templates because I've found it create inconsistent behavior.
+   */
   get breadcrumbs () {
     return this.getBreadcrumbs()
   }

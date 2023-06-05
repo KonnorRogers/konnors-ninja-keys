@@ -96,6 +96,7 @@
     "@web/dev-server": "0.1.25",
     "@web/dev-server-rollup": "^0.3.9",
     "@web/test-runner": "^0.16.1",
+    "@web/test-runner-playwright": "^0.10.0",
     "@webcomponents/webcomponentsjs": "^2.6.0",
     "clean-publish": "3.4.2",
     "eslint": "^7.32.0",
