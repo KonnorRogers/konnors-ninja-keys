@@ -1,11 +1,18 @@
 # Change Log
 
+## 1.8.0
+
+- fix: issue with RegExp and using `\` and `/` in searches.
+- fix: issue with extending ninja-keys and breadcrumbs not appearing.
+- fix: overflowing titles now have a max-width of 100% to truncate.
+
 ## 1.7.0
 
 - fix: change focus styling and add 4px of X padding to ninja-action for more obvious focus.
 - fix: use `mousemove` instead of `mouseover` to prevent jumping to different actions.
 - feat: Add an override for `findMatches` in case a user has their own search function for adding / removing results.
 - fix: remove `white-space: nowrap;` for content blocks to allow them to be 2 lines or more.
+
 
 ## 1.6.0
 

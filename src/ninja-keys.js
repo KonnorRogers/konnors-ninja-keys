@@ -77,9 +77,8 @@ export class NinjaKeys extends BaseElement {
     _bump: {state: true},
     _actionMatches: {state: true},
     _search: {state: true},
-    _currentRoot: {state: true},
+    currentRoot: {state: true},
     _flatData: {state: true},
-    breadcrumbs: {state: true},
   };
 
   /**
@@ -214,10 +213,10 @@ export class NinjaKeys extends BaseElement {
     this._search = '';
 
     /**
-     * @private
+     * @public
      * @type {undefined | string}
      */
-    this._currentRoot = undefined;
+    this.currentRoot = undefined;
 
     /**
      * Array of actions in flat structure
@@ -274,10 +273,9 @@ export class NinjaKeys extends BaseElement {
    */
   setParent(parent) {
     if (!parent) {
-      this._currentRoot = undefined;
-      // this.breadcrumbs = [];
+      this.currentRoot = undefined;
     } else {
-      this._currentRoot = parent;
+      this.currentRoot = parent;
     }
     this._selected = undefined;
     this._search = '';
@@ -287,7 +285,7 @@ export class NinjaKeys extends BaseElement {
   /**
    * @private
    */
-  get breadcrumbs() {
+  getBreadcrumbs() {
     const path = [];
     let parentAction = this._selected?.parent;
     if (parentAction) {
@@ -430,6 +428,7 @@ export class NinjaKeys extends BaseElement {
         if (!this.visible) {
           return;
         }
+
         if (!this._search) {
           event.preventDefault();
           this._goBack();
@@ -527,15 +526,25 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
+   * This is a convenience function to align with the previous API.
+   * Don't use this to pass to templates because I've found it create inconsistent behavior.
+   */
+  get breadcrumbs () {
+    return this.getBreadcrumbs()
+  }
+
+  /**
    * @private
    */
   _goBack() {
-    if (this.breadcrumbs) {
+    const breadcrumbs = this.getBreadcrumbs()
+    if (breadcrumbs) {
       const parent =
-        this.breadcrumbs.length > 1
-          ? this.breadcrumbs[this.breadcrumbs.length - 2]
+        breadcrumbs.length > 1
+          ? breadcrumbs[breadcrumbs.length - 2]
           : undefined;
       this.setParent(parent);
+      return
     }
   }
 
@@ -560,16 +569,18 @@ export class NinjaKeys extends BaseElement {
    */
   findMatches (flatData) {
     return flatData.filter((action) => {
-      const regex = new RegExp(this._search, 'gi');
+      // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
+      const sanitizedSearch = this._search.replace(/\\/g, "\\\\")
+      const regex = new RegExp(sanitizedSearch, 'gi');
       const matcher =
         action.title?.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
 
-      if (!this._currentRoot && this._search) {
+      if (!this.currentRoot && this._search) {
         // global search for items on root
         return matcher;
       }
 
-      return action.parent === this._currentRoot && matcher;
+      return action.parent === this.currentRoot && matcher;
     });
   }
 
@@ -651,7 +662,7 @@ export class NinjaKeys extends BaseElement {
             ${ref(this._headerRef)}
             .placeholder=${this.placeholder}
             .hideBreadcrumbs=${this.hideBreadcrumbs}
-            .breadcrumbs=${this.breadcrumbs}
+            .breadcrumbs=${this.getBreadcrumbs()}
             searchLabel=${this.searchLabel}
             @change=${this._handleInput}
             @setParent=${(/** @type {CustomEvent<INinjaAction>} */ event) =>
@@ -714,7 +725,7 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (action.children && action.children?.length > 0) {
-      this._currentRoot = action.id;
+      this.currentRoot = action.id;
       this._search = '';
     }
 

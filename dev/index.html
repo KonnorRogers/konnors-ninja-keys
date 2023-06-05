@@ -107,55 +107,94 @@
       ninja.addEventListener('selected', (event) => {
         console.log('ninja on selected', event.detail);
       });
-      ninja.data = [
-        //
-        {
-          id: 'Search Projects',
-          title: 'Search projects...',
-          hotkey: 'Shift+N,Shift+S',
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="ninja-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-</svg>`,
-          section: 'Projects',
-          content: "My projects"
-        },
-        //
-        {
-          id: 'Theme',
-          title: 'Change theme...',
-          mdIcon: 'desktop_windows',
-          children: [
-            {
-              id: 'Light Theme',
-              title: 'Change theme to Light',
-              mdIcon: 'light_mode',
-            },
-            {
-              id: 'Dark Theme',
-              title: 'Change theme to Dark',
-              mdIcon: 'dark_mode',
-              keywords: 'lol',
-            },
-            {
-              id: 'System Theme',
-              title: 'Change theme to System',
-              mdIcon: 'desktop_windows',
-              children: [
-                {
-                  id: 'sub1',
-                  title: 'Sub1',
-                  mdIcon: 'light_mode',
-                },
-                {
-                  id: 'sub2',
-                  title: 'sub2',
-                  mdIcon: 'dark_mode',
-                },
-              ],
-            },
-          ],
-        },
-      ];
+//       ninja.data = [
+//         //
+//         {
+//           id: 'Search Projects',
+//           title: 'Search projects...',
+//           hotkey: 'Shift+N,Shift+S',
+//           icon: `<svg xmlns="http://www.w3.org/2000/svg" class="ninja-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+//   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+// </svg>`,
+//           section: 'Projects',
+//           content: "My projects"
+//         },
+//         //
+//         {
+//           id: 'Theme',
+//           title: 'Change theme...',
+//           mdIcon: 'desktop_windows',
+//           children: [
+//             {
+//               id: 'Light Theme',
+//               title: 'Change theme to Light',
+//               mdIcon: 'light_mode',
+//             },
+//             {
+//               id: 'Dark Theme',
+//               title: 'Change theme to Dark',
+//               mdIcon: 'dark_mode',
+//               keywords: 'lol',
+//             },
+//             {
+//               id: 'System Theme',
+//               title: 'Change theme to System',
+//               mdIcon: 'desktop_windows',
+//               children: [
+//                 {
+//                   id: 'sub1',
+//                   title: 'Sub1',
+//                   mdIcon: 'light_mode',
+//                 },
+//                 {
+//                   id: 'sub2',
+//                   title: 'sub2',
+//                   mdIcon: 'dark_mode',
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       ];
+
+      ninja.data = [{
+        id: "Theme",
+        title: "Theme",
+        children: [
+          {
+            id: "theme-light",
+            icon: "<sl-icon name='sun'></sl-icon>",
+            title: "Light Mode",
+            handler () {
+              window.applyTheme("light");
+            }
+          },
+          {
+            id: "theme-dark",
+            icon: "<sl-icon name='moon'></sl-icon>",
+            title: "Dark Mode",
+            handler () {
+              window.applyTheme("dark");
+            }
+          },
+          {
+            id: "theme-system",
+            icon: "<sl-icon name='display'></sl-icon>",
+            title: "System",
+            handler () {
+              window.applyTheme("system");
+            }
+          },
+        ]
+      }]
+
+        ninja.data = [
+          ...ninja.data,
+          {
+            id: "other-thing",
+            title: "Thing"
+          }
+        ]
       // ninja.data = [
       // {
       //   id: 'Theme',
