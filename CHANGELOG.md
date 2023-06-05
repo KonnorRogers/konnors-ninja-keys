@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.8.1
+
+fix: check if `match` is a function on matchers.
+
 ## 1.8.0
 
 - fix: issue with RegExp and using `\` and `/` in searches.
