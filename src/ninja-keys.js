@@ -575,7 +575,7 @@ export class NinjaKeys extends BaseElement {
       const sanitizedSearch = this._search.replace(/\\/g, "\\\\")
       const regex = new RegExp(sanitizedSearch, 'gi');
       const matcher =
-        action.title?.match(regex) || action.keywords?.match(regex) || action.content?.match(regex);
+        action.title?.match?.(regex) || action.keywords?.match?.(regex) || action.content?.match?.(regex);
 
       if (!this.currentRoot && this._search) {
         // global search for items on root
