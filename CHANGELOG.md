@@ -5,6 +5,8 @@
 - fix: issue with RegExp and using `\` and `/` in searches.
 - fix: issue with extending ninja-keys and breadcrumbs not appearing.
 - fix: overflowing titles now have a max-width of 100% to truncate.
+- feat: expose `currentRoot` which refers to a `string` id
+- fix: issues with cached breadcrumbs. Prefer `getBreadcrumbs` over `breadcrumbs`
 
 ## 1.7.0
 

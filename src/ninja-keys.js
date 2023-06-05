@@ -526,8 +526,10 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
+   * @deprecated
    * This is a convenience function to align with the previous API.
    * Don't use this to pass to templates because I've found it create inconsistent behavior.
+   * Use `this.getBreadcrumbs()` instead.
    */
   get breadcrumbs () {
     return this.getBreadcrumbs()
