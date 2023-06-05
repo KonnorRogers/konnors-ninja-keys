@@ -3,6 +3,7 @@
 ## 1.8.0
 
 - fix: issue with RegExp and using `\` and `/` in searches.
+- fix: issue with extending ninja-keys and breadcrumbs not appearing.
 
 ## 1.7.0
 
