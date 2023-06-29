@@ -82,7 +82,6 @@ export class NinjaAction extends BaseElement {
       }
 
       .ninja-title {
-        flex-shrink: 0.01;
         flex-grow: 1;
         font-size: 0.8125em;
         white-space: nowrap;
@@ -283,14 +282,14 @@ export class NinjaAction extends BaseElement {
     }
 
     return html`
-        <div class="ninja-action__header">
+        <div part="ninja-action__header" class="ninja-action__header">
           ${icon}
-          <div class="ninja-title">${this.action.title}</div>
+          <div part="ninja-action__title" class="ninja-title">${this.action.title}</div>
           ${this.renderHotkey()}
         </div>
 
         ${when(this.action.content, () =>
-          html`<div class="ninja-action__content">
+          html`<div part="ninja-action__content" class="ninja-action__content">
             ${this.action.content}
           </div>`
         )}
@@ -304,11 +303,11 @@ export class NinjaAction extends BaseElement {
         hotkey = this.action.hotkey.split(',').map((hotkeys) => {
           const keys = hotkeys.split('+');
           const joinedKeys = html`${join(
-            keys.map((key) => html`<kbd>${key}</kbd>`),
+            keys.map((key) => html`<kbd part="ninja-hotkey">${key}</kbd>`),
             '+'
           )}`;
 
-          return html`<div class="ninja-hotkey ninja-hotkeys">
+          return html`<div part="ninja-hotkeys" class="ninja-hotkey ninja-hotkeys">
             ${joinedKeys}
           </div>`;
         });
@@ -316,9 +315,9 @@ export class NinjaAction extends BaseElement {
         hotkey = this.action.hotkey.split(',').map((hotkeys) => {
           const keys = hotkeys.split('+');
           const keyElements = keys.map(
-            (key) => html`<kbd class="ninja-hotkey">${key}</kbd>`
+            (key) => html`<kbd part="ninja-hotkey" class="ninja-hotkey">${key}</kbd>`
           );
-          return html`<kbd class="ninja-hotkeys">${keyElements}</kbd>`;
+          return html`<kbd part="ninja-hotkeys" class="ninja-hotkeys">${keyElements}</kbd>`;
         });
       }
     }

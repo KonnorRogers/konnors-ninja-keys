@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.9.0
+
+feat: add additional parts to `ninja-action`
+fix: `flex-shrink: 0.01` causing text-overflow to behave unexpectedly.
+
 ## 1.8.1
 
 fix: check if `match` is a function on matchers.
