@@ -1,9 +1,13 @@
 # Change Log
 
+## 1.9.1
+
+fix: Change the search input `autocomplete="none"` to `autocomplete="off"`
+
 ## 1.9.0
 
 feat: add additional parts to `ninja-action`
-fix: `flex-shrink: 0.01` causing text-overflow to behave unexpectedly.
+fix: removed `flex-shrink: 0.01` on `ninja-action` causing text-overflow to behave unexpectedly.
 
 ## 1.8.1
 

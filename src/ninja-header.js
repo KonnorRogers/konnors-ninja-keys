@@ -170,7 +170,7 @@ export class NinjaHeader extends BaseElement {
           type="text"
           id="search"
           spellcheck="false"
-          autocomplete="none"
+          autocomplete="off"
           @input="${this._handleInput}"
           ${ref(this._inputRef)}
           placeholder="${this.placeholder}"
