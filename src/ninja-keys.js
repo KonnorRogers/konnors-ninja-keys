@@ -416,7 +416,7 @@ export class NinjaKeys extends BaseElement {
     const disallowedTags = ['input', 'textarea']
 
     return composedPath.some((el) => {
-      if (el?.getAttribute("contenteditable") === "true") {
+      if (el?.getAttribute?.("contenteditable") === "true") {
         return true
       }
 
