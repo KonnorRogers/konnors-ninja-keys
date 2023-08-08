@@ -1,17 +1,21 @@
 # Change Log
 
+## 1.9.2
+
+- fix: Check if the user is inside an input or a contenteditable field before opening.
+
 ## 1.9.1
 
-fix: Change the search input `autocomplete="none"` to `autocomplete="off"`
+- fix: Change the search input `autocomplete="none"` to `autocomplete="off"`
 
 ## 1.9.0
 
-feat: add additional parts to `ninja-action`
-fix: removed `flex-shrink: 0.01` on `ninja-action` causing text-overflow to behave unexpectedly.
+- feat: add additional parts to `ninja-action`
+- fix: removed `flex-shrink: 0.01` on `ninja-action` causing text-overflow to behave unexpectedly.
 
 ## 1.8.1
 
-fix: check if `match` is a function on matchers.
+- fix: check if `match` is a function on matchers.
 
 ## 1.8.0
 

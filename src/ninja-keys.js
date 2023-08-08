@@ -403,11 +403,37 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
+   * @param {Event} event
+   */
+  shouldNotOpen (event) {
+    /**
+      * @type {Element[]}
+      */
+    // @ts-expect-error
+    const composedPath = event.composedPath()
+
+    const disallowedTags = ['input', 'textarea']
+
+    return composedPath.some((el) => {
+      if (el.getAttribute("contenteditable") === "true") {
+        return true
+      }
+
+      return disallowedTags.includes(el?.tagName?.toLowerCase())
+    })
+  }
+
+
+  /**
    * @private
    */
   _registerInternalHotkeys() {
     if (this.openHotkey) {
       hotkeys(this.openHotkey, (event) => {
+        if (this._shouldNotOpen(event)) {
+          return
+        }
+
         event.preventDefault();
         this.visible ? this.close() : this.open();
       });
