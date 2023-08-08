@@ -404,6 +404,7 @@ export class NinjaKeys extends BaseElement {
 
   /**
    * @param {Event} event
+   * @return {Boolean}
    */
   shouldNotOpen (event) {
     /**
@@ -430,7 +431,7 @@ export class NinjaKeys extends BaseElement {
   _registerInternalHotkeys() {
     if (this.openHotkey) {
       hotkeys(this.openHotkey, (event) => {
-        if (this._shouldNotOpen(event)) {
+        if (this.shouldNotOpen(event)) {
           return
         }
 
