@@ -684,9 +684,10 @@ export class NinjaKeys extends BaseElement {
     });
 
     return html`
-      <div @click=${this._overlayClick} class=${classMap(menuClasses)}>
-        <div class=${classMap(classes)} @animationend=${this._onTransitionEnd}>
+      <div part="modal-overlay" @click=${this._overlayClick} class=${classMap(menuClasses)}>
+        <div part="modal-content" class=${classMap(classes)} @animationend=${this._onTransitionEnd}>
           <ninja-header
+            part="modal-header"
             exportparts="ninja-input,ninja-input-wrapper"
             ${ref(this._headerRef)}
             .placeholder=${this.placeholder}
@@ -699,7 +700,7 @@ export class NinjaKeys extends BaseElement {
             @close=${this.close}
           >
           </ninja-header>
-          <div class="modal-body">
+          <div part="modal-body" class="modal-body">
             <div
               id="actions-list"
               class="actions-list"

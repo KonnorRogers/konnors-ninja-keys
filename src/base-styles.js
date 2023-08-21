@@ -116,8 +116,8 @@ export const baseStyles = css`
     top: var(--ninja-top);
     margin: auto;
     padding: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: minmax(0, auto) minmax(0, 1fr);
     flex-shrink: 1;
     -webkit-box-flex: 1;
     flex-grow: 1;
@@ -128,6 +128,16 @@ export const baseStyles = css`
     box-shadow: var(--ninja-modal-shadow);
     max-width: var(--ninja-width);
     overflow: hidden;
+
+    /* Fallback for non-dvh browsers */
+    max-height: calc(100vh - var(--ninja-top));
+    max-height: calc(100dvh - var(--ninja-top));
+  }
+
+  .modal-body {
+    height: 100%;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
   }
 
   .bump {

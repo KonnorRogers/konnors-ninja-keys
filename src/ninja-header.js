@@ -158,7 +158,12 @@ export class NinjaHeader extends BaseElement {
         >
           ${this.breadcrumbHome}
         </button>
+
         ${itemTemplates}
+
+        <button class="breadcrumb" @click=${this.dispatchEscKey}>
+          Close
+        </button>
       </div>`;
     }
 
@@ -199,6 +204,15 @@ export class NinjaHeader extends BaseElement {
     if (this._inputRef.value) {
       this._inputRef.value.value = value;
     }
+  }
+
+  // This is kinda hacky, but its how we tell it to close us.
+  dispatchEscKey () {
+    this.dispatchEvent(new KeyboardEvent("keydown", {
+      keyCode: 27, which: 27, code: "Escape", key: "Escape",
+      altKey: false, metaKey: false, ctrlKey: false, shiftKey: false,
+      bubbles: true, composed: true, cancelable: false
+    }))
   }
 
   focusSearch() {
