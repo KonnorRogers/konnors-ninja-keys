@@ -12,7 +12,6 @@ import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
-
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error
 const hotkeys = _hotkeys
@@ -464,6 +463,7 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (this.navigationDownHotkey) {
+
       hotkeys(this.navigationDownHotkey, (event) => {
         if (!this.visible) {
           return;
@@ -476,6 +476,7 @@ export class NinjaKeys extends BaseElement {
         }
       });
     }
+
 
     if (this.navigationUpHotkey) {
       hotkeys(this.navigationUpHotkey, (event) => {
@@ -684,9 +685,10 @@ export class NinjaKeys extends BaseElement {
     });
 
     return html`
-      <div @click=${this._overlayClick} class=${classMap(menuClasses)}>
-        <div class=${classMap(classes)} @animationend=${this._onTransitionEnd}>
+      <div part="modal-overlay" @click=${this._overlayClick} class=${classMap(menuClasses)}>
+        <div part="modal-content" class=${classMap(classes)} @animationend=${this._onTransitionEnd}>
           <ninja-header
+            part="modal-header"
             exportparts="ninja-input,ninja-input-wrapper"
             ${ref(this._headerRef)}
             .placeholder=${this.placeholder}
@@ -699,7 +701,7 @@ export class NinjaKeys extends BaseElement {
             @close=${this.close}
           >
           </ninja-header>
-          <div class="modal-body">
+          <div part="modal-body" class="modal-body">
             <div
               id="actions-list"
               class="actions-list"

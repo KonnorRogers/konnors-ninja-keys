@@ -34,7 +34,7 @@ export class NinjaHeader extends BaseElement {
         color: var(--ninja-placeholder-color);
       }
       .breadcrumb-list {
-        padding: 1em 4em 0 1em;
+        padding: 1em 1em 0 1em;
         display: flex;
         flex-direction: row;
         align-items: stretch;
@@ -49,11 +49,24 @@ export class NinjaHeader extends BaseElement {
         border-radius: var(--ninja-key-border-radius);
         border: 0;
         cursor: pointer;
-        padding: 0.1em 0.5em;
+        padding: 0.4em 0.6em;
         color: var(--ninja-secondary-text-color);
         margin-right: 0.5em;
-        outline: none;
+        outline: transparent;
         font-family: var(--ninja-font-family);
+      }
+
+      .breadcrumb:focus-visible {
+      }
+
+      .breadcrumb:last-child {
+        margin-inline-start: auto;
+      }
+
+      .breadcrumb--close {
+        color: var(--ninja-accent-color);
+        background-color: transparent;
+        text-decoration: underline;
       }
 
       .search-wrapper {
@@ -141,7 +154,7 @@ export class NinjaHeader extends BaseElement {
         for (const breadcrumb of this.breadcrumbs) {
           itemTemplates.push(
             html`<button
-              tabindex="-1"
+              type="button"
               @click=${() => this.selectParent(breadcrumb)}
               class="breadcrumb"
             >
@@ -152,13 +165,18 @@ export class NinjaHeader extends BaseElement {
       }
       breadcrumbs = html`<div class="breadcrumb-list" id="breadcrumb-list">
         <button
-          tabindex="-1"
+          type="button"
           @click=${() => this.selectParent()}
           class="breadcrumb"
         >
           ${this.breadcrumbHome}
         </button>
+
         ${itemTemplates}
+
+        <button type="button" class="breadcrumb breadcrumb--close" @click=${this.dispatchEscKey}>
+          Cancel
+        </button>
       </div>`;
     }
 
@@ -199,6 +217,15 @@ export class NinjaHeader extends BaseElement {
     if (this._inputRef.value) {
       this._inputRef.value.value = value;
     }
+  }
+
+  // This is kinda hacky, but its how we tell it to close us.
+  dispatchEscKey () {
+    this.dispatchEvent(new KeyboardEvent("keydown", {
+      keyCode: 27, which: 27, code: "Escape", key: "Escape",
+      altKey: false, metaKey: false, ctrlKey: false, shiftKey: false,
+      bubbles: true, composed: true, cancelable: false
+    }))
   }
 
   focusSearch() {

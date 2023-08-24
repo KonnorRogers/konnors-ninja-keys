@@ -10,6 +10,7 @@
     "inlineSources": true,
     "outDir": "./types",
     "allowJs": true,
+    "checkJs": true,
     "rootDir": "./src",
     "strict": true,
     "skipLibCheck": true,

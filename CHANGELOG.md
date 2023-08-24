@@ -1,5 +1,18 @@
 # Change Log
 
+## 2.0.0 (Not released)
+
+- feat: remove going through `list items` with the `tab` key. Instead Tab now traps between input and breadcrumbs.
+
+## 1.10.0
+
+- feat: expose all parts for modal, modal-content etc.
+- feat: Add a close button to breadcrumbs area for mobile users with full-height modal.
+- feat: remove `tabindex="-1"` from breadcrumbs. Will work in a future version to let it be keyboard tabbable.
+
+- fix: support full-height dialogs by moving from flex -> grid for modal-content
+- fix: the default `navigationDownHotkey` and `navigationUpHotkey` have removed `"tab"` as the default.
+
 ## 1.9.2
 
 - fix: Check if the user is inside an input or a contenteditable field before opening.
