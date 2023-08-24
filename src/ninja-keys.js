@@ -12,7 +12,6 @@ import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
-
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error
 const hotkeys = _hotkeys
@@ -464,6 +463,7 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (this.navigationDownHotkey) {
+
       hotkeys(this.navigationDownHotkey, (event) => {
         if (!this.visible) {
           return;
@@ -476,6 +476,7 @@ export class NinjaKeys extends BaseElement {
         }
       });
     }
+
 
     if (this.navigationUpHotkey) {
       hotkeys(this.navigationUpHotkey, (event) => {
