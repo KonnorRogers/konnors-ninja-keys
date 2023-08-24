@@ -386,6 +386,21 @@ ninja-keys {
 </ninja-keys>
 ```
 
+## Creating a full-height / full-width modal.
+
+```css
+ninja-keys {
+  --ninja-top: 0px;
+  --ninja-width: 100vw;
+  --ninja-actions-height: 100%;
+}
+
+ninja-keys::part(modal-content) {
+  height: 100%;
+  border-radius: 0px;
+}
+```
+
 ## Dev Server
 
 ```bash
