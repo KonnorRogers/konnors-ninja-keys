@@ -3,6 +3,7 @@
 ## 2.0.0 (Not released)
 
 - feat: remove going through `list items` with the `tab` key. Instead Tab now traps between input and breadcrumbs.
+- fix: Properly escape strings prior to calling `findMatches`: []() <https://github.com/ssleptsov/ninja-keys/pull/33>
 
 ## 1.10.0
 
