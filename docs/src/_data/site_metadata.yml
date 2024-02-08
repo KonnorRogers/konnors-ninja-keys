@@ -4,13 +4,13 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.metadata.myvariable }}.
 
-title: A collection of reusable mixins + helpers for working with form associated custom elements.
-logo: "Form Associated Helpers"
+title: Konnors Ninja Keys
+logo: "Ctrl+k made simple"
 slogan: >-
-  A collection of reusable mixins + helpers for working with form associated custom elements.
+  A fork of ninja-keys, designed to make ctrl+k easy.
 email: konnor5456@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  A collection of reusable mixins + helpers for working with form associated custom elements.
-github_url: https://github.com/konnorrogers/form-associated-helpers
+  A fork of ninja-keys, designed to make ctrl+k easy.
+github_url: https://github.com/konnorrogers/konnors-ninja-keys
 default_branch: main
 doc_location: docs/src
