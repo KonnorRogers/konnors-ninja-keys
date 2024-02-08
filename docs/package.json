@@ -1,24 +1,40 @@
 {
-  "name": "demo",
+  "name": "docs",
   "version": "1.0.0",
-  "description": "Ninja Keys Demo",
-  "main": "tailwind.config.js",
+  "private": true,
   "scripts": {
-    "tailwind": "tailwindcss build tailwind.css -o style.css",
-    "autoprefixer": "postcss style.css -u autoprefixer --no-map -o style.css",
-    "minify": "postcss style.css -u cssnano --no-map -o style.min.css",
-    "build": "npm run tailwind && npm run autoprefixer",
-    "production": "npm run tailwind && npm run autoprefixer && npm run minify"
+    "start": "overmind start -f Procfile.dev",
+    "build": "NODE_ENV=\"production\" pnpm run esbuild && BRIDGETOWN_ENV=\"production\" bundle exec bridgetown build --skip-frontend",
+    "esbuild": "node esbuild.config.js --minify",
+    "esbuild-dev": "node esbuild.config.js --watch"
   },
-  "keywords": [],
-  "author": {
-    "name": "Sergei Sleptosv"
-  },
-  "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "10.3.7",
-    "cssnano": "5.0.8",
-    "postcss-cli": "9.0.1",
-    "tailwindcss": "2.2.17"
+    "asset-mapper-esbuild": "^1.0.1",
+    "esbuild": "^0.19.3",
+    "esbuild-plugin-copy": "^2.1.1",
+    "glob": "^8.0.3",
+    "linkifyjs": "^4.1.1",
+    "postcss": "^8.4.19",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.1.0",
+    "postcss-load-config": "^3.1.4",
+    "postcss-preset-env": "^7.8.3",
+    "read-cache": "^1.0.0"
+  },
+  "dependencies": {
+    "@github/clipboard-copy-element": "^1.2.1",
+    "@hotwired/stimulus": "^3.2.1",
+    "@hotwired/turbo": "^7.3.0",
+    "konnors-ninja-keys": "link:../",
+    "@konnorr/bridgetown-quick-search": "^3.8.0",
+    "@shoelace-style/shoelace": "^2.13.1",
+    "light-pen": "^2.2.0",
+    "lit": "^2.8.0",
+    "web-component-lazy-loader": "^1.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "konnors-ninja-keys": "link:../"
+    }
   }
 }

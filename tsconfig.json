@@ -1,27 +1,25 @@
 {
+  "include": ["src/**/*.js", "internal/**/*.js", "types/**/*.d.ts"],
   "compilerOptions": {
-    "target": "es2019",
-    "module": "es2020",
-    "lib": ["es2020", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "target": "ESNext",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "lib": ["ESNext", "DOM"],
+    "useDefineForClassFields": false,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
-    "outDir": "./types",
     "allowJs": true,
     "checkJs": true,
-    "rootDir": "./src",
-    "strict": true,
-    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "moduleResolution": "nodenext",
-    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
@@ -31,7 +29,5 @@
         "strict": true
       }
     ]
-  },
-  "include": ["src/**/*.js", "src/**/*.ts"],
-  "exclude": []
+  }
 }
