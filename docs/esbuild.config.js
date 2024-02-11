@@ -43,7 +43,6 @@ const esbuildOptions = {
   entryPoints: {
     "javascript/index": "frontend/javascript/index.js",
     "javascript/defer": "frontend/javascript/defer.js",
-    "textarea-component": "../examples/textarea-component.js",
     ...entries
   },
   define: {

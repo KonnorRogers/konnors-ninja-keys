@@ -13,7 +13,7 @@ import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
 /** @type {import("hotkeys-js").Hotkeys} */
-// @ts-expect-error
+// @ts-expect-error Gets proper types for hotkeys.
 const hotkeys = _hotkeys
 
 /** @typedef {import("./index.js").INinjaAction} INinjaAction */
@@ -409,7 +409,7 @@ export class NinjaKeys extends BaseElement {
     /**
       * @type {Element[]}
       */
-    // @ts-expect-error
+    // @ts-expect-error EventTarget sucks.
     const composedPath = event.composedPath()
 
     const disallowedTags = ['input', 'textarea']
@@ -543,7 +543,7 @@ export class NinjaKeys extends BaseElement {
     this._selected = index;
 
     /** @type {import("./index.js").NinjaAction} */
-    // @ts-expect-error
+    // @ts-expect-error we know its a ninja action.
     const target = $event.target;
     target.ensureInView();
   }

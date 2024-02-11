@@ -1,9 +1,13 @@
 # Change Log
 
-## 2.0.0 (Not released)
+## Planned Changes (Not released)
 
-- feat: remove going through `list items` with the `tab` key. Instead Tab now traps between input and breadcrumbs.
-- fix: Properly escape strings prior to calling `findMatches`: []() <https://github.com/ssleptsov/ninja-keys/pull/33>
+- feat: remove going through `listItems` with the `tab` key. Instead Tab now traps between input and breadcrumbs.
+- feat: change from a custom dialog to `<dialog>`
+
+# Next
+
+- fix: Properly escape strings prior to calling `findMatches` <https://github.com/ssleptsov/ninja-keys/pull/33>
 
 ## 1.10.0
 
