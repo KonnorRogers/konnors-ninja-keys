@@ -1,4 +1,0 @@
----
-title: Guides
-layout: index
----
