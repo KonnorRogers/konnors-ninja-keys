@@ -2,6 +2,12 @@ baseurl: "" # OPTIONAL: the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. https://example.com
 destination: output
 
+additional_watch_paths: [
+  "../CHANGELOG.md",
+  "../../CHANGELOG.md",
+  "../../../CHANGELOG.md"
+  ]
+
 development:
   url: "localhost:4000"
 production:
