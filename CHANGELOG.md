@@ -1,4 +1,4 @@
-## Next
+## 1.10.1 02/15/2024
 
 - fix: Properly escape strings prior to calling `findMatches` <https://github.com/ssleptsov/ninja-keys/pull/33>
 
