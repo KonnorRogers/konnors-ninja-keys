@@ -64,6 +64,9 @@ devDependencies:
   eslint:
     specifier: ^7.32.0
     version: 7.32.0
+  konnors-ninja-keys:
+    specifier: link:./
+    version: 'link:'
   lit-analyzer:
     specifier: ^1.1.10
     version: 1.2.1

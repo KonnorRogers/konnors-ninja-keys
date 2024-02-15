@@ -229,7 +229,11 @@ export class NinjaHeader extends BaseElement {
   }
 
   focusSearch() {
-    requestAnimationFrame(() => this._inputRef.value?.focus());
+    requestAnimationFrame(() => {
+      if (this._inputRef && this._inputRef.value) {
+        this._inputRef.value.focus()
+      }
+    });
   }
 
   /**

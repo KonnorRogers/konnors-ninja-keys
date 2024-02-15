@@ -1,0 +1,16 @@
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.metadata.title }}, {{ site.metadata.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.metadata.myvariable }}.
+
+title: Konnors Ninja Keys
+logo: "Ctrl+k made simple"
+slogan: >-
+  A fork of ninja-keys, designed to make ctrl+k easy.
+email: konnor5456@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  A fork of ninja-keys, designed to make ctrl+k easy.
+github_url: https://github.com/konnorrogers/konnors-ninja-keys
+default_branch: main
+doc_location: docs/src

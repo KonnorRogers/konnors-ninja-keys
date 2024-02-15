@@ -13,7 +13,7 @@ import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
 /** @type {import("hotkeys-js").Hotkeys} */
-// @ts-expect-error
+// @ts-expect-error Gets proper types for hotkeys.
 const hotkeys = _hotkeys
 
 /** @typedef {import("./index.js").INinjaAction} INinjaAction */
@@ -409,7 +409,7 @@ export class NinjaKeys extends BaseElement {
     /**
       * @type {Element[]}
       */
-    // @ts-expect-error
+    // @ts-expect-error EventTarget sucks.
     const composedPath = event.composedPath()
 
     const disallowedTags = ['input', 'textarea']
@@ -543,7 +543,7 @@ export class NinjaKeys extends BaseElement {
     this._selected = index;
 
     /** @type {import("./index.js").NinjaAction} */
-    // @ts-expect-error
+    // @ts-expect-error we know its a ninja action.
     const target = $event.target;
     target.ensureInView();
   }
@@ -592,6 +592,22 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
+   * @public
+   * Escapes invalid string sequences when calling `new RegExp(string)`. This is used for `findMatches`.
+   * @see {@link https://github.com/ssleptsov/ninja-keys/pull/33}
+   * @param {string} str
+   */
+  stringToRegExp (str) {
+    // https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
+    return new RegExp(
+      str
+        .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+        .replace(/-/g, '\\x2d'),
+      'gi'
+    )
+  }
+
+  /**
    * Iterates over flatData to find a match. Override this if you want to implement your own matcher.
    * If you're using search from a different place and adding / removing results, just return
    * the flatData.
@@ -600,8 +616,7 @@ export class NinjaKeys extends BaseElement {
   findMatches (flatData) {
     return flatData.filter((action) => {
       // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
-      const sanitizedSearch = this._search.replace(/\\/g, "\\\\")
-      const regex = new RegExp(sanitizedSearch, 'gi');
+      const regex = this.stringToRegExp(this._search);
       const matcher =
         action.title?.match?.(regex) || action.keywords?.match?.(regex) || action.content?.match?.(regex);
 
