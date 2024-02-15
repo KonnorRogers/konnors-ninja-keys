@@ -1,0 +1,25 @@
+/* Tokens */
+@import "./tokens/_layout.css";
+@import "./tokens/_typography.css";
+
+@import "./_normalize.css";
+@import "./_components.css";
+@import "./_content.css";
+@import "./_layout.css";
+@import "./_overrides.css";
+
+light-preview::part(base) {
+  grid-template-rows: minmax(0, 1fr) minmax(0, auto) minmax(0, auto);
+  min-height: inherit;
+}
+
+light-preview::part(preview) {
+  min-height: 100%;
+  max-height: 100%;
+  width: 100%;
+}
+
+light-preview::part(iframe) {
+  min-height: 100%;
+  max-height: 100%;
+}

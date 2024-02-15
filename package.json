@@ -1,6 +1,6 @@
 {
   "name": "konnors-ninja-keys",
-  "version": "1.9.5",
+  "version": "1.10.0",
   "description": "Konnors Ninja Keys",
   "main": "src/ninja-keys.js",
   "module": "src/ninja-keys.js",
@@ -9,23 +9,25 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "import": "./src/index.js",
-      "types": "./src/index.d.ts"
+      "import": "./src/index.js"
     },
     "./ninja-keys.js": {
-      "import": "./src/ninja-keys.js",
-      "types": "./types/ninja-keys.d.ts"
+      "import": "./src/ninja-keys.js"
     },
     "./ninja-header.js": {
-      "import": "./src/ninja-header.js",
-      "types": "./types/ninja-header.d.ts"
+      "import": "./src/ninja-header.js"
     }
   },
   "scripts": {
-    "start": "npm run serve",
-    "build": "tsc",
+    "start:docs": "cd docs && bin/bridgetown start",
+    "setup": "pnpm install && cd docs && pnpm install && bundle install",
+    "build:docs": "cd docs && pnpm run build && cd - && pnpm run build:api",
+    "build:api": "typedoc --out ./docs/output/references/api/ ./exports/**/*.js",
+    "build": "npm run clean && tsc && npm run build:cem",
+    "watch:cem": "custom-elements-manifest analyze --litelement --watch",
+    "build:cem": "custom-elements-manifest analyze --litelement",
+    "clean": "rimraf -g \"./src/**/*.d.ts\" \"./internal/**/*.d.ts\"",
     "build:watch": "tsc --watch",
-    "clean": "rimraf dist/ types/",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
@@ -33,7 +35,6 @@
     "analyze": "cem analyze --litelement --globs \"src/**/*.ts\"",
     "analyze:watch": "cem analyze --litelement --globs \"src/**/*.ts\" --watch",
     "serve": "wds --root-dir=. --node-resolve --watch",
-    "demo": "tsc && rollup -c --file docs/ninja-keys.bundled.js && wds --root-dir=. --open=./docs/ --node-resolve --watch",
     "serve:prod": "MODE=prod npm run serve",
     "bundle": "npm run build && rollup -c --file dist/ninja-keys.bundled.js",
     "checksize": "rollup -c ; cat dist/ninja-keys.bundled.js | gzip -9 | wc -c ; rm dist/ninja-keys.bundled.js",
@@ -103,6 +104,7 @@
     "clean-publish": "3.4.2",
     "eslint": "^7.32.0",
     "lit-analyzer": "^1.1.10",
+    "konnors-ninja-keys": "link:./",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.28.2",

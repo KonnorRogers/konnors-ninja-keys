@@ -1,8 +1,6 @@
-# Change Log
+## 1.10.1 02/15/2024
 
-## 2.0.0 (Not released)
-
-- feat: remove going through `list items` with the `tab` key. Instead Tab now traps between input and breadcrumbs.
+- fix: Properly escape strings prior to calling `findMatches` <https://github.com/ssleptsov/ninja-keys/pull/33> <https://github.com/KonnorRogers/konnors-ninja-keys/pull/9>
 
 ## 1.10.0
 

@@ -1,32 +1,70 @@
-# 🚀 Setup Tailwind CSS in 20 seconds without node_modules
+# Bridgetown Website README
 
-### Based on my [article](https://dev.to/tomaszbujnowicz/setup-tailwind-css-in-20-seconds-without-nodemodules-1b83)
+Welcome to your new Bridgetown website! You can update this README file to provide additional context and setup information for yourself or other contributors.
 
-Tired of running `npm install / yarn` and seeing tons of files installed in your node_modules just to process your Tailwind CSS file? I got you, have a look at this minimal approach.
+## Table of Contents
 
----
+- [Prerequisites](#prerequisites)
+- [Install](#install)
+- [Development](#development)
+- [Commands](#commands)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
 
-### Requirements
+## Prerequisites
 
-Make sure all dependencies have been installed before moving on:
+- [GCC](https://gcc.gnu.org/install/)
+- [Make](https://www.gnu.org/software/make/)
+- [Ruby](https://www.ruby-lang.org/en/downloads/)
+  - `>= 2.7`
+- [Bridgetown Gem](https://rubygems.org/gems/bridgetown)
+  - `gem install bridgetown -N`
+- [Node](https://nodejs.org)
+  - `>= 12`
+- [Yarn](https://yarnpkg.com)
 
-- [yarn](https://yarnpkg.com/lang/en/) or [npm](https://www.npmjs.com/get-npm)
-- [Node.js](https://nodejs.org/en/download/)
+## Install
 
-### Quick start: Installation
+```sh
+cd bridgetown-site-folder
+bundle install && yarn install
+```
+> Learn more: [Bridgetown Getting Started Documentation](https://www.bridgetownrb.com/docs/).
 
-Clone this repository and run
+## Development
 
-- `npm install -g postcss-cli autoprefixer cssnano` to install dependencies globally
+To start your site in development mode, run `bin/bridgetown start` and navigate to [localhost:4000](https://localhost:4000/)!
 
-### Tasks
+Use a [theme](https://github.com/topics/bridgetown-theme) or add some [plugins](https://www.bridgetownrb.com/plugins/) to get started quickly.
 
-| Task Name            | Description                                               |
-| :------------------- | :-------------------------------------------------------- |
-| `npm run tailwind`   | Basic usage: process your CSS (development)               |
-| `npm run build`      | Process your CSS + Autoprefixer (development)             |
-| `npm run production` | Process your CSS + Autoprefixer + Minify CSS (production) |
+### Commands
 
-## Copyright and license
+```sh
+# running locally
+bin/bridgetown start
 
-Copyright 2020 Tomasz Bujnowicz under the [MIT license](http://opensource.org/licenses/MIT).
+# build & deploy to production
+bin/bridgetown deploy
+
+# load the site up within a Ruby console (IRB)
+bin/bridgetown console
+```
+
+> Learn more: [Bridgetown CLI Documentation](https://www.bridgetownrb.com/docs/command-line-usage)
+
+## Deployment
+
+You can deploy Bridgetown sites on hosts like Render or Vercel as well as traditional web servers by simply building and copying the output folder to your HTML root.
+
+> Read the [Bridgetown Deployment Documentation](https://www.bridgetownrb.com/docs/deployment) for more information.
+
+## Contributing
+
+If repo is on GitHub:
+
+1. Fork it
+2. Clone the fork using `git clone` to your local development machine.
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create a new Pull Request
