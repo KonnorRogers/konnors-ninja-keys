@@ -8,6 +8,7 @@ import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import * as fzy from "fzy.js"
 
 export class NinjaAction extends BaseElement {
   /**
@@ -266,6 +267,14 @@ export class NinjaAction extends BaseElement {
       </a>
     `
   }
+
+  // renderWithHighlight (query, s) {
+  //   let padded = ""
+	 //  var p = fzy.positions(query, s);
+	 //  for(var i = 0; i < query.length; i++) {
+		//   padded = padded.padEnd(p[i], ' ') + query[i];
+	 //  }
+  // }
 
   renderBody () {
     let icon;
