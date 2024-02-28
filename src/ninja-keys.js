@@ -35,31 +35,55 @@ list = list.sort((a,b) => fzy.score(query, b) - fzy.score(query, a));
 list.slice(0, 10);
 
 // Print out our results with matched positions
-list.forEach((s) => {
-	var highlightedString = s
-	var p = fzy.positions(query, s);
+function renderHighlight(query, s) {
+  if (!fzy.hasMatch(query, s)) return `${s}`
 
-	p.forEach((currentLetterIndex, index) => {
-	  const nextLetterIndex = p[index + 1]
-	  const prevLetterIndex = p[index + 1]
+  const stringAry = s.split("")
+  const positions = fzy.positions(query, s);
 
-    // Look behind
-	  if (currentLetterIndex - 1 === prevLetterIndex) return
+  return renderPositionHighlights(positions, stringAry)
+}
 
-    // highlightedString = s.substring(0, currentLetterIndex - 1) + "<span>" + s.substring(currentLetterIndex) + s.substring(currentLetterIndex + 1, s.length)
+function renderPositionHighlights(positions, stringAry, prevLetters) {
+  const start = prevLetters || stringAry.slice(positions[0] - 1, positions[0])
 
+  let positionIndex = 0
+  let finalIndex = positionIndex
 
-    // Look ahead
-	  if (currentLetterIndex + 1 === nextLetterIndex) return
+  let matchedWord = stringAry[positions[positionIndex]]
 
-    // highlightedString = s.substring(0, currentLetterIndex - 1) + s.substring(currentLetterIndex) + "</span>" + s.substring(currentLetterIndex + 1, s.length)
+  while (true) {
+    let previousPosition = positions[positionIndex]
+    positionIndex++
+    const nextPosition = positions[positionIndex]
 
-	})
+    finalIndex = nextPosition
 
-	console.log(s);
-	console.log(highlightedString);
-	console.log("");
-});
+    if (nextPosition !== previousPosition + 1) {
+      break
+    }
+
+    if (stringAry[nextPosition] == undefined) {
+      break
+    }
+
+    matchedWord += stringAry[nextPosition]
+  }
+
+  const nextPositions = positions.slice(positionIndex)
+
+  prevLetters = stringAry.slice(positions[positionIndex - 1] + matchedWord.length, positions[positionIndex]).join("")
+
+  if (nextPositions.length === 0) {
+    const endStr = stringAry.slice(positions[positionIndex - 1] + 1).join("")
+    // All done. So we just render to end of string.
+    return `${start}<mark>${matchedWord}</mark>${endStr}`
+  }
+
+  return `${start}<mark>${matchedWord}</mark>${renderPositionHighlights(nextPositions, stringAry, prevLetters)}`
+}
+
+console.log(renderHighlight(query, list[0]))
 
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error Gets proper types for hotkeys.

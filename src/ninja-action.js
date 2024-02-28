@@ -276,6 +276,26 @@ export class NinjaAction extends BaseElement {
 	 //  }
   // }
 
+  renderMatch (query, s) {
+    const stringAry = s.split("")
+    var p = fzy.positions(query, s);
+
+    p.forEach((currentLetterIndex, index) => {
+      const nextLetterIndex = p[index + 1]
+      const prevLetterIndex = p[index - 1]
+
+      if (prevLetterIndex == null || currentLetterIndex - 1 !== prevLetterIndex) {
+      	stringAry[currentLetterIndex] = "<span part='matched-word'>" + stringAry[currentLetterIndex]
+      }
+
+      if (nextLetterIndex == null || currentLetterIndex + 1 !== nextLetterIndex) {
+      	stringAry[currentLetterIndex] = stringAry[currentLetterIndex] + "</span>"
+      }
+    })
+
+    return stringAry.join("")
+  }
+
   renderBody () {
     let icon;
     if (this.action.mdIcon) {
@@ -293,7 +313,7 @@ export class NinjaAction extends BaseElement {
     return html`
         <div part="ninja-action__header" class="ninja-action__header">
           ${icon}
-          <div part="ninja-action__title" class="ninja-title">${this.action.title}</div>
+          <div part="ninja-action__title" class="ninja-title">${html`${this.action.title}`}</div>
           ${this.renderHotkey()}
         </div>
 
