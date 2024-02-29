@@ -42,7 +42,8 @@
     "deploy:patch": "npm run clean && npm run build && npm version patch && clean-publish",
     "deploy:minor": "npm run clean && npm run build && npm version minor && clean-publish",
     "deploy:major": "npm run clean && npm run build && npm version major && clean-publish",
-    "deploy-test": "rimraf package && clean-publish --without-publish --temp-dir package"
+    "deploy-test": "rimraf package && clean-publish --without-publish --temp-dir package",
+    "test": "wtr"
   },
   "files": [
     "src",
@@ -106,6 +107,7 @@
     "eslint": "^7.32.0",
     "konnors-ninja-keys": "link:./",
     "lit-analyzer": "^1.1.10",
+    "playwright": "^1.42.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.28.2",

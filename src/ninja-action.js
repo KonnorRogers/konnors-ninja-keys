@@ -8,7 +8,7 @@ import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import * as fzy from "fzy.js"
+import { renderHighlight } from '../internal/fuzzy-highlight.js';
 
 export class NinjaAction extends BaseElement {
   /**
@@ -268,32 +268,12 @@ export class NinjaAction extends BaseElement {
     `
   }
 
-  // renderWithHighlight (query, s) {
-  //   let padded = ""
-	 //  var p = fzy.positions(query, s);
-	 //  for(var i = 0; i < query.length; i++) {
-		//   padded = padded.padEnd(p[i], ' ') + query[i];
-	 //  }
-  // }
-
+  /**
+   * @param {string} query
+   * @param {string} s
+   */
   renderMatch (query, s) {
-    const stringAry = s.split("")
-    var p = fzy.positions(query, s);
-
-    p.forEach((currentLetterIndex, index) => {
-      const nextLetterIndex = p[index + 1]
-      const prevLetterIndex = p[index - 1]
-
-      if (prevLetterIndex == null || currentLetterIndex - 1 !== prevLetterIndex) {
-      	stringAry[currentLetterIndex] = "<span part='matched-word'>" + stringAry[currentLetterIndex]
-      }
-
-      if (nextLetterIndex == null || currentLetterIndex + 1 !== nextLetterIndex) {
-      	stringAry[currentLetterIndex] = stringAry[currentLetterIndex] + "</span>"
-      }
-    })
-
-    return stringAry.join("")
+    return html(renderHighlight(query, s, (matchedStr) => html`<mark>${matchedStr}</mark>`))
   }
 
   renderBody () {
