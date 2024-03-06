@@ -12,6 +12,8 @@ import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
+import * as fzy from "fzy.js"
+import { escapeStringRegexp } from '../internal/escape-string-regexp.js';
 
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error Gets proper types for hotkeys.
@@ -71,6 +73,9 @@ export class NinjaKeys extends BaseElement {
         return true;
       },
     },
+    highlightMatches: {
+      type: Boolean, reflect: true, attribute: "highlight-matches"
+    },
 
     // State
     __selected__: {state: true},
@@ -111,6 +116,12 @@ export class NinjaKeys extends BaseElement {
     this.searchType = "regex"
 
     /**
+     * Whether or not to turn on match highlighting
+     * @type {boolean}
+     */
+    this.highlightMatches = false
+
+    /**
      * Maps to `aria-labelledby` for search input
      * @type {string}
      */
@@ -138,13 +149,13 @@ export class NinjaKeys extends BaseElement {
      * Navigation Up hotkey
      * @type {string}
      */
-    this.navigationUpHotkey = 'up,shift+tab';
+    this.navigationUpHotkey = 'up';
 
     /**
      * Navigation Down hotkey
      * @type {string}
      */
-    this.navigationDownHotkey = 'down,tab';
+    this.navigationDownHotkey = 'down';
 
     /**
      * Close hotkey
@@ -243,11 +254,14 @@ export class NinjaKeys extends BaseElement {
     this._bump = true;
     this.visible = true;
     const header = this._headerRef.value;
-    if (header) {
-      header.focusSearch();
-      header.expanded = true;
-      header.controls = 'actions-list';
-    }
+
+    requestAnimationFrame(() => {
+      if (header) {
+        header.focusSearch();
+        header.expanded = true;
+        header.controls = 'actions-list';
+      }
+    })
 
     if (this._actionMatches.length > 0) {
       this._selected = this._actionMatches[0];
@@ -470,7 +484,6 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (this.navigationDownHotkey) {
-
       hotkeys(this.navigationDownHotkey, (event) => {
         if (!this.visible) {
           return;
@@ -506,6 +519,7 @@ export class NinjaKeys extends BaseElement {
         }
 
         e.preventDefault();
+        this.visible = false
         this.close();
       });
     }
@@ -605,13 +619,7 @@ export class NinjaKeys extends BaseElement {
    * @param {string} str
    */
   stringToRegExp (str) {
-    // https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
-    return new RegExp(
-      str
-        .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-        .replace(/-/g, '\\x2d'),
-      'gi'
-    )
+    return escapeStringRegexp(str)
   }
 
   /**
@@ -635,18 +643,19 @@ export class NinjaKeys extends BaseElement {
         const regex = this.stringToRegExp(this._search);
 
         matcher = Boolean(
-          (!title || title && title.match(regex))
-          || (!keywords || keywords && keywords.match(regex))
-          || (!content || content && content.match(regex))
+          (title && title.match(regex))
+          || (keywords && keywords.match(regex))
+          || (content && content.match(regex))
         )
       }
 
       if (this.searchType === "fuzzy") {
         const search = this._search
+
         matcher = Boolean(
-          (!title || title && fzy.hasMatch(title, search))
-          || (!keywords || keywords && fzy.hasMatch(keywords, search))
-          || (!content || content && fzy.hasMatch(content, search))
+          (title && hasMatch(search, title))
+          || (keywords && hasMatch(search, keywords))
+          || (content && hasMatch(search, content))
         )
       }
 
@@ -706,8 +715,12 @@ export class NinjaKeys extends BaseElement {
             role="option"
             exportparts="ninja-action, ninja-selected,ninja-icon, ninja-hotkeys, ninja-hotkey, ninja-action__header, ninja-action__title, ninja-action__content"
             aria-selected=${live(action.id === this._selected?.id)}
+            .searchQuery=${this._search}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}
+            .searchType=${this.searchType}
+            .highlightMatches=${this.highlightMatches}
+            tabindex="-1"
             @mousemove=${(/** @type {MouseEvent} */ event) => {
               this._actionFocused(action, event);
             }}
@@ -757,11 +770,11 @@ export class NinjaKeys extends BaseElement {
               ${itemTemplates}
             </div>
 
-            <div class="visually-hidden">
-              <slot id="listbox-label" name="listbox-label">
+            <label id="listbox-label" class="visually-hidden">
+              <slot>
                 <span>${this.listboxLabel}</span>
               </slot>
-            </div>
+            </label>
             <slot name="footer"> ${footerHtml} </slot>
           </div>
         </div>
@@ -849,4 +862,13 @@ export class NinjaKeys extends BaseElement {
       }
     }
   }
+}
+
+/**
+ * @param {string} query
+ * @param {string} str
+ * @returns {boolean}
+ */
+function hasMatch (query, str) {
+  return [query, ...query.split(/\s+/)].some((q) => fzy.hasMatch(q, str))
 }

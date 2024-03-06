@@ -16,3 +16,7 @@ npm install konnors-ninja-keys
 ```js
 import "konnors-ninja-keys"
 ```
+
+## Going Forward
+
+These docs themselves use `konnors-ninja-keys`! However, for obvious reasons, preview examples have disabled the `cmd+k` / `ctrl+k` functionality and instead require manual activation.
