@@ -142,8 +142,10 @@ export class NinjaAction extends BaseElement {
   constructor() {
     super();
 
-    /** @type {import('./index.js').INinjaAction} */
-    this.action = {};
+    /** @type {import('../types/index.d.ts').INinjaAction} */
+    this.action = {
+      title: ""
+    };
 
     /**
      * @type {boolean}

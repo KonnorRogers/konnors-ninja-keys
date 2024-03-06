@@ -1,4 +1,9 @@
 // @ts-check
+/**
+ * import("../types/index.d.ts")
+ * import("../types/fzy.d.ts")
+ */
+
 import {BaseElement} from './base-element.js';
 import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
@@ -19,8 +24,9 @@ import { escapeStringRegexp } from '../internal/escape-string-regexp.js';
 // @ts-expect-error Gets proper types for hotkeys.
 const hotkeys = _hotkeys
 
-/** @typedef {import("./index.js").INinjaAction} INinjaAction */
-/** @typedef {import("./index.js").NinjaHeader} NinjaHeaderElement */
+
+/** @typedef {import("./ninja-header.js").NinjaHeader} NinjaHeaderElement */
+/** @typedef {import("../types/index.d.ts").INinjaAction} INinjaAction */
 
 /**
  * @type BaseElement
@@ -201,7 +207,7 @@ export class NinjaKeys extends BaseElement {
 
     /**
      * @private
-     * @type {import('./index.js').Maybe<INinjaAction>}
+     * @type {import('../types/index.js').Maybe<INinjaAction>}
      */
     this.__selected__ = null;
 
@@ -322,14 +328,14 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
-   * @returns {import("./index.js").Maybe<INinjaAction>}
+   * @returns {import('../types/index.js').Maybe<INinjaAction>}
    */
   get _selected() {
     return this.__selected__;
   }
 
   /**
-   * @param {import("./index.js").Maybe<INinjaAction>} action
+   * @param {import('../types/index.js').Maybe<INinjaAction>} action
    */
   set _selected(action) {
     const header = this._headerRef.value;

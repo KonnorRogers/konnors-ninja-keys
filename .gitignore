@@ -4,4 +4,6 @@ node_modules/
 # top level source
 /dist
 /package
-/types
+
+/src/**/*.d.ts
+/internal/**/*.d.ts
