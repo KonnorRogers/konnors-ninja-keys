@@ -60,7 +60,7 @@ jobs:
         run: echo "BASE_PATH=/${{ github.event.repository.name }}/${{ env.PR_PATH }}" >> $GITHUB_ENV
 
       - name: Set base_url
-        run: echo "BASE_URL=$URL/$BASE_PATH" >> $GITHUB_ENV
+        run: echo "BASE_URL=$URL$BASE_PATH" >> $GITHUB_ENV
 
 
       - name: Build website
