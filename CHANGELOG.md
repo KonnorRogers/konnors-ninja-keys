@@ -1,3 +1,8 @@
+## v1.11.0 - 03/06/2024
+
+- feature: Add fuzzy-matching via `fzy.js` [#13](https://github.com/konnorrogers/ninja-keys/pulls/13)
+- feature: Add highlighting for matched terms [#13](https://github.com/konnorrogers/ninja-keys/pulls/13)
+
 ## v1.10.1 - 02/15/2024
 
 - fix: Properly escape strings prior to calling `findMatches` <https://github.com/ssleptsov/ninja-keys/pull/33> <https://github.com/KonnorRogers/konnors-ninja-keys/pull/9>
