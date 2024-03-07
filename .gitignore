@@ -1,7 +1,0 @@
-node_modules/
-/lib/
-/test/
-# top level source
-/dist
-/package
-/types
