@@ -32,7 +32,7 @@ if (!BASE_PATH.endsWith("/")) {
 
 const entries = {}
 
-globSync("../exports/**/*.js").forEach((fileName) => {
+globSync("../src/**/*.js").forEach((fileName) => {
   const key = path.basename(fileName)
 
   entries[key] = fileName

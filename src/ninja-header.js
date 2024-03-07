@@ -57,6 +57,7 @@ export class NinjaHeader extends BaseElement {
       }
 
       .breadcrumb:focus-visible {
+        background-color: red;
       }
 
       .breadcrumb:last-child {
@@ -174,7 +175,7 @@ export class NinjaHeader extends BaseElement {
 
         ${itemTemplates}
 
-        <button type="button" class="breadcrumb breadcrumb--close" @click=${this.dispatchEscKey}>
+        <button type="button" class="breadcrumb breadcrumb--close" @click=${this._close}>
           Cancel
         </button>
       </div>`;
@@ -189,7 +190,7 @@ export class NinjaHeader extends BaseElement {
           id="search"
           spellcheck="false"
           autocomplete="off"
-          @input="${this._handleInput}"
+          @input=${this._handleInput}
           ${ref(this._inputRef)}
           placeholder="${this.placeholder}"
           class="search"
@@ -221,7 +222,7 @@ export class NinjaHeader extends BaseElement {
 
   // This is kinda hacky, but its how we tell it to close us.
   dispatchEscKey () {
-    this.dispatchEvent(new KeyboardEvent("keydown", {
+    document.dispatchEvent(new KeyboardEvent("keydown", {
       keyCode: 27, which: 27, code: "Escape", key: "Escape",
       altKey: false, metaKey: false, ctrlKey: false, shiftKey: false,
       bubbles: true, composed: true, cancelable: false
@@ -246,8 +247,8 @@ export class NinjaHeader extends BaseElement {
       this.dispatchEvent(
         new CustomEvent('change', {
           detail: {search: input.value},
-          bubbles: false,
-          composed: false,
+          bubbles: true,
+          composed: true,
         })
       );
     }

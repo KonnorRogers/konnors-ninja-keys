@@ -1,4 +1,9 @@
 // @ts-check
+/**
+ * import("../types/index.d.ts")
+ * import("../types/fzy.d.ts")
+ */
+
 import {BaseElement} from './base-element.js';
 import {html} from 'lit';
 import {repeat} from 'lit/directives/repeat.js';
@@ -12,12 +17,16 @@ import { NinjaAction } from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
+import * as fzy from "fzy.js"
+import { escapeStringRegexp } from '../internal/escape-string-regexp.js';
+
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error Gets proper types for hotkeys.
 const hotkeys = _hotkeys
 
-/** @typedef {import("./index.js").INinjaAction} INinjaAction */
-/** @typedef {import("./index.js").NinjaHeader} NinjaHeaderElement */
+
+/** @typedef {import("./ninja-header.js").NinjaHeader} NinjaHeaderElement */
+/** @typedef {import("../types/index.d.ts").INinjaAction} INinjaAction */
 
 /**
  * @type BaseElement
@@ -49,6 +58,7 @@ export class NinjaKeys extends BaseElement {
   static properties = {
     placeholder: {type: String},
     disableHotkeys: {type: Boolean},
+    searchType: {attribute: "search-type"},
     searchLabel: {attribute: 'search-label'},
     listboxLabel: {attribute: 'listbox-label'},
     hideBreadcrumbs: {type: Boolean},
@@ -68,6 +78,9 @@ export class NinjaKeys extends BaseElement {
         // That's why object passed to web component always same and no render triggered. Issue #9
         return true;
       },
+    },
+    highlightMatches: {
+      type: Boolean, reflect: true, attribute: "highlight-matches"
     },
 
     // State
@@ -104,6 +117,17 @@ export class NinjaKeys extends BaseElement {
     this.disableHotkeys = false;
 
     /**
+     * @type {"regex" | "fuzzy"}
+     */
+    this.searchType = "regex"
+
+    /**
+     * Whether or not to turn on match highlighting
+     * @type {boolean}
+     */
+    this.highlightMatches = false
+
+    /**
      * Maps to `aria-labelledby` for search input
      * @type {string}
      */
@@ -131,13 +155,13 @@ export class NinjaKeys extends BaseElement {
      * Navigation Up hotkey
      * @type {string}
      */
-    this.navigationUpHotkey = 'up,shift+tab';
+    this.navigationUpHotkey = 'up';
 
     /**
      * Navigation Down hotkey
      * @type {string}
      */
-    this.navigationDownHotkey = 'down,tab';
+    this.navigationDownHotkey = 'down';
 
     /**
      * Close hotkey
@@ -183,7 +207,7 @@ export class NinjaKeys extends BaseElement {
 
     /**
      * @private
-     * @type {import('./index.js').Maybe<INinjaAction>}
+     * @type {import('../types/index.js').Maybe<INinjaAction>}
      */
     this.__selected__ = null;
 
@@ -236,11 +260,14 @@ export class NinjaKeys extends BaseElement {
     this._bump = true;
     this.visible = true;
     const header = this._headerRef.value;
-    if (header) {
-      header.focusSearch();
-      header.expanded = true;
-      header.controls = 'actions-list';
-    }
+
+    requestAnimationFrame(() => {
+      if (header) {
+        header.focusSearch();
+        header.expanded = true;
+        header.controls = 'actions-list';
+      }
+    })
 
     if (this._actionMatches.length > 0) {
       this._selected = this._actionMatches[0];
@@ -301,14 +328,14 @@ export class NinjaKeys extends BaseElement {
   }
 
   /**
-   * @returns {import("./index.js").Maybe<INinjaAction>}
+   * @returns {import('../types/index.js').Maybe<INinjaAction>}
    */
   get _selected() {
     return this.__selected__;
   }
 
   /**
-   * @param {import("./index.js").Maybe<INinjaAction>} action
+   * @param {import('../types/index.js').Maybe<INinjaAction>} action
    */
   set _selected(action) {
     const header = this._headerRef.value;
@@ -463,7 +490,6 @@ export class NinjaKeys extends BaseElement {
     }
 
     if (this.navigationDownHotkey) {
-
       hotkeys(this.navigationDownHotkey, (event) => {
         if (!this.visible) {
           return;
@@ -499,6 +525,7 @@ export class NinjaKeys extends BaseElement {
         }
 
         e.preventDefault();
+        this.visible = false
         this.close();
       });
     }
@@ -598,13 +625,7 @@ export class NinjaKeys extends BaseElement {
    * @param {string} str
    */
   stringToRegExp (str) {
-    // https://github.com/sindresorhus/escape-string-regexp/blob/main/index.js
-    return new RegExp(
-      str
-        .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-        .replace(/-/g, '\\x2d'),
-      'gi'
-    )
+    return escapeStringRegexp(str)
   }
 
   /**
@@ -615,10 +636,34 @@ export class NinjaKeys extends BaseElement {
    */
   findMatches (flatData) {
     return flatData.filter((action) => {
-      // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
-      const regex = this.stringToRegExp(this._search);
-      const matcher =
-        action.title?.match?.(regex) || action.keywords?.match?.(regex) || action.content?.match?.(regex);
+      if (this._search.trim() === "") {
+        return action.parent === this.currentRoot && true;
+      }
+
+      const { title, keywords, content } = action
+
+      let matcher = false
+
+      if (this.searchType === "regex") {
+        // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
+        const regex = this.stringToRegExp(this._search);
+
+        matcher = Boolean(
+          (title && title.match(regex))
+          || (keywords && keywords.match(regex))
+          || (content && content.match(regex))
+        )
+      }
+
+      if (this.searchType === "fuzzy") {
+        const search = this._search
+
+        matcher = Boolean(
+          (title && hasMatch(search, title))
+          || (keywords && hasMatch(search, keywords))
+          || (content && hasMatch(search, content))
+        )
+      }
 
       if (!this.currentRoot && this._search) {
         // global search for items on root
@@ -676,8 +721,12 @@ export class NinjaKeys extends BaseElement {
             role="option"
             exportparts="ninja-action, ninja-selected,ninja-icon, ninja-hotkeys, ninja-hotkey, ninja-action__header, ninja-action__title, ninja-action__content"
             aria-selected=${live(action.id === this._selected?.id)}
+            .searchQuery=${this._search}
             .selected=${live(action.id === this._selected?.id)}
             .hotKeysJoinedView=${this.hotKeysJoinedView}
+            .searchType=${this.searchType}
+            .highlightMatches=${this.highlightMatches}
+            tabindex="-1"
             @mousemove=${(/** @type {MouseEvent} */ event) => {
               this._actionFocused(action, event);
             }}
@@ -727,11 +776,11 @@ export class NinjaKeys extends BaseElement {
               ${itemTemplates}
             </div>
 
-            <div class="visually-hidden">
-              <slot id="listbox-label" name="listbox-label">
+            <label id="listbox-label" class="visually-hidden">
+              <slot>
                 <span>${this.listboxLabel}</span>
               </slot>
-            </div>
+            </label>
             <slot name="footer"> ${footerHtml} </slot>
           </div>
         </div>
@@ -819,4 +868,13 @@ export class NinjaKeys extends BaseElement {
       }
     }
   }
+}
+
+/**
+ * @param {string} query
+ * @param {string} str
+ * @returns {boolean}
+ */
+function hasMatch (query, str) {
+  return [query, ...query.split(/\s+/)].some((q) => fzy.hasMatch(q, str))
 }

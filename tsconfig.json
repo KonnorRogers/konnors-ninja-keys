@@ -1,5 +1,10 @@
 {
-  "include": ["src/**/*.js", "internal/**/*.js", "types/**/*.d.ts"],
+  "include": [
+    "src/**/*.js",
+    "internal/**/*.js",
+    "types/**/*.d.ts",
+    "tests/**/*.js",
+  ],
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
@@ -28,6 +33,7 @@
         "name": "ts-lit-plugin",
         "strict": true
       }
-    ]
+    ],
+    "skipLibCheck": true
   }
 }

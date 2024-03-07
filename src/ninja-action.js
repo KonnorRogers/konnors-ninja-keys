@@ -3,11 +3,12 @@ import {html, css} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {join} from 'lit/directives/join.js';
-import '@material/mwc-icon';
+import '@material/mwc-icon/mwc-icon.js'
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { renderFuzzyHighlight, renderRegexHighlight } from '../internal/fuzzy-highlight.js';
 
 export class NinjaAction extends BaseElement {
   /**
@@ -25,6 +26,11 @@ export class NinjaAction extends BaseElement {
         width: 100%;
         padding: 0 4px;
       }
+
+      mark {
+        background-color: Highlight;
+      }
+
       .ninja-action {
         padding: 0.75em 8px;
         display: flex;
@@ -124,7 +130,10 @@ export class NinjaAction extends BaseElement {
     action: {type: Object},
     selected: {type: Boolean},
     hotKeysJoinedView: {type: Boolean},
-    content: {}
+    content: {},
+    searchType: { attribute: "search-type" },
+    highlightMatches: { type: Boolean, attribute: "highlight-matches" },
+    searchQuery: {state: true, attribute: false}
   };
 
   /**
@@ -133,8 +142,10 @@ export class NinjaAction extends BaseElement {
   constructor() {
     super();
 
-    /** @type {import('./index.js').INinjaAction} */
-    this.action = {};
+    /** @type {import('../types/index.d.ts').INinjaAction} */
+    this.action = {
+      title: ""
+    };
 
     /**
      * @type {boolean}
@@ -146,6 +157,21 @@ export class NinjaAction extends BaseElement {
      * @type {boolean}
      */
     this.hotKeysJoinedView = true;
+
+    /**
+     * @type {string}
+     */
+    this.searchQuery = ""
+
+    /**
+     * @type {"regex" | "fuzzy"}
+     */
+    this.searchType = "regex"
+
+    /**
+     * @type {boolean}
+     */
+    this.highlightMatches = false
   }
 
   /**
@@ -154,6 +180,7 @@ export class NinjaAction extends BaseElement {
   connectedCallback() {
     super.connectedCallback();
 
+    this.setAttribute("aria-selected", "false")
     this.addEventListener('click', this.click);
   }
 
@@ -267,12 +294,50 @@ export class NinjaAction extends BaseElement {
     `
   }
 
+  /**
+   * Escapes user content to proper HTML entities
+   * @param {string} str
+   */
+  escapeString (str) {
+    // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-html-contexts
+    return str
+      .replaceAll(/&/g,   "&amp;")
+      .replaceAll(/</g,   "&lt;")
+      .replaceAll(/>/g,   "&gt;")
+      .replaceAll(/"/g,   "&quot;")
+      .replaceAll(/'/g,   "&#x27;")
+  }
+
+  /**
+   * @param {string} query
+   * @param {string} s
+   */
+  renderMatch (query, s) {
+    const escapeString = this.escapeString(s)
+    const escapeQuery = this.escapeString(query)
+
+    /**
+     * @param {string} str
+     */
+    function matchRender (str) {
+      return `<mark part="match-highlight">${str}</mark>`
+    }
+
+    if (this.searchType === "regex") {
+      return renderRegexHighlight(escapeQuery, escapeString, matchRender)
+    }
+
+    if (this.searchType === "fuzzy") {
+      return renderFuzzyHighlight(escapeQuery, escapeString, matchRender)
+    }
+
+    return ""
+  }
+
   renderBody () {
     let icon;
     if (this.action.mdIcon) {
-      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon">
-        ${this.action.mdIcon}
-      </mwc-icon>`;
+      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon">${this.action.mdIcon}</mwc-icon>`;
     } else if (this.action.icon) {
       icon = unsafeHTML(`
         <div class="ninja-icon" part="ninja-icon">
@@ -281,16 +346,26 @@ export class NinjaAction extends BaseElement {
       `);
     }
 
+    let { title, content } = this.action
+
+    if (title && this.highlightMatches) {
+      title = this.renderMatch(this.searchQuery, title)
+    }
+
+    if (content && this.highlightMatches) {
+      content = this.renderMatch(this.searchQuery, content)
+    }
+
     return html`
         <div part="ninja-action__header" class="ninja-action__header">
           ${icon}
-          <div part="ninja-action__title" class="ninja-title">${this.action.title}</div>
+          <div part="ninja-action__title" class="ninja-title">${unsafeHTML(title)}</div>
           ${this.renderHotkey()}
         </div>
 
-        ${when(this.action.content, () =>
+        ${when(content, () =>
           html`<div part="ninja-action__content" class="ninja-action__content">
-            ${this.action.content}
+            ${unsafeHTML(content)}
           </div>`
         )}
     `

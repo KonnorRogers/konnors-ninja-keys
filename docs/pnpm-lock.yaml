@@ -30,8 +30,8 @@ dependencies:
     specifier: link:..
     version: link:..
   light-pen:
-    specifier: ^2.2.0
-    version: 2.2.0
+    specifier: ^3.0.1
+    version: 3.0.1
   lit:
     specifier: ^2.8.0
     version: 2.8.0
@@ -828,6 +828,10 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
+  /form-associated-helpers@0.0.4:
+    resolution: {integrity: sha512-Fy3dCmzxbaB08nRIr8GVBo5duQSN/NouCU4JjQ/Pd3bipsKMsV2RhPb3uGujEYYk/OIMDf9EPwRI5pQq6PsZpw==}
+    dev: false
+
   /fraction.js@4.2.0:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
@@ -957,9 +961,10 @@ packages:
       graceful-fs: 4.2.11
     dev: true
 
-  /light-pen@2.2.0:
-    resolution: {integrity: sha512-RtHoum+mZ1g/U69jyiwt6QsWzD8abdm29AU54xVYxsMq3rQGwYk1++JoQQsgObEvFGeiFWGEgUMP7vX3IBHskA==}
+  /light-pen@3.0.1:
+    resolution: {integrity: sha512-MxhEiEcxRfWCbHmvPBbRP+TDLSrxFz7SSowe9aascoVbK5l0pbWtYVXyhkd9bmM+LgLIhNANKthi7PRUHzN5aw==}
     dependencies:
+      form-associated-helpers: 0.0.4
       lit: 2.8.0
       prism-esm: 1.29.0-fix.4
       web-component-define: 2.0.11

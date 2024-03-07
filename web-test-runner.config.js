@@ -8,9 +8,8 @@ export default {
   plugins: [
     // esbuildPlugin()
   ],
-  files: ['./src/**/*.test.js', './tests/unit/**/*.test.js'], // "default" group
+  files: ['./src/**/*.test.js', './internal/**/*.test.ts', './tests/**/*.test.js'], // "default" group
   concurrentBrowsers: 3,
-  nodeResolve: true,
   testFramework: {
     config: {
       ui: 'tdd',
