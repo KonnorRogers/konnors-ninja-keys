@@ -1,0 +1,134 @@
+[
+        {
+          "id": "konnors-ninja-keys-pull-16-guides-getting-started",
+          "title": "Getting Started",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/guides/getting-started/",
+          "content": "Installation\n\nFirst step is to install the helpers.\n\nnpm install konnors-ninja-keys\n\n\nUsage\n\nimport \"konnors-ninja-keys\"\n\n\nGoing Forward\n\nThese docs themselves use konnors-ninja-keys! However, for obvious reasons, preview examples have disabled the cmd+k / ctrl+k functionality and instead require manual activation."
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-guides",
+          "title": "Guides",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "guides",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/guides/",
+          "content": ""
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-how-tos-match-highlighting",
+          "title": "Match Highlighting",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "how_tos",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/how-tos/match-highlighting/",
+          "content": "Whether you’re using fuzzy or regexp based search, you can turn on “match highlighting” by adding\nthe attribute highlight-matches=\"\" to your ninja keys element. Like so:\n\n\n\n\n  \n    \n    Open Ninja Keys\n    \n  \n  \n    \n    Open Ninja Keys"
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-how-tos-fuzzy-matching",
+          "title": "Fuzzy Matching",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "how_tos",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/how-tos/fuzzy-matching/",
+          "content": "Fuzzy matching comes prebuilt into konnors-ninja-keys via the fzy.js library. It does\nnot actually sort based on the score of the matches, but rather simply checks that the matches exist in\neither title, keywords, or content.\n\nTo enable fuzzy matching, add the search-type=\"fuzzy\" and highlight-matches attribute to your ninja-keys element. Like so:\n\n\n\n\n  \n    \n    Open Ninja Keys\n    \n  \n  \n    \n    Open Ninja Keys"
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-how-tos",
+          "title": "How Tos",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "how_tos",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/how-tos/",
+          "content": ""
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-references",
+          "title": "References",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/references/",
+          "content": ""
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-references-changelog",
+          "title": "Changelog",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/references/changelog/",
+          "content": "v1.12.1 - 05/25/2024\n\n\n  fix: Fixed “bundle/” not being added to final files published to NPM.\n\n\nv1.12.0 - 05/25/2024\n\n\n  feature: Add searchQuery to handler functions. #15\n  feature: Added a matcher function to override the default matching behavior when searching a string. #15\n  feature: Add prebundled entrypoints for CDN users and for those on older bundlers. #15\n\n\nv1.11.0 - 03/06/2024\n\n\n  feature: Add fuzzy-matching via fzy.js #13\n  feature: Add highlighting for matched terms #13\n\n\nv1.10.1 - 02/15/2024\n\n\n  fix: Properly escape strings prior to calling findMatches https://github.com/ssleptsov/ninja-keys/pull/33 https://github.com/KonnorRogers/konnors-ninja-keys/pull/9\n\n\nv1.10.0\n\n\n  feat: expose all parts for modal, modal-content etc.\n  feat: Add a close button to breadcrumbs area for mobile users with full-height modal.\n  \n    feat: remove tabindex=\"-1\" from breadcrumbs. Will work in a future version to let it be keyboard tabbable.\n  \n  fix: support full-height dialogs by moving from flex -&gt; grid for modal-content\n  fix: the default navigationDownHotkey and navigationUpHotkey have removed \"tab\" as the default.\n\n\nv1.9.2\n\n\n  fix: Check if the user is inside an input or a contenteditable field before opening.\n\n\nv1.9.1\n\n\n  fix: Change the search input autocomplete=\"none\" to autocomplete=\"off\"\n\n\nv1.9.0\n\n\n  feat: add additional parts to ninja-action\n  fix: removed flex-shrink: 0.01 on ninja-action causing text-overflow to behave unexpectedly.\n\n\nv1.8.1\n\n\n  fix: check if match is a function on matchers.\n\n\nv1.8.0\n\n\n  fix: issue with RegExp and using \\ and / in searches.\n  fix: issue with extending ninja-keys and breadcrumbs not appearing.\n  fix: overflowing titles now have a max-width of 100% to truncate.\n  feat: expose currentRoot which refers to a string id\n  fix: issues with cached breadcrumbs. Prefer getBreadcrumbs over breadcrumbs\n\n\nv1.7.0\n\n\n  fix: change focus styling and add 4px of X padding to ninja-action for more obvious focus.\n  fix: use mousemove instead of mouseover to prevent jumping to different actions.\n  feat: Add an override for findMatches in case a user has their own search function for adding / removing results.\n  fix: remove white-space: nowrap; for content blocks to allow them to be 2 lines or more.\n\n\nv1.6.0\n\n\n  feat: add block content to allow for more than just a title to be displayed.\n  feat: allow rendering of anchor tags that don’t need handlers.\n\n\nv1.5.1\n\n\n  upgrade TS version\n  upgrade web-component-define version\n\n\nv1.5.0\n\n\n  feat: export all elements and types\n  feat: only auto-register on parent level import. importing from “ninja-keys/ninja-keys.js” will not auto-register the element.\n  feat: update ninja-keys to use scoped element registry .\n  fix: duplicate “placeholder” value in &lt;ninja-header&gt;\n\n\nv1.4.2\n\n\n  fix: change the default width to: clamp(100px, 96vw, 640px) to allow some padding on small screens.\n\n\nv1.4.1\n\n\n  fix: move @types/node to devDependencies\n\n\nv1.4.0\n\n\n  fix: issues with types.\n\n\nv1.3.0\n\n\n  fix: pressing “escape” key now calls preventDefault() to prevent the browser minimizing in Firefox.\n  fix: add accessibility attributes for combobox as well as visually hidden labels.\n  fix: check if the element has been defined before calling define() to prevent errors.\n  fix: add additional padding to the bottom of header.\n  feat: change the default width to: max(96vw, 640px) to allow some padding on small screens.\n\n\nv1.2.0 (2022-04-21)\n\n\n  \n    Clean up hotkeys on disconnect #20. Thanks to @excid3\n  \n  \n    Export css variable of content zIndex #21"
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-references-readme",
+          "title": "README",
+          "collection": {
+            "label": "documentation",
+            "name": "Posts"
+          },
+          "categories": "references",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/references/readme/",
+          "content": "Ninja Keys\n\nNOTE\n\nThis is a fork of https://github.com/ssleptsov/ninja-keys for adding things I (Konnor Rogers)\nwanted.\n\nKeyboard shortcut interface for your website that works with Vanilla JS, Vue, and React.\n\n\n\n\nDemo\n\n\n\nMotivation\n\nA lot of applications support a common pattern where the user hits ⌘+k (or ctrl+k) and a search UI dialog appears.\nI’ve recently seen this in Notion, Slack, Linear, Vercel and Algolia, but I’m sure there are plenty more.\nApple Spotlight, Alfred and the Raycast app also have a similar pattern, but with different shortcuts.\nThere are already some libraries built for this, but they are too framework specific, like Laravel only or React only\nNevertheless, mine is not a silver bullet and if you need more framework integration, check them out too.\n\nI needed a keyboard interface for navigation with static websites without any frameworks.\nAt the same time, I have a few Vue projects where something like this could be useful,\nso I decided to give it a try for Web Components and Lit Element.\n\nIntegrations\n\n\n  Vue 3 Example - Codesandbox\n  Vue 2 Example - Codesandbox\n  React Example - Codesandbox\n  React/NextJS\n  Static Html - Codesandbox\n  Svelte - Codesandbox\n  SolidJS wrapper\n\n\nFeatures\n\n\n  Keyboard navigation\n  Light and dark theme built in\n  Built-in icon support from Material font and custom svg icons\n  Nested menu - a tree or flat data structure can be used\n  Auto register your shortcuts\n  Root search - for example, if you search “Dark,” it will find it within the “Theme” submenu\n  CSS variable to customize the view\n  Customizable hotkeys to open/close etc. Choose what best fits your website.\n\n\nWhy the “Ninja” name?\n\nBecause it appears from nowhere and executes any actions quickly…\nOr because it allows your users to become keyboard ninjas 🙃\n\nInstall from NPM\n\nnpm i konnors-ninja-keys\n\n\nImport if you are using webpack, rollup, vite or other build system.\n\nimport 'konnors-ninja-keys';\n\n\nInstall from CDN\n\nMostly for usage in HTML/JS without a build system.\n\n&lt;script\n  type=\"module\"\n  src=\"https://unpkg.com/konnors-ninja-keys/bundle/index.js?module\"\n&gt;&lt;/script&gt;\n\n\nor inside your module scripts\n\n&lt;script type=\"module\"&gt;\n  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys/bundle/index.js?module';\n&lt;/script&gt;\n\n\nImportable routes\n\n\n  \"konnors-ninja-keys/index.js\"\n  \"konnors-ninja-keys/ninja-keys.js\"\n  \"konnors-ninja-keys/ninja-header.js\"\n  \"konnors-ninja-keys/bundle/index.js\"\n  \"konnors-ninja-keys/bundle/ninja-keys.js\"\n  \"konnors-ninja-keys/bundle/ninja-header.js\"\n\n\nUsage\n\nAdd the tag to your HTML.\n\n&lt;ninja-keys&gt;&lt;/ninja-keys&gt;\n\n\n&lt;script&gt;\n  const ninja = document.querySelector('ninja-keys');\n  ninja.data = [\n    {\n      id: 'Projects',\n      title: 'Open Projects',\n      hotkey: 'ctrl+N',\n      icon: 'apps',\n      section: 'Projects',\n      handler: (_data, _event) =&gt; {\n        // it's auto register above hotkey with this handler\n        alert('Your logic to handle');\n      },\n    },\n    {\n      id: 'Users',\n      title: 'Go to user profile',\n      icon: 'person',\n      matcher: (action, { searchString, searchRegex }) =&gt; searchString.match(/.+@.+/),\n      handler: (action, event, searchQuery) =&gt; {\n        // simple handler\n        alert(`Visiting user profile: ${searchQuery}`);\n      },\n    },\n    {\n      id: 'Theme',\n      title: 'Change theme...',\n      icon: 'desktop_windows',\n      children: ['Light Theme', 'Dark Theme', 'System Theme'],\n      hotkey: 'ctrl+T',\n      handler: () =&gt; {\n        // open menu if closed. Because you can open directly that menu from it's hotkey\n        ninja.open({parent: 'Theme'});\n        // if menu opened that prevent it from closing on select that action, no need if you don't have child actions\n        return {keepOpen: true};\n      },\n    },\n    {\n      id: 'Light Theme',\n      title: 'Change theme to Light',\n      icon: 'light_mode',\n      parent: 'Theme',\n      handler: () =&gt; {\n        // simple handler\n        document.documentElement.classList.remove('dark');\n      },\n    },\n    {\n      id: 'Dark Theme',\n      title: 'Change theme to Dark',\n      icon: 'dark_mode',\n      parent: 'Theme',\n      handler: () =&gt; {\n        // simple handler\n        document.documentElement.classList.add('dark');\n      },\n    },\n  ];\n&lt;/script&gt;\n\n\nLibrary using flat data structure inside, as in the example above. But you can also use a tree structure as below:\n\n{\n  id: 'Theme',\n  children: [\n    { id: 'light', title: 'light_mode', },\n    { id: 'System Theme',\n      children: [\n        { title: 'Sub item 1' },\n        { title: 'Sub item 2' }\n      ]\n    }\n  ]\n}\n\n\nAttributes\n\n\n  \n    \n      Field\n      Default\n      Description\n    \n  \n  \n    \n      placeholder\n      Type a command or search…\n      Placeholder for search\n    \n    \n      disableHotkeys\n      false\n      If attribute exist will register all hotkey for all actions\n    \n    \n      hideBreadcrumbs\n      false\n      Hide breadcrumbs on header if true\n    \n    \n      openHotkey\n      cmd+k,ctrl+k\n      Open or close shortcut\n    \n    \n      navigationUpHotkey\n      up,shift+tab\n      Navigation up shortcuts\n    \n    \n      navigationDownHotkey\n      down,tab\n      Navigation down shortcuts\n    \n    \n      closeHotkey\n      esc\n      Close shortcut\n    \n    \n      goBackHotkey\n      backspace\n      Go back on one level if has parent menu\n    \n    \n      selectHotkey\n      enter\n      Select action and execute handler or open submenu\n    \n    \n      hotKeysJoinedView\n      false\n      If exist/true will display hotkeys inside one element\n    \n    \n      noAutoLoadMdIcons\n      false\n      If exist it disable load material icons font on connect\n    \n  \n\n\nExample\n\n&lt;ninja-keys\n  placeholder=\"Must app is awesome\"\n  openHotkey=\"cmd+l\"\n  hideBreadcrumbs\n&gt;&lt;/ninja-keys&gt;\n\n\nData\n\nArray of INinjaAction - interface properties below\n| Name | Type | Description |\n|———-|————————-|—————————————————————————————-|\n| id | string | Unique id/text. Will be displayed as breadcrumb in multimenu |\n| title | string | Title of action |\n| hotkey | string(optional) | Shortcut to display and register |\n| handler | (action, event) =&gt; void (optional) | Function to execute on select |\n| matcher | (action, { searchString, searchRegex }) =&gt; boolean | Function to execute on search to override the default matcher. |\n| mdIcon | string(optional) | Material Design font icon name |\n| icon | string(optional) | Html to render as custom icon |\n| parent | string(optional) | If using flat structure use id of actions to make a multilevel menu |\n| keywords | string(optional) | Keywords to use for search |\n| children | Array(optional) | If using flat structure then ids of child menu actions. Not required on tree structure |\n| section | string(optional) | Section text. Like a header will be group with other same sections |\n| content | string(optional) | Content text. Allows you to display additional info besides just a title. |\n| href    | string(optional) | When an href is set, under the hood it will render an `` tag.\n| attributes | {}(optional)  | additional attributes to add when using \"href\". Typically `rel` and `target`.\n\nMethods\n\n\n  \n    \n      Name\n      Arg\n      Description\n    \n  \n  \n    \n      open\n      { parent?: string }\n      Open menu with parent, if null then open root menu\n    \n    \n      close\n       \n      Close menu\n    \n    \n      setParent\n      parent?: string\n      Navigate to parent menu\n    \n  \n\n\nExample\n\nconst ninja = document.querySelector('ninja-keys');\nninja.open();\n// or\nninja.open({parent: 'Theme'});\n\n\nEvents\n\nComponent wide events\n\n\n  \n    \n      Name\n      Description\n      Payload\n    \n  \n  \n    \n      change\n      Emitted when on each change of search input\n      { detail: { search: string, actions: Array&lt;NinjaAction&gt; } }\n    \n    \n      selected\n      Emitted when on user selected action or on submit of input\n      { detail: { search: string, action: NinjaAction or undefined }}\n    \n  \n\n\nBoth handler of action and component event selected emitted when user submit form or select item.\n\nBut event selected can be used to handle edge cases, so it’s not recommended to write each action logic here. It’s better to use the action handler property.\n\nFor example, if a user enters a search query and there is an empty list, listening to this event you can handle that.\n\nninja.addEventListener('change', (event) =&gt; {\n  console.log('ninja on change', event.detail);\n  // detail = {search: 'your search query', actions: Array&lt;NinjaAction&gt;}\n});\nninja.addEventListener('selected', (event) =&gt; {\n  console.log('ninja on selected', event.detail);\n  // detail = {search: 'your search query', action: NinjaAction | undefined }\n  if (event.detail.action) {\n    // perform API search for example\n  }\n});\n\n\nThemes\n\nComponent supports a dark theme out-of-box. You just need to add a class.\n\n&lt;ninja-keys class=\"dark\"&gt;&lt;/ninja-keys&gt;\n\n\nIf you need more style control, use any of the CSS variables below.\n\nCSS variables\n\n\n  \n    \n      Name\n      Default\n    \n  \n  \n    \n      –ninja-width\n      640px;\n    \n    \n      –ninja-backdrop-filter\n      none;\n    \n    \n      –ninja-overflow-background\n      rgba(255, 255, 255, 0.5);\n    \n    \n      –ninja-text-color\n      rgb(60, 65, 73);\n    \n    \n      –ninja-font-size\n      16px;\n    \n    \n      –ninja-top\n      20%;\n    \n    \n      –ninja-key-border-radius\n      0.25em\n    \n    \n      –ninja-accent-color\n      rgb(110, 94, 210);\n    \n    \n      –ninja-secondary-background-color\n      rgb(239, 241, 244);\n    \n    \n      –ninja-secondary-text-color\n      rgb(107, 111, 118);\n    \n    \n      –ninja-selected-background\n      rgb(248, 249, 251);\n    \n    \n      –ninja-icon-color\n      var(–ninja-secondary-text-color);\n    \n    \n      –ninja-icon-size\n      1.2em;\n    \n    \n      –ninja-separate-border\n      1px solid var(–ninja-secondary-background-color);\n    \n    \n      –ninja-modal-background\n      #fff;\n    \n    \n      –ninja-modal-shadow\n      rgb(0 0 0 / 50%) 0px 16px 70px;\n    \n    \n      –ninja-actions-height\n      300px;\n    \n    \n      –ninja-group-text-color\n      rgb(144, 149, 157);\n    \n    \n      –ninja-footer-background\n      rgba(242, 242, 242, 0.4);\n    \n    \n      –ninja-placeholder-color\n      #8e8e8e\n    \n    \n      –ninja-z-index\n      1\n    \n  \n\n\nExample\n\nninja-keys {\n  --ninja-width: 400px;\n}\n\n\nCSS Shadow Parts\n\nAllowing you to style specific elements from your style.\nBecause styles are encapsulated by Shadow DOM, it will be annoying to create css variables for all properties.\nThat’s why you can use ::part to make a custom look for the component.\nIt’s supported by all modern browsers\n\n\n  \n    \n      Name\n      Description\n    \n  \n  \n    \n      actions-list\n      Element that wraps all child elements.\n    \n    \n      ninja-action\n      Single action\n    \n    \n      ninja-selected\n      Selected action\n    \n    \n      ninja-input\n      Input element\n    \n    \n      ninja-input-wrapper\n      Wrapper element around div, useful for advanced styles\n    \n    \n      ninja-content\n      Wrapper element around content\n    \n  \n\n\nExample style using parts\n\nninja-keys::part(actions-list) {\n  padding: 8px;\n}\nninja-keys::part(ninja-action) {\n  border-radius: 8px;\n  border-left: none;\n}\n\nninja-keys::part(ninja-selected) {\n  background: rgba(51, 51, 51, 0.1);\n}\n\nninja-keys::part(ninja-input) {\n  color: #14b8a6;\n}\n\nninja-keys::part(ninja-input)::placeholder {\n  color: #f43f5e;\n}\n\nninja-keys::part(ninja-input-wrapper) {\n  background: rgba(244, 63, 93, 0.3);\n}\n\n\nIcons\n\nBy default, components use icons from https://fonts.google.com/icons\n\nFor example, you can just set mdIcon to light_mode to render a sun icon.\n\nTo add Material icons for your website, you need to add them to your HTML, for example\n\n&lt;link\n  href=\"https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block\"\n  rel=\"stylesheet\"\n/&gt;\n\n\nIf you want custom icons, you can use svg or img to insert it with an icon property for action with ninja-icon class.\nExample:\n\n{\n  title: 'Search projects...',\n  icon: `&lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"ninja-icon\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"&gt;\n    &lt;path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z\" /&gt;\n  &lt;/svg&gt;`,\n  section: 'Projects',\n},\n\n\nYou can also change the width and font using CSS variables\n\nninja-keys {\n  --ninja-icon-size: 1em;\n}\n\n\nChange or hide footer\n\n&lt;ninja-keys&gt;\n  &lt;div slot=\"footer\"&gt;You can use a custom footer or empty div to hide it&lt;/div&gt;\n&lt;/ninja-keys&gt;\n\n\nCreating a full-height / full-width modal.\n\nninja-keys {\n  --ninja-top: 0px;\n  --ninja-width: 100vw;\n  --ninja-actions-height: 100%;\n}\n\nninja-keys::part(modal-content) {\n  height: 100%;\n  border-radius: 0px;\n}\n\n\nDev Server\n\nnpm run start\n\n\nLinting\n\nTo lint the project run:\n\nnpm run lint\n\n\nFormatting\n\nPrettier is used for code formatting. It has been pre-configured according to the Lit’s style.\n\nLicense\n\nLicensed under the MIT license."
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16",
+          "title": "Konnors Ninja Keys",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/",
+          "content": ""
+        },
+        {
+          "id": "konnors-ninja-keys-pull-16-bridgetown_quick_search-index.json",
+          "title": "Index",
+          "collection": {
+            "label": "pages",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "/konnors-ninja-keys/pull/16/bridgetown_quick_search/index.json",
+          "content": "[\n  {%- assign looped = false %}\n  {%- assign documents = site.documents %}\n  {%- if site.content_engine == \"resource\" %}{% assign documents = site.resources %}{% endif %}\n  {%- for document in documents %}\n    {%- if document.title %}\n      {%- unless document.exclude_from_search or document.id == \"\" %}\n        {%- assign url = document.url %}\n        {%- if site.content_engine == \"resource\" %}{% assign url = document.relative_url %}{% endif %}\n        {%- if looped %},{% endif %}\n        {\n          \"id\": \"{{ url | slugify }}\",\n          \"title\": {{ document.title | jsonify }},\n          {%- if document.collection %}\n          \"collection\": {\n            \"label\": {{ document.collection.label | jsonify }},\n            \"name\": {{ document.collection.name | default: \"Posts\" | jsonify }}\n          },\n          {%- endif %}\n          \"categories\": {{ document.categories | join: \", \" | jsonify }},\n          \"tags\": {{ document.tags | join: \", \" | jsonify }},\n          \"url\": {{ url | jsonify }},\n          \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n        }\n        {%- assign looped = true %}\n      {%- endunless %}\n    {%- endif %}\n  {%- endfor %}\n  {%- for document in site.generated_pages %}\n    {%- if document.name contains \".md\" or document.name contains \".html\" %}\n      {%- if document.title %}\n        {%- unless document.exclude_from_search %}\n          {%- if looped %},{% endif %}\n          {\n            \"id\": \"{{ document.url | slugify }}\",\n            \"title\": {{ document.title | jsonify }},\n            \"categories\": {{ document.categories | join: \", \" | jsonify }},\n            \"tags\": {{ document.tags | join: \", \" | jsonify }},\n            \"url\": {{ document.url | jsonify }},\n            \"content\": {{ document.content | strip_html | replace_regex: \"[\\s/\\n]+\",\" \" | strip | jsonify }}\n          }\n        {%- endunless %}\n      {%- endif %}\n    {%- endif %}\n  {%- endfor %}\n]"
+        },
+        {
+          "id": "",
+          "title": "Konnors Ninja Keys",
+          "collection": {
+            "label": "data",
+            "name": "Posts"
+          },
+          "categories": "",
+          "tags": "",
+          "url": "",
+          "content": ""
+        }
+]
