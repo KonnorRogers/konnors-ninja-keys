@@ -1,3 +1,7 @@
+## v1.13.1 - 05/25/2024
+
+- fix: `internal/` exports are now accessible to fix an issue with bundlers.
+
 ## v1.13.0 - 05/25/2024
 
 - feature: `::part(ninja-action__highlight)` part added to `ninja-action`
