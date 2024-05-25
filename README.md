@@ -74,7 +74,7 @@ Mostly for usage in HTML/JS without a build system.
 ```html
 <script
   type="module"
-  src="https://unpkg.com/konnors-ninja-keys?module"
+  src="https://unpkg.com/konnors-ninja-keys/bundle/index.js?module"
 ></script>
 ```
 
@@ -82,9 +82,18 @@ or inside your module scripts
 
 ```html
 <script type="module">
-  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys?module';
+  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys/bundle/index.js?module';
 </script>
 ```
+
+### Importable routes
+
+- `"konnors-ninja-keys/index.js"`
+- `"konnors-ninja-keys/ninja-keys.js"`
+- `"konnors-ninja-keys/ninja-header.js"`
+- `"konnors-ninja-keys/bundle/index.js"`
+- `"konnors-ninja-keys/bundle/ninja-keys.js"`
+- `"konnors-ninja-keys/bundle/ninja-header.js"`
 
 ### Usage
 

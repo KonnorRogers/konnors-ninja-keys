@@ -67,12 +67,12 @@ function BuildTimer () {
       format: 'esm',
       target: "es2017",
       external: [],
-      splitting: false,
+      splitting: true,
       minify: false,
       plugins: [
         BuildTimer()
-      ]
-      // chunkNames: 'chunks/[name]-[hash]'
+      ],
+      chunkNames: 'chunks/[name]-[hash]'
     },
   ]
 
