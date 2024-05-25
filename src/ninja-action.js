@@ -30,7 +30,6 @@ export class NinjaAction extends BaseElement {
       mark {
         background-color: var(--ninja-accent-color);
         border: 2px solid var(--ninja-accent-color);
-        position: relative;
       }
 
       .ninja-action {
