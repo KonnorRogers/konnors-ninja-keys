@@ -16,17 +16,31 @@
     },
     "./ninja-header.js": {
       "import": "./src/ninja-header.js"
+    },
+    "./bundle/index.js": {
+      "import": "./bundle/index.js",
+      "types": "./src/index.d.ts"
+    },
+    "./bundle/ninja-keys.js": {
+      "import": "./bundle/ninja-keys.js",
+      "types": "./src/ninja-keys.d.ts"
+    },
+    "./bundle/ninja-header.js": {
+      "import": "./bundle/ninja-header.js",
+      "types": "./src/ninja-header.d.ts"
     }
   },
   "scripts": {
     "start:docs": "cd docs && bin/bridgetown start",
     "setup": "pnpm install && cd docs && pnpm install && bundle install",
     "build:docs": "cd docs && pnpm run build && cd - && pnpm run build:api",
+    "build:js": "node esbuild.config.js",
     "build:api": "typedoc --out ./docs/output/references/api/ ./src/**/*.js",
-    "build": "npm run clean && tsc && npm run build:cem",
+    "build": "npm run clean && tsc && npm run build:cem && npm run build:js",
+    "watch:js": "node esbuild.config.js --watch",
     "watch:cem": "custom-elements-manifest analyze --litelement --watch",
     "build:cem": "custom-elements-manifest analyze --litelement",
-    "clean": "rimraf -g \"./src/**/*.d.ts\" \"./internal/**/*.d.ts\"",
+    "clean": "rimraf -g \"./bundle/\" \"./src/**/*.d.ts\" \"./internal/**/*.d.ts\"",
     "build:watch": "tsc --watch",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
@@ -34,16 +48,14 @@
     "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "analyze": "cem analyze --litelement --globs \"src/**/*.js\"",
     "analyze:watch": "cem analyze --litelement --globs \"src/**/*.js\" --watch",
-    "serve": "wds --root-dir=. --node-resolve --watch",
+    "serve": "web-dev-server --root-dir=. --node-resolve --watch",
     "serve:prod": "MODE=prod npm run serve",
-    "bundle": "npm run build && rollup -c --file dist/ninja-keys.bundled.js",
-    "checksize": "rollup -c ; cat dist/ninja-keys.bundled.js | gzip -9 | wc -c ; rm dist/ninja-keys.bundled.js",
     "prepublish": "npm run clean && npm run build",
     "deploy:patch": "npm run clean && npm run build && npm version patch && clean-publish",
     "deploy:minor": "npm run clean && npm run build && npm version minor && clean-publish",
     "deploy:major": "npm run clean && npm run build && npm version major && clean-publish",
     "deploy-test": "rimraf package && clean-publish --without-publish --temp-dir package",
-    "test": "wtr"
+    "test": "web-test-runner"
   },
   "files": [
     "src",
@@ -78,7 +90,6 @@
     "files": [
       "dev",
       "docs",
-      "rollup.config.js",
       "web-dev-server.config.mjs"
     ]
   },
@@ -93,29 +104,24 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.9.3",
     "@open-wc/testing": "^3.1.8",
-    "@rollup/plugin-node-resolve": "^13.0.4",
-    "@rollup/plugin-replace": "^3.0.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.24",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.30.0",
     "@web/dev-server": "0.1.25",
-    "@web/dev-server-rollup": "^0.3.9",
     "@web/test-runner": "^0.16.1",
     "@web/test-runner-playwright": "^0.10.0",
-    "@webcomponents/webcomponentsjs": "^2.6.0",
+    "chalk": "^5.3.0",
     "clean-publish": "3.4.2",
+    "esbuild": "^0.21.4",
     "eslint": "^7.32.0",
     "gh-pages": "^6.1.1",
+    "glob": "^10.4.1",
     "konnors-ninja-keys": "link:./",
     "lit-analyzer": "^1.1.10",
     "playwright": "^1.42.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.28.2",
-    "rollup-plugin-minify-html-literals": "1.2.6",
-    "rollup-plugin-summary": "^1.2.3",
-    "rollup-plugin-terser": "^7.0.2",
     "typedoc": "^0.25.11",
     "typescript": "~5.0.0"
   },

@@ -420,7 +420,7 @@ export class NinjaKeys extends BaseElement {
           hotkeys(action.hotkey, (event) => {
             event.preventDefault();
             if (action.handler) {
-              action.handler(action, event);
+              action.handler(action, event, this._search);
             }
           });
         });

@@ -2,6 +2,7 @@
 
 - feature: Add `searchQuery` to `handler` functions. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)
 - feature: Added a `matcher` function to override the default matching behavior when searching a string. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)
+- feature: Add prebundled entrypoints for CDN users and for those on older bundlers. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)
 
 ## v1.11.0 - 03/06/2024
 
