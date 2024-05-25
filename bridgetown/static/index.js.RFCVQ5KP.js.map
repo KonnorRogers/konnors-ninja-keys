@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/index.js"],
-  "sourcesContent": ["// @ts-check\nimport { NinjaKeys } from './ninja-keys.js';\n\nexport {NinjaAction} from './ninja-action.js';\nexport {NinjaHeader} from './ninja-header.js';\nexport {NinjaKeys} from './ninja-keys.js';\n\nNinjaKeys.define()\n"],
-  "mappings": "mqBAOAA,EAAU,OAAO",
-  "names": ["NinjaKeys"]
-}
