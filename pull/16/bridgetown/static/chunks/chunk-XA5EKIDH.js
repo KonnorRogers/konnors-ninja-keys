@@ -48,7 +48,6 @@ import{a as x,b as j,c as S}from"/konnors-ninja-keys/pull/16/bridgetown/static/c
       mark {
         background-color: var(--ninja-accent-color);
         border: 2px solid var(--ninja-accent-color);
-        position: relative;
       }
 
       .ninja-action {
@@ -265,4 +264,4 @@ lit-html/directives/if-defined.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */
-//# sourceMappingURL=/konnors-ninja-keys/pull/16/bridgetown/static/chunks/chunk-TP7BJQFU.js.map
+//# sourceMappingURL=/konnors-ninja-keys/pull/16/bridgetown/static/chunks/chunk-XA5EKIDH.js.map
