@@ -28,7 +28,9 @@ export class NinjaAction extends BaseElement {
       }
 
       mark {
-        background-color: Highlight;
+        background-color: var(--ninja-accent-color);
+        border: 2px solid var(--ninja-accent-color);
+        position: relative;
       }
 
       .ninja-action {
@@ -181,13 +183,13 @@ export class NinjaAction extends BaseElement {
      * @private
      * @type {string | Parameters<String["replaceAll"]>[1]}
      */
-    this.__regexMatchRender = `<mark part="match-highlight">$&</mark>`
+    this.__regexMatchRender = `<mark part="ninja-action__highlight">$&</mark>`
 
     /**
      * @private
      * @type {(str: string) => string}
      */
-    this.__fuzzyMatchRender = (/** @type {string} */ str) => `<mark part="match-highlight">${str}</mark>`
+    this.__fuzzyMatchRender = (/** @type {string} */ str) => `<mark part="ninja-action__highlight">${str}</mark>`
 
   }
 
