@@ -247,6 +247,23 @@
             },
             {
               "kind": "field",
+              "name": "__regexMatchRender",
+              "privacy": "private",
+              "type": {
+                "text": "string | Parameters<String[\"replaceAll\"]>[1]"
+              },
+              "default": "`<mark part=\"match-highlight\">$&</mark>`"
+            },
+            {
+              "kind": "field",
+              "name": "__fuzzyMatchRender",
+              "privacy": "private",
+              "type": {
+                "text": "(str: string) => string"
+              }
+            },
+            {
+              "kind": "field",
               "name": "content",
               "privacy": "public",
               "attribute": "content"
@@ -1068,6 +1085,17 @@
             },
             {
               "kind": "field",
+              "name": "maxSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Max size of elements to render",
+              "default": "Infinity",
+              "attribute": "maxSize"
+            },
+            {
+              "kind": "field",
               "name": "__selected__",
               "privacy": "private",
               "type": {
@@ -1282,6 +1310,15 @@
               "fieldName": "noAutoLoadMdIcons"
             },
             {
+              "name": "maxSize",
+              "type": {
+                "text": "number"
+              },
+              "description": "Max size of elements to render",
+              "default": "Infinity",
+              "fieldName": "maxSize"
+            },
+            {
               "name": "data",
               "type": {
                 "text": "Array<INinjaAction>"
@@ -1434,9 +1471,8 @@
             },
             {
               "name": "matchRender",
-              "default": "(str) => str",
               "type": {
-                "text": "(matchedString: string) => string"
+                "text": "string | Parameters<String[\"replaceAll\"]>[1]"
               }
             }
           ]
@@ -1462,7 +1498,7 @@
               "name": "matchRender",
               "default": "(str) => str",
               "type": {
-                "text": "(matchedString: string) => string"
+                "text": "(str: string) => string"
               }
             }
           ]

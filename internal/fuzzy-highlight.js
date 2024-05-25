@@ -8,12 +8,18 @@ import { escapeStringRegexp } from "./escape-string-regexp.js"
 /**
  * @param {string} query
  * @param {string} s - The string to search for the query
- * @param {(matchedString: string) => string} matchRender
+ * @param {string | Parameters<String["replaceAll"]>[1]} matchRender
  */
-export function renderRegexHighlight(query, s, matchRender = (str) => str) {
+export function renderRegexHighlight(query, s, matchRender) {
+  if (!query.trim()) return s
+
   const queryRegexp = escapeStringRegexp(query)
 
-  return s.replaceAll(queryRegexp, (word) => matchRender(word))
+  if (typeof matchRender === "function") {
+    return s.replaceAll(queryRegexp, matchRender)
+  }
+
+  return s.replaceAll(queryRegexp, matchRender)
 }
 
 // Print out our results with matched positions
@@ -22,7 +28,7 @@ export function renderRegexHighlight(query, s, matchRender = (str) => str) {
 /**
  * @param {string} query
  * @param {string} s - The string to search for the query
- * @param {(matchedString: string) => string} matchRender
+ * @param {(str: string) => string} matchRender
  */
 export function renderFuzzyHighlight(query, s, matchRender = (str) => str) {
   if (!s) return ""
