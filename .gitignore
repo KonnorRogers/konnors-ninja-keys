@@ -9,3 +9,4 @@ node_modules/
 /internal/**/*.d.ts
 /tests/**/*.d.ts
 /bundle/
+custom-elements.json
