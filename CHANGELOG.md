@@ -1,3 +1,7 @@
+## v1.12.1 - 05/25/2024
+
+- fix: Fixed "bundle/" not being added to final files published to NPM.
+
 ## v1.12.0 - 05/25/2024
 
 - feature: Add `searchQuery` to `handler` functions. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)

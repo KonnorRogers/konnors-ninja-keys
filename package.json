@@ -59,6 +59,7 @@
   },
   "files": [
     "src",
+    "bundle",
     "types",
     "custom-elements.json",
     "README.md",
