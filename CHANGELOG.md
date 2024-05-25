@@ -1,3 +1,7 @@
+## v1.13.2 - 05/25/2024
+
+- fix: `internal/` exports are now shipped to NPM.
+
 ## v1.13.1 - 05/25/2024
 
 - fix: `internal/` exports are now accessible to fix an issue with bundlers.

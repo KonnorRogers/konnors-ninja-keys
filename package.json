@@ -28,9 +28,6 @@
     "./bundle/ninja-header.js": {
       "import": "./bundle/ninja-header.js",
       "types": "./src/ninja-header.d.ts"
-    },
-    "./internal/*.js": {
-      "import": "./internal/*.js"
     }
   },
   "scripts": {
@@ -64,6 +61,7 @@
     "src",
     "bundle",
     "types",
+    "internal",
     "custom-elements.json",
     "README.md",
     "LICENSE",
