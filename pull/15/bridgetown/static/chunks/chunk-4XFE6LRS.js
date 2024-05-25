@@ -1,0 +1,2 @@
+import{a as c}from"/konnors-ninja-keys/pull/15/bridgetown/static/chunks/chunk-S3GKFFSH.js";function w(t,l){let o=c({waitUntilFirstUpdate:!1},l);return(a,r)=>{let{update:d}=a,f=Array.isArray(t)?t:[t];a.update=function(i){f.forEach(u=>{let s=u;if(i.has(s)){let e=i.get(s),n=this[s];e!==n&&(!o.waitUntilFirstUpdate||this.hasUpdated)&&this[r](e,n)}}),d.call(this,i)}}}export{w as a};
+//# sourceMappingURL=/konnors-ninja-keys/pull/15/bridgetown/static/chunks/chunk-4XFE6LRS.js.map
