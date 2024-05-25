@@ -29,7 +29,7 @@
       "import": "./bundle/ninja-header.js",
       "types": "./src/ninja-header.d.ts"
     },
-    "./internal/*": {
+    "./internal/*.js": {
       "import": "./internal/*.js"
     }
   },
