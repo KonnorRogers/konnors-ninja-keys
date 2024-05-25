@@ -1,3 +1,8 @@
+## v1.12.0 - 05/25/2024
+
+- feature: Add `searchQuery` to `handler` functions. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)
+- feature: Added a `matcher` function to override the default matching behavior when searching a string. [#15](https://github.com/konnorrogers/ninja-keys/pulls/15)
+
 ## v1.11.0 - 03/06/2024
 
 - feature: Add fuzzy-matching via `fzy.js` [#13](https://github.com/konnorrogers/ninja-keys/pulls/13)
