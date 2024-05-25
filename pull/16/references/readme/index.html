@@ -1,0 +1,1498 @@
+<!DOCTYPE html><html class="sl-theme-light" lang="en"><head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>README</title>
+
+<!-- <base href="/konnors-ninja-keys/pull/16/"> -->
+
+<meta name="description" content="A fork of ninja-keys, designed to make ctrl+k easy.">
+<link rel="modulepreload" href="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/index.JJ4PFFTO.js">
+<link rel="modulepreload" href="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/defer.QQHJOB6A.js">
+<link rel="preload" href="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/defer.357HW7N5.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<!-- Critical CSS -->
+<link rel="stylesheet" data-turbo-track="reload" href="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/index.OOPKVDAK.css">
+<!-- Deferred CSS -->
+<noscript><link rel="stylesheet" href="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/defer.357HW7N5.css"></noscript>
+
+<!-- Entrypoints -->
+<script data-turbo-track="reload" src="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/index.JJ4PFFTO.js" type="module"></script>
+<script data-turbo-track="reload" src="/konnors-ninja-keys/pull/16/bridgetown/static/javascript/defer.QQHJOB6A.js" type="module"></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://KonnorRogers.github.io/konnors-ninja-keys/pull/16/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://KonnorRogers.github.io/konnors-ninja-keys/pull/16/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://KonnorRogers.github.io/konnors-ninja-keys/pull/16/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec4899">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name="turbo-cache-control" content="no-preview">
+
+<!-- Social stuff -->
+
+<script>
+  function getTheme () {
+    return localStorage.getItem('theme') || 'system';
+  }
+
+  function setTheme (theme) {
+    localStorage.setItem('theme', theme);
+  }
+
+  function themeIsDark() {
+    const theme = getTheme()
+    if (theme === 'system') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return theme === 'dark';
+  }
+
+  function applyTheme(newTheme) {
+    const noTransitions = Object.assign(document.createElement('style'), {
+      textContent: '* { transition: none !important; }'
+    });
+
+    this.setTheme(newTheme)
+
+    setTimeout(() => {
+      ;[...document.querySelectorAll("[data-controller='theme-switcher'] sl-menu-item")].forEach((el) => {
+        el.toggleAttribute("checked", el.getAttribute("value") === newTheme)
+      })
+    })
+
+
+    // Toggle the dark mode class without transitions
+    document.documentElement.append(noTransitions);
+    requestAnimationFrame(() => {
+      const darkMode = themeIsDark()
+      document.documentElement.classList.toggle("sl-theme-light", !darkMode)
+      document.documentElement.classList.toggle("sl-theme-dark", darkMode)
+      const ninjaKeys = document.querySelector("bridgetown-ninja-keys")
+      if (ninjaKeys) {
+        ninjaKeys.classList.toggle("dark", darkMode)
+      }
+      requestAnimationFrame(() => noTransitions.remove());
+    });
+  }
+
+  applyTheme(getTheme())
+</script>
+
+
+
+
+  </head>
+  <body class="doc " data-controller="search">
+    <kr-layout main-id="main">
+      <header class="nav-header" slot="header">
+  <nav class="top-nav" aria-labelledby="top-nav-label">
+    <sl-visually-hidden id="top-nav-label">
+      Main Navigation
+    </sl-visually-hidden>
+
+    <sl-icon-button data-controller="side-nav" data-action="click->side-nav#open" class="top-nav__hamburger__button" name="list" label="Navigation"></sl-icon-button>
+
+    <div class="top-nav__go-home">
+      <a class="nav-link logo__link" href="/konnors-ninja-keys/pull/16">
+  <span class="logo__text">
+    Ctrl+k made simple
+  </span>
+</a>
+
+
+        <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
+    v1.12.1
+  </div>
+
+    </div>
+
+    <div class="top-nav__search">
+      <sl-icon-button class="top-nav__search__button" name="search" label="Search" data-action="click->search#show">
+      </sl-icon-button>
+
+      <sl-button class="top-nav__command-palette-button" data-action="click->search#show" style="min-width: 100px;" size="medium">
+        <sl-icon slot="prefix" name="search"></sl-icon>
+        <span>Search...</span>
+        <kbd slot="suffix" style="color: var(--sl-color-neutral-600); padding: 8px">
+          Ctrl+K
+        </kbd>
+      </sl-button>
+    </div>
+
+    <div class="top-nav__links">
+      <!-- <div class="top-nav__categories"> -->
+      <!--     <a class="nav-link" href="/konnors-ninja-keys/pull/16/guides">Guides</a>
+  <a class="nav-link" href="/konnors-ninja-keys/pull/16/how-tos">How Tos</a>
+  <a class="nav-link" href="/konnors-ninja-keys/pull/16/references">References</a>
+ -->
+      <!-- </div> -->
+      <a target="_blank" rel="nofollow noopener noreferrer" aria-label="Link to GitHub" href="https://github.com/konnorrogers/konnors-ninja-keys" class="nav-link top-nav__github" no-external-icon="">
+        <sl-icon name="github"></sl-icon>
+      </a>
+      <sl-dropdown style="margin-inline-start: 8px;" data-controller="theme-switcher" aria-label="Change site theme">
+        <sl-button slot="trigger" caret="">
+          <sl-icon id="light-theme__icon" name="sun"></sl-icon>
+          <sl-icon hidden="" id="dark-theme__icon" name="moon-stars"></sl-icon>
+          <sl-icon hidden="" id="auto-theme__icon" name="display"></sl-icon>
+        </sl-button>
+        <sl-menu>
+          <sl-menu-label>
+            Toggle <kbd>\</kbd>
+          </sl-menu-label>
+
+          <sl-divider></sl-divider>
+
+          <sl-menu-item type="checkbox" id="light-theme__menu-item" checked="" value="light">
+            <span class="theme-item">
+              <sl-icon name="sun"></sl-icon>
+              <span>Light</span>
+            </span>
+          </sl-menu-item>
+
+          <sl-menu-item type="checkbox" id="dark-theme__menu-item" value="dark">
+            <span class="theme-item">
+              <sl-icon name="moon-stars"></sl-icon>
+              <span>Dark</span>
+            </span>
+          </sl-menu-item>
+
+          <sl-menu-item type="checkbox" id="auto-theme__menu-item" value="system">
+            <span class="theme-item">
+              <sl-icon name="display"></sl-icon>
+              <span>System</span>
+            </span>
+          </sl-menu-item>
+        </sl-menu>
+      </sl-dropdown>
+    </div>
+
+  </nav>
+</header>
+
+
+      <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+  <div class="side-nav__drawer__header" autofocus="" tabindex="-1">
+    <div style="display: flex; align-items: center;">
+      <a class="nav-link logo__link" href="/konnors-ninja-keys/pull/16">
+  <span class="logo__text">
+    Ctrl+k made simple
+  </span>
+</a>
+
+        <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
+    v1.12.1
+  </div>
+
+    </div>
+    <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
+  </div>
+
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/guides">Guides</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/guides/getting-started/">Getting Started</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/how-tos">How Tos</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/match-highlighting/">Match Highlighting</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/fuzzy-matching/">Fuzzy Matching</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/references">References</a></li>
+          <li class="side-nav__item is-active">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/readme/">README</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/changelog/">Changelog</a>
+  </li>
+
+      </ul>
+  </ul>
+</nav>
+
+  <sl-button slot="footer" type="primary" data-action="click->side-nav#close">Close</sl-button>
+</sl-drawer>
+
+<nav id="side-nav--desktop" slot="menu" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--desktop" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/guides">Guides</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/guides/getting-started/">Getting Started</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/how-tos">How Tos</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/match-highlighting/">Match Highlighting</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/fuzzy-matching/">Fuzzy Matching</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/references">References</a></li>
+          <li class="side-nav__item is-active">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/readme/">README</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/changelog/">Changelog</a>
+  </li>
+
+      </ul>
+  </ul>
+</nav>
+
+
+
+<main id="main" class="documentation-content flow">
+  <h1 id="readme">
+    <a href="#readme">
+      Readme
+    </a>
+  </h1>
+
+
+  <h1 id="ninja-keys">Ninja Keys</h1>
+
+<h2 id="note">
+          <a href="#note">NOTE</a>
+        </h2>
+
+<p>This is a fork of <a href="https://github.com/ssleptsov/ninja-keys" target="_blank" rel="nofollow noopener noreferrer">https://github.com/ssleptsov/ninja-keys <external-icon></external-icon></a> for adding things I (Konnor Rogers)
+wanted.</p>
+
+<p>Keyboard shortcut interface for your website that works with Vanilla JS, Vue, and React.</p>
+
+<p><img src="https://img.shields.io/npm/v/konnors-ninja-keys" alt="npm">
+<img src="https://img.shields.io/npm/dw/konnors-ninja-keys" alt="npm"></p>
+
+<h2 id="demo">
+          <a href="#demo">Demo</a>
+        </h2>
+
+<!--
+[https://ninja-keys-demo.vercel.app/](https://ninja-keys-demo.vercel.app/)
+![Demo](./docs/demo-min.gif)
+-->
+
+<h2 id="motivation">
+          <a href="#motivation">Motivation</a>
+        </h2>
+
+<p>A lot of applications support a common pattern where the user hits <kbd>⌘</kbd>+<kbd>k</kbd> (or <kbd>ctrl</kbd>+<kbd>k</kbd>) and a search UI dialog appears.
+I’ve recently seen this in Notion, Slack, Linear, Vercel and Algolia, but I’m sure there are plenty more.
+Apple Spotlight, Alfred and the Raycast app also have a similar pattern, but with different shortcuts.
+There are already some libraries built for this, but they are too framework specific, like <a href="https://github.com/livewire-ui/spotlight" target="_blank" rel="nofollow noopener noreferrer">Laravel only <external-icon></external-icon></a> or <a href="https://github.com/timc1/kbar" target="_blank" rel="nofollow noopener noreferrer">React only <external-icon></external-icon></a>
+Nevertheless, mine is not a silver bullet and if you need more framework integration, check them out too.</p>
+
+<p>I needed a keyboard interface for navigation with static websites without any frameworks.
+At the same time, I have a few Vue projects where something like this could be useful,
+so I decided to give it a try for <a href="https://open-wc.org/" target="_blank" rel="nofollow noopener noreferrer">Web Components <external-icon></external-icon></a> and <a href="https://lit.dev/" target="_blank" rel="nofollow noopener noreferrer">Lit Element <external-icon></external-icon></a>.</p>
+
+<h2 id="integrations">
+          <a href="#integrations">Integrations</a>
+        </h2>
+
+<ul>
+  <li><a href="https://codesandbox.io/s/ninja-keys-demo-vue3-bps5w?file=/public/index.html" target="_blank" rel="nofollow noopener noreferrer">Vue 3 Example - Codesandbox <external-icon></external-icon></a></li>
+  <li><a href="https://codesandbox.io/s/ninja-keys-demo-vue2-b129z" target="_blank" rel="nofollow noopener noreferrer">Vue 2 Example - Codesandbox <external-icon></external-icon></a></li>
+  <li><a href="https://codesandbox.io/s/ninja-keys-demo-reactjs-rlv4b?file=/src/App.js" target="_blank" rel="nofollow noopener noreferrer">React Example - Codesandbox <external-icon></external-icon></a></li>
+  <li><a href="https://github.com/ssleptsov/ninja-keys-demo/blob/master/components/LayoutWrapper.js#L14-L71" target="_blank" rel="nofollow noopener noreferrer">React/NextJS <external-icon></external-icon></a></li>
+  <li><a href="https://codesandbox.io/s/ninja-keys-demo-html-cf9wy?file=/index.html" target="_blank" rel="nofollow noopener noreferrer">Static Html - Codesandbox <external-icon></external-icon></a></li>
+  <li><a href="https://codesandbox.io/s/ninja-keys-demo-svelte-r31l8" target="_blank" rel="nofollow noopener noreferrer">Svelte - Codesandbox <external-icon></external-icon></a></li>
+  <li><a href="https://github.com/wobsoriano/solid-ninja-keys" target="_blank" rel="nofollow noopener noreferrer">SolidJS wrapper <external-icon></external-icon></a></li>
+</ul>
+
+<h2 id="features">
+          <a href="#features">Features</a>
+        </h2>
+
+<ul>
+  <li>Keyboard navigation</li>
+  <li>Light and dark theme built in</li>
+  <li>Built-in icon support from Material font and custom svg icons</li>
+  <li>Nested menu - a tree or flat data structure can be used</li>
+  <li>Auto register your shortcuts</li>
+  <li>Root search - for example, if you search “Dark,” it will find it within the “Theme” submenu</li>
+  <li>CSS variable to customize the view</li>
+  <li>Customizable hotkeys to open/close etc. Choose what best fits your website.</li>
+</ul>
+
+<h2 id="why-the-ninja-name">
+          <a href="#why-the-ninja-name">Why the “Ninja” name?</a>
+        </h2>
+
+<p>Because it appears from nowhere and executes any actions quickly…
+Or because it allows your users to become keyboard ninjas 🙃</p>
+
+<h2 id="install-from-npm">
+          <a href="#install-from-npm">Install from NPM</a>
+        </h2>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            shell
+          </div>
+
+          <clipboard-copy for="c2d045c1-e8d9-4d5d-997b-a07e83ba0b61" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="c2d045c1-e8d9-4d5d-997b-a07e83ba0b61" hidden="">npm i konnors-ninja-keys
+</textarea>
+        </div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i konnors-ninja-keys
+</code></pre></div></div></div>
+
+<p>Import if you are using webpack, rollup, vite or other build system.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="1b998d7d-aeee-429c-8cb8-4037ad32b6da" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="1b998d7d-aeee-429c-8cb8-4037ad32b6da" hidden="">import 'konnors-ninja-keys';
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">'</span><span class="s1">konnors-ninja-keys</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div></div>
+
+<h2 id="install-from-cdn">
+          <a href="#install-from-cdn">Install from CDN</a>
+        </h2>
+
+<p>Mostly for usage in HTML/JS without a build system.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="2c19bf05-af27-4941-864a-c87fe6a4740e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="2c19bf05-af27-4941-864a-c87fe6a4740e" hidden="">&lt;script
+  type="module"
+  src="https://unpkg.com/konnors-ninja-keys/bundle/index.js?module"
+&gt;&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script
+  </span><span class="na">type=</span><span class="s">"module"</span>
+  <span class="na">src=</span><span class="s">"https://unpkg.com/konnors-ninja-keys/bundle/index.js?module"</span>
+<span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div></div>
+
+<p>or inside your module scripts</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="c84272ff-cad9-4ef0-9a19-1d1150fbe32e" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="c84272ff-cad9-4ef0-9a19-1d1150fbe32e" hidden="">&lt;script type="module"&gt;
+  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys/bundle/index.js?module';
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"module"</span><span class="nt">&gt;</span>
+  <span class="k">import</span> <span class="p">{</span><span class="nx">NinjaKeys</span><span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">https://unpkg.com/konnors-ninja-keys/bundle/index.js?module</span><span class="dl">'</span><span class="p">;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div></div>
+
+<h3 id="importable-routes">
+          <a href="#importable-routes">Importable routes</a>
+        </h3>
+
+<ul>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/index.js"</code></li>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/ninja-keys.js"</code></li>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/ninja-header.js"</code></li>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/bundle/index.js"</code></li>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/bundle/ninja-keys.js"</code></li>
+  <li><code class="highlighter-rouge">"konnors-ninja-keys/bundle/ninja-header.js"</code></li>
+</ul>
+
+<h3 id="usage">
+          <a href="#usage">Usage</a>
+        </h3>
+
+<p>Add the tag to your HTML.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="2cbc02e0-0c9f-48cd-bc11-fa220d40a972" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="2cbc02e0-0c9f-48cd-bc11-fa220d40a972" hidden="">&lt;ninja-keys&gt;&lt;/ninja-keys&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ninja-keys&gt;&lt;/ninja-keys&gt;</span>
+</code></pre></div></div></div>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="cc52e544-67b9-4580-b0d2-34ae9399bd24" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="cc52e544-67b9-4580-b0d2-34ae9399bd24" hidden="">&lt;script&gt;
+  const ninja = document.querySelector('ninja-keys');
+  ninja.data = [
+    {
+      id: 'Projects',
+      title: 'Open Projects',
+      hotkey: 'ctrl+N',
+      icon: 'apps',
+      section: 'Projects',
+      handler: (_data, _event) =&gt; {
+        // it's auto register above hotkey with this handler
+        alert('Your logic to handle');
+      },
+    },
+    {
+      id: 'Users',
+      title: 'Go to user profile',
+      icon: 'person',
+      matcher: (action, { searchString, searchRegex }) =&gt; searchString.match(/.+@.+/),
+      handler: (action, event, searchQuery) =&gt; {
+        // simple handler
+        alert(`Visiting user profile: ${searchQuery}`);
+      },
+    },
+    {
+      id: 'Theme',
+      title: 'Change theme...',
+      icon: 'desktop_windows',
+      children: ['Light Theme', 'Dark Theme', 'System Theme'],
+      hotkey: 'ctrl+T',
+      handler: () =&gt; {
+        // open menu if closed. Because you can open directly that menu from it's hotkey
+        ninja.open({parent: 'Theme'});
+        // if menu opened that prevent it from closing on select that action, no need if you don't have child actions
+        return {keepOpen: true};
+      },
+    },
+    {
+      id: 'Light Theme',
+      title: 'Change theme to Light',
+      icon: 'light_mode',
+      parent: 'Theme',
+      handler: () =&gt; {
+        // simple handler
+        document.documentElement.classList.remove('dark');
+      },
+    },
+    {
+      id: 'Dark Theme',
+      title: 'Change theme to Dark',
+      icon: 'dark_mode',
+      parent: 'Theme',
+      handler: () =&gt; {
+        // simple handler
+        document.documentElement.classList.add('dark');
+      },
+    },
+  ];
+&lt;/script&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script&gt;</span>
+  <span class="kd">const</span> <span class="nx">ninja</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">ninja-keys</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">ninja</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Projects</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Open Projects</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">hotkey</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ctrl+N</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">icon</span><span class="p">:</span> <span class="dl">'</span><span class="s1">apps</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">section</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Projects</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">handler</span><span class="p">:</span> <span class="p">(</span><span class="nx">_data</span><span class="p">,</span> <span class="nx">_event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// it's auto register above hotkey with this handler</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Your logic to handle</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Users</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Go to user profile</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">icon</span><span class="p">:</span> <span class="dl">'</span><span class="s1">person</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">matcher</span><span class="p">:</span> <span class="p">(</span><span class="nx">action</span><span class="p">,</span> <span class="p">{</span> <span class="nx">searchString</span><span class="p">,</span> <span class="nx">searchRegex</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">searchString</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/.+@.+/</span><span class="p">),</span>
+      <span class="na">handler</span><span class="p">:</span> <span class="p">(</span><span class="nx">action</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">searchQuery</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// simple handler</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">`Visiting user profile: </span><span class="p">${</span><span class="nx">searchQuery</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Change theme...</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">icon</span><span class="p">:</span> <span class="dl">'</span><span class="s1">desktop_windows</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">children</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Light Theme</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Dark Theme</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">System Theme</span><span class="dl">'</span><span class="p">],</span>
+      <span class="na">hotkey</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ctrl+T</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">handler</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// open menu if closed. Because you can open directly that menu from it's hotkey</span>
+        <span class="nx">ninja</span><span class="p">.</span><span class="nx">open</span><span class="p">({</span><span class="na">parent</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">});</span>
+        <span class="c1">// if menu opened that prevent it from closing on select that action, no need if you don't have child actions</span>
+        <span class="k">return</span> <span class="p">{</span><span class="na">keepOpen</span><span class="p">:</span> <span class="kc">true</span><span class="p">};</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Light Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Change theme to Light</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">icon</span><span class="p">:</span> <span class="dl">'</span><span class="s1">light_mode</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">parent</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">handler</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// simple handler</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="dl">'</span><span class="s1">dark</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Dark Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Change theme to Dark</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">icon</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dark_mode</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">parent</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">handler</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="c1">// simple handler</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="dl">'</span><span class="s1">dark</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">];</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div></div>
+
+<p>Library using flat data structure inside, as in the example above. But you can also use a tree structure as below:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="7b7ed9c5-a72d-4fda-9b9b-50c80b9bab4d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="7b7ed9c5-a72d-4fda-9b9b-50c80b9bab4d" hidden="">{
+  id: 'Theme',
+  children: [
+    { id: 'light', title: 'light_mode', },
+    { id: 'System Theme',
+      children: [
+        { title: 'Sub item 1' },
+        { title: 'Sub item 2' }
+      ]
+    }
+  ]
+}
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">light</span><span class="dl">'</span><span class="p">,</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">light_mode</span><span class="dl">'</span><span class="p">,</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">System Theme</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">children</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Sub item 1</span><span class="dl">'</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Sub item 2</span><span class="dl">'</span> <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<h2 id="attributes">
+          <a href="#attributes">Attributes</a>
+        </h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>placeholder</td>
+      <td>Type a command or search…</td>
+      <td>Placeholder for search</td>
+    </tr>
+    <tr>
+      <td>disableHotkeys</td>
+      <td>false</td>
+      <td>If attribute exist will register all hotkey for all actions</td>
+    </tr>
+    <tr>
+      <td>hideBreadcrumbs</td>
+      <td>false</td>
+      <td>Hide breadcrumbs on header if true</td>
+    </tr>
+    <tr>
+      <td>openHotkey</td>
+      <td>cmd+k,ctrl+k</td>
+      <td>Open or close shortcut</td>
+    </tr>
+    <tr>
+      <td>navigationUpHotkey</td>
+      <td>up,shift+tab</td>
+      <td>Navigation up shortcuts</td>
+    </tr>
+    <tr>
+      <td>navigationDownHotkey</td>
+      <td>down,tab</td>
+      <td>Navigation down shortcuts</td>
+    </tr>
+    <tr>
+      <td>closeHotkey</td>
+      <td>esc</td>
+      <td>Close shortcut</td>
+    </tr>
+    <tr>
+      <td>goBackHotkey</td>
+      <td>backspace</td>
+      <td>Go back on one level if has parent menu</td>
+    </tr>
+    <tr>
+      <td>selectHotkey</td>
+      <td>enter</td>
+      <td>Select action and execute handler or open submenu</td>
+    </tr>
+    <tr>
+      <td>hotKeysJoinedView</td>
+      <td>false</td>
+      <td>If exist/true will display hotkeys inside one element</td>
+    </tr>
+    <tr>
+      <td>noAutoLoadMdIcons</td>
+      <td>false</td>
+      <td>If exist it disable load material icons font on connect</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example">
+          <a href="#example">Example</a>
+        </h4>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="c6103645-fafd-483e-bd8a-c2ac78c5f8d2" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="c6103645-fafd-483e-bd8a-c2ac78c5f8d2" hidden="">&lt;ninja-keys
+  placeholder="Must app is awesome"
+  openHotkey="cmd+l"
+  hideBreadcrumbs
+&gt;&lt;/ninja-keys&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ninja-keys</span>
+  <span class="na">placeholder=</span><span class="s">"Must app is awesome"</span>
+  <span class="na">openHotkey=</span><span class="s">"cmd+l"</span>
+  <span class="na">hideBreadcrumbs</span>
+<span class="nt">&gt;&lt;/ninja-keys&gt;</span>
+</code></pre></div></div></div>
+
+<h2 id="data">
+          <a href="#data">Data</a>
+        </h2>
+
+<p>Array of <code class="highlighter-rouge">INinjaAction</code> - interface properties below
+| Name | Type | Description |
+|———-|————————-|—————————————————————————————-|
+| id | string | Unique id/text. Will be displayed as breadcrumb in multimenu |
+| title | string | Title of action |
+| hotkey | string(optional) | Shortcut to display and register |
+| handler | (action, event) =&gt; void (optional) | Function to execute on select |
+| matcher | (action, { searchString, searchRegex }) =&gt; boolean | Function to execute on search to override the default matcher. |
+| mdIcon | string(optional) | Material Design font icon name |
+| icon | string(optional) | Html to render as custom icon |
+| parent | string(optional) | If using flat structure use id of actions to make a multilevel menu |
+| keywords | string(optional) | Keywords to use for search |
+| children | Array<string>(optional) | If using flat structure then ids of child menu actions. Not required on tree structure |
+| section | string(optional) | Section text. Like a header will be group with other same sections |
+| content | string(optional) | Content text. Allows you to display additional info besides just a title. |
+| href    | string(optional) | When an href is set, under the hood it will render an `<a>` tag.
+| attributes | {}(optional)  | additional attributes to add when using "href". Typically `rel` and `target`.</a></string></p>
+
+<h2 id="methods">
+          <a href="#methods">Methods</a>
+        </h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Arg</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">open</code></td>
+      <td>{ parent?: string }</td>
+      <td>Open menu with parent, if null then open root menu</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">close</code></td>
+      <td>&nbsp;</td>
+      <td>Close menu</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">setParent</code></td>
+      <td>parent?: string</td>
+      <td>Navigate to parent menu</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-1">
+          <a href="#example-1">Example</a>
+        </h4>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="1b438fa9-c281-4016-9986-35fc6869ef73" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="1b438fa9-c281-4016-9986-35fc6869ef73" hidden="">const ninja = document.querySelector('ninja-keys');
+ninja.open();
+// or
+ninja.open({parent: 'Theme'});
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">ninja</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">ninja-keys</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">ninja</span><span class="p">.</span><span class="nx">open</span><span class="p">();</span>
+<span class="c1">// or</span>
+<span class="nx">ninja</span><span class="p">.</span><span class="nx">open</span><span class="p">({</span><span class="na">parent</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Theme</span><span class="dl">'</span><span class="p">});</span>
+</code></pre></div></div></div>
+
+<h3 id="events">
+          <a href="#events">Events</a>
+        </h3>
+
+<p>Component wide events</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">change</code></td>
+      <td>Emitted when on each change of search input</td>
+      <td><code class="highlighter-rouge">{ detail: { search: string, actions: Array&lt;NinjaAction&gt; } }</code></td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">selected</code></td>
+      <td>Emitted when on user selected action or on submit of input</td>
+      <td><code class="highlighter-rouge">{ detail: { search: string, action: NinjaAction or undefined }}</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Both <code class="highlighter-rouge">handler</code> of action and component event <code class="highlighter-rouge">selected</code> emitted when user submit form or select item.</p>
+
+<p>But event <code class="highlighter-rouge">selected</code> can be used to handle edge cases, so it’s not recommended to write each action logic here. It’s better to use the action <code class="highlighter-rouge">handler</code> property.</p>
+
+<p>For example, if a user enters a search query and there is an empty list, listening to this event you can handle that.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="26088f1e-6997-4074-98e9-0d71b1fbef18" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="26088f1e-6997-4074-98e9-0d71b1fbef18" hidden="">ninja.addEventListener('change', (event) =&gt; {
+  console.log('ninja on change', event.detail);
+  // detail = {search: 'your search query', actions: Array&lt;NinjaAction&gt;}
+});
+ninja.addEventListener('selected', (event) =&gt; {
+  console.log('ninja on selected', event.detail);
+  // detail = {search: 'your search query', action: NinjaAction | undefined }
+  if (event.detail.action) {
+    // perform API search for example
+  }
+});
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ninja</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">change</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">ninja on change</span><span class="dl">'</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">);</span>
+  <span class="c1">// detail = {search: 'your search query', actions: Array&lt;NinjaAction&gt;}</span>
+<span class="p">});</span>
+<span class="nx">ninja</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">selected</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">ninja on selected</span><span class="dl">'</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">);</span>
+  <span class="c1">// detail = {search: 'your search query', action: NinjaAction | undefined }</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// perform API search for example</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div></div>
+
+<h2 id="themes">
+          <a href="#themes">Themes</a>
+        </h2>
+
+<p>Component supports a dark theme out-of-box. You just need to add a class.</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="1ce0aee0-c528-499d-b35d-04a0361d3559" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="1ce0aee0-c528-499d-b35d-04a0361d3559" hidden="">&lt;ninja-keys class="dark"&gt;&lt;/ninja-keys&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ninja-keys</span> <span class="na">class=</span><span class="s">"dark"</span><span class="nt">&gt;&lt;/ninja-keys&gt;</span>
+</code></pre></div></div></div>
+
+<p>If you need more style control, use any of the CSS variables below.</p>
+
+<h3 id="css-variables">
+          <a href="#css-variables">CSS variables</a>
+        </h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>–ninja-width</td>
+      <td>640px;</td>
+    </tr>
+    <tr>
+      <td>–ninja-backdrop-filter</td>
+      <td>none;</td>
+    </tr>
+    <tr>
+      <td>–ninja-overflow-background</td>
+      <td>rgba(255, 255, 255, 0.5);</td>
+    </tr>
+    <tr>
+      <td>–ninja-text-color</td>
+      <td>rgb(60, 65, 73);</td>
+    </tr>
+    <tr>
+      <td>–ninja-font-size</td>
+      <td>16px;</td>
+    </tr>
+    <tr>
+      <td>–ninja-top</td>
+      <td>20%;</td>
+    </tr>
+    <tr>
+      <td>–ninja-key-border-radius</td>
+      <td>0.25em</td>
+    </tr>
+    <tr>
+      <td>–ninja-accent-color</td>
+      <td>rgb(110, 94, 210);</td>
+    </tr>
+    <tr>
+      <td>–ninja-secondary-background-color</td>
+      <td>rgb(239, 241, 244);</td>
+    </tr>
+    <tr>
+      <td>–ninja-secondary-text-color</td>
+      <td>rgb(107, 111, 118);</td>
+    </tr>
+    <tr>
+      <td>–ninja-selected-background</td>
+      <td>rgb(248, 249, 251);</td>
+    </tr>
+    <tr>
+      <td>–ninja-icon-color</td>
+      <td>var(–ninja-secondary-text-color);</td>
+    </tr>
+    <tr>
+      <td>–ninja-icon-size</td>
+      <td>1.2em;</td>
+    </tr>
+    <tr>
+      <td>–ninja-separate-border</td>
+      <td>1px solid var(–ninja-secondary-background-color);</td>
+    </tr>
+    <tr>
+      <td>–ninja-modal-background</td>
+      <td>#fff;</td>
+    </tr>
+    <tr>
+      <td>–ninja-modal-shadow</td>
+      <td>rgb(0 0 0 / 50%) 0px 16px 70px;</td>
+    </tr>
+    <tr>
+      <td>–ninja-actions-height</td>
+      <td>300px;</td>
+    </tr>
+    <tr>
+      <td>–ninja-group-text-color</td>
+      <td>rgb(144, 149, 157);</td>
+    </tr>
+    <tr>
+      <td>–ninja-footer-background</td>
+      <td>rgba(242, 242, 242, 0.4);</td>
+    </tr>
+    <tr>
+      <td>–ninja-placeholder-color</td>
+      <td>#8e8e8e</td>
+    </tr>
+    <tr>
+      <td>–ninja-z-index</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-2">
+          <a href="#example-2">Example</a>
+        </h4>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            CSS
+          </div>
+
+          <clipboard-copy for="f4ae7cfe-f60d-44c5-89b7-572f78beab21" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="f4ae7cfe-f60d-44c5-89b7-572f78beab21" hidden="">ninja-keys {
+  --ninja-width: 400px;
+}
+</textarea>
+        </div>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">ninja-keys</span> <span class="p">{</span>
+  <span class="py">--ninja-width</span><span class="p">:</span> <span class="m">400px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<h3 id="css-shadow-parts">
+          <a href="#css-shadow-parts">CSS Shadow Parts</a>
+        </h3>
+
+<p>Allowing you to style specific elements from your style.
+Because styles are encapsulated by Shadow DOM, it will be annoying to create css variables for all properties.
+That’s why you can use <code class="highlighter-rouge">::part</code> to make a custom look for the component.
+It’s supported by <a href="https://caniuse.com/mdn-css_selectors_part" target="_blank" rel="nofollow noopener noreferrer">all modern browsers <external-icon></external-icon></a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>actions-list</td>
+      <td>Element that wraps all child elements.</td>
+    </tr>
+    <tr>
+      <td>ninja-action</td>
+      <td>Single action</td>
+    </tr>
+    <tr>
+      <td>ninja-selected</td>
+      <td>Selected action</td>
+    </tr>
+    <tr>
+      <td>ninja-input</td>
+      <td>Input element</td>
+    </tr>
+    <tr>
+      <td>ninja-input-wrapper</td>
+      <td>Wrapper element around div, useful for advanced styles</td>
+    </tr>
+    <tr>
+      <td>ninja-content</td>
+      <td>Wrapper element around content</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="example-style-using-parts">
+          <a href="#example-style-using-parts">Example style using parts</a>
+        </h4>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            CSS
+          </div>
+
+          <clipboard-copy for="25d2b770-706f-4e75-a68e-d95ac179d55d" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="25d2b770-706f-4e75-a68e-d95ac179d55d" hidden="">ninja-keys::part(actions-list) {
+  padding: 8px;
+}
+ninja-keys::part(ninja-action) {
+  border-radius: 8px;
+  border-left: none;
+}
+
+ninja-keys::part(ninja-selected) {
+  background: rgba(51, 51, 51, 0.1);
+}
+
+ninja-keys::part(ninja-input) {
+  color: #14b8a6;
+}
+
+ninja-keys::part(ninja-input)::placeholder {
+  color: #f43f5e;
+}
+
+ninja-keys::part(ninja-input-wrapper) {
+  background: rgba(244, 63, 93, 0.3);
+}
+</textarea>
+        </div>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">actions-list</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">ninja-action</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span>
+  <span class="nl">border-left</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">ninja-selected</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">51</span><span class="p">,</span> <span class="m">51</span><span class="p">,</span> <span class="m">51</span><span class="p">,</span> <span class="m">0.1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">ninja-input</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#14b8a6</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">ninja-input</span><span class="o">)</span><span class="nd">::placeholder</span> <span class="p">{</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="m">#f43f5e</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">ninja-input-wrapper</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">rgba</span><span class="p">(</span><span class="m">244</span><span class="p">,</span> <span class="m">63</span><span class="p">,</span> <span class="m">93</span><span class="p">,</span> <span class="m">0.3</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<h3 id="icons">
+          <a href="#icons">Icons</a>
+        </h3>
+
+<p>By default, components use icons from <a href="https://fonts.google.com/icons" target="_blank" rel="nofollow noopener noreferrer">https://fonts.google.com/icons <external-icon></external-icon></a></p>
+
+<p>For example, you can just set <code class="highlighter-rouge">mdIcon</code> to <code class="highlighter-rouge">light_mode</code> to render a sun icon.</p>
+
+<p>To add Material icons for your website, you need to add them to your HTML, for example</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="da5beb7c-377e-455f-a41f-8776a3dd32ec" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="da5beb7c-377e-455f-a41f-8776a3dd32ec" hidden="">&lt;link
+  href="https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block"
+  rel="stylesheet"
+/&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span>
+  <span class="na">href=</span><span class="s">"https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block"</span>
+  <span class="na">rel=</span><span class="s">"stylesheet"</span>
+<span class="nt">/&gt;</span>
+</code></pre></div></div></div>
+
+<p>If you want custom icons, you can use <code class="highlighter-rouge">svg</code> or <code class="highlighter-rouge">img</code> to insert it with an <code class="highlighter-rouge">icon</code> property for action with <code class="highlighter-rouge">ninja-icon</code> class.
+Example:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            JavaScript
+          </div>
+
+          <clipboard-copy for="30568b45-053f-4932-a259-b40a1113269b" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="30568b45-053f-4932-a259-b40a1113269b" hidden="">{
+  title: 'Search projects...',
+  icon: `&lt;svg xmlns="http://www.w3.org/2000/svg" class="ninja-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" /&gt;
+  &lt;/svg&gt;`,
+  section: 'Projects',
+},
+</textarea>
+        </div>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="nl">title</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Search projects...</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">icon</span><span class="p">:</span> <span class="s2">`&lt;svg xmlns="http://www.w3.org/2000/svg" class="ninja-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"&gt;
+    &lt;path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" /&gt;
+  &lt;/svg&gt;`</span><span class="p">,</span>
+  <span class="nx">section</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Projects</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">},</span>
+</code></pre></div></div></div>
+
+<p>You can also change the width and font using CSS variables</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            CSS
+          </div>
+
+          <clipboard-copy for="fec93f0b-886a-4fbd-a822-97d11fc7138c" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="fec93f0b-886a-4fbd-a822-97d11fc7138c" hidden="">ninja-keys {
+  --ninja-icon-size: 1em;
+}
+</textarea>
+        </div>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">ninja-keys</span> <span class="p">{</span>
+  <span class="py">--ninja-icon-size</span><span class="p">:</span> <span class="m">1em</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<h3 id="change-or-hide-footer">
+          <a href="#change-or-hide-footer">Change or hide footer</a>
+        </h3>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            HTML
+          </div>
+
+          <clipboard-copy for="dc589f79-9079-4adb-a8be-b1cb063ed516" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="dc589f79-9079-4adb-a8be-b1cb063ed516" hidden="">&lt;ninja-keys&gt;
+  &lt;div slot="footer"&gt;You can use a custom footer or empty div to hide it&lt;/div&gt;
+&lt;/ninja-keys&gt;
+</textarea>
+        </div>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ninja-keys&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"footer"</span><span class="nt">&gt;</span>You can use a custom footer or empty div to hide it<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/ninja-keys&gt;</span>
+</code></pre></div></div></div>
+
+<h2 id="creating-a-full-height--full-width-modal">
+          <a href="#creating-a-full-height--full-width-modal">Creating a full-height / full-width modal.</a>
+        </h2>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            CSS
+          </div>
+
+          <clipboard-copy for="69e14ac0-82d4-44e3-ae40-5d244103817f" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="69e14ac0-82d4-44e3-ae40-5d244103817f" hidden="">ninja-keys {
+  --ninja-top: 0px;
+  --ninja-width: 100vw;
+  --ninja-actions-height: 100%;
+}
+
+ninja-keys::part(modal-content) {
+  height: 100%;
+  border-radius: 0px;
+}
+</textarea>
+        </div>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">ninja-keys</span> <span class="p">{</span>
+  <span class="py">--ninja-top</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="py">--ninja-width</span><span class="p">:</span> <span class="m">100vw</span><span class="p">;</span>
+  <span class="py">--ninja-actions-height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">ninja-keys</span><span class="nd">::part</span><span class="o">(</span><span class="nt">modal-content</span><span class="o">)</span> <span class="p">{</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">0px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div></div>
+
+<h2 id="dev-server">
+          <a href="#dev-server">Dev Server</a>
+        </h2>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            shell
+          </div>
+
+          <clipboard-copy for="d1b38829-f1bc-415e-8c14-b1b46e0253db" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="d1b38829-f1bc-415e-8c14-b1b46e0253db" hidden="">npm run start
+</textarea>
+        </div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run start
+</code></pre></div></div></div>
+
+<h2 id="linting">
+          <a href="#linting">Linting</a>
+        </h2>
+
+<p>To lint the project run:</p>
+
+<div class="syntax-block">        <div class="syntax-block__actions">
+          <div class="syntax-block__badge">
+            shell
+          </div>
+
+          <clipboard-copy for="c3ff311b-69a3-467c-ac5d-64fb32c34a30" class="button clipboard clipboard--idle syntax-block__clipboard" aria-label="Copy to clipboard" data-controller="clipboard">
+            <sl-icon class="clipboard__icon--success" name="clipboard-check"></sl-icon>
+            <sl-icon class="clipboard__icon--idle" name="clipboard"></sl-icon>
+          </clipboard-copy>
+
+          <textarea id="c3ff311b-69a3-467c-ac5d-64fb32c34a30" hidden="">npm run lint
+</textarea>
+        </div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run lint
+</code></pre></div></div></div>
+
+<h2 id="formatting">
+          <a href="#formatting">Formatting</a>
+        </h2>
+
+<p><a href="https://prettier.io/" target="_blank" rel="nofollow noopener noreferrer">Prettier <external-icon></external-icon></a> is used for code formatting. It has been pre-configured according to the Lit’s style.</p>
+
+<h2 id="license">
+          <a href="#license">License</a>
+        </h2>
+
+<p>Licensed under <a href="./LICENSE">the MIT license</a>.</p>
+
+
+
+    <div class="pagination-footer">
+
+      <div></div>
+
+      <sl-button class="next-page" href="/konnors-ninja-keys/pull/16/references/changelog/">
+        <span style="text-align: start; display: block;">
+          <span style="display: block; color: var(--sl-color-neutral-500); font-size: 0.85rem;">Next Page</span>
+          <pagination-title>
+            Changelog
+          </pagination-title>
+        </span>
+
+        <span slot="suffix">
+          <sl-icon name="arrow-right" style="font-size: 1.5rem; display: block;"></sl-icon>
+        </span>
+
+      </sl-button>
+  </div>
+
+
+</main>
+
+<nav slot="aside" class="table-of-contents" id="table-of-contents" aria-label="Table of contents" tabindex="-1" data-controller="scroll-spy">
+  <h2 class="table-of-contents__header">
+    Readme
+  </h2>
+  <ol class="table-of-contents__list">
+  <li class="side-nav__item">
+        <a href="#note" class="side-nav__link">NOTE</a>
+      </li><li class="side-nav__item">
+        <a href="#demo" class="side-nav__link">Demo</a>
+      </li><li class="side-nav__item">
+        <a href="#motivation" class="side-nav__link">Motivation</a>
+      </li><li class="side-nav__item">
+        <a href="#integrations" class="side-nav__link">Integrations</a>
+      </li><li class="side-nav__item">
+        <a href="#features" class="side-nav__link">Features</a>
+      </li><li class="side-nav__item">
+        <a href="#why-the-ninja-name" class="side-nav__link">Why the “Ninja” name?</a>
+      </li><li class="side-nav__item">
+        <a href="#install-from-npm" class="side-nav__link">Install from NPM</a>
+      </li><li class="side-nav__item">
+        <a href="#install-from-cdn" class="side-nav__link">Install from CDN</a>
+      </li><li class="side-nav__item">
+        <a href="#importable-routes" class="side-nav__link">Importable routes</a>
+      </li><li class="side-nav__item">
+        <a href="#usage" class="side-nav__link">Usage</a>
+      </li><li class="side-nav__item">
+        <a href="#attributes" class="side-nav__link">Attributes</a>
+      </li><li class="side-nav__item">
+        <a href="#example" class="side-nav__link">Example</a>
+      </li><li class="side-nav__item">
+        <a href="#data" class="side-nav__link">Data</a>
+      </li><li class="side-nav__item">
+        <a href="#methods" class="side-nav__link">Methods</a>
+      </li><li class="side-nav__item">
+        <a href="#example-1" class="side-nav__link">Example</a>
+      </li><li class="side-nav__item">
+        <a href="#events" class="side-nav__link">Events</a>
+      </li><li class="side-nav__item">
+        <a href="#themes" class="side-nav__link">Themes</a>
+      </li><li class="side-nav__item">
+        <a href="#css-variables" class="side-nav__link">CSS variables</a>
+      </li><li class="side-nav__item">
+        <a href="#example-2" class="side-nav__link">Example</a>
+      </li><li class="side-nav__item">
+        <a href="#css-shadow-parts" class="side-nav__link">CSS Shadow Parts</a>
+      </li><li class="side-nav__item">
+        <a href="#example-style-using-parts" class="side-nav__link">Example style using parts</a>
+      </li><li class="side-nav__item">
+        <a href="#icons" class="side-nav__link">Icons</a>
+      </li><li class="side-nav__item">
+        <a href="#change-or-hide-footer" class="side-nav__link">Change or hide footer</a>
+      </li><li class="side-nav__item">
+        <a href="#creating-a-full-height--full-width-modal" class="side-nav__link">Creating a full-height / full-width modal.</a>
+      </li><li class="side-nav__item">
+        <a href="#dev-server" class="side-nav__link">Dev Server</a>
+      </li><li class="side-nav__item">
+        <a href="#linting" class="side-nav__link">Linting</a>
+      </li><li class="side-nav__item">
+        <a href="#formatting" class="side-nav__link">Formatting</a>
+      </li><li class="side-nav__item">
+        <a href="#license" class="side-nav__link">License</a>
+      </li></ol>
+</nav>
+
+
+
+      <footer slot="main-footer">
+  <div class="footer">
+    Found a mistake? Want to contribute?
+    <a href="https://github.com/konnorrogers/konnors-ninja-keys/tree/16/merge/docs/src/references/00-readme.md" target="_blank" rel="nofollow noopener noreferrer"> Edit this page on GitHub  <external-icon></external-icon></a>
+
+    <div style="margin: 1.5rem 0;"></div>
+
+    Built with <a href="https://www.bridgetownrb.com/" rel="nofollow noopener noreferrer" external="" target="_blank">Bridgetown <external-icon></external-icon></a> and <a href="https://shoelace.style" rel="nofollow noopener noreferrer" external="" target="_blank">Shoelace <external-icon></external-icon></a>.
+  </div>
+</footer>
+
+
+    </kr-layout>
+
+    <sl-drawer id="side-nav-drawer" hidden="" no-header="" placement="start" class="drawer-placement-start side-nav__drawer" style="--size: clamp(400px, 75%, 1536px);" data-controller="side-nav" slot="dialog">
+  <div class="side-nav__drawer__header" autofocus="" tabindex="-1">
+    <div style="display: flex; align-items: center;">
+      <a class="nav-link logo__link" href="/konnors-ninja-keys/pull/16">
+  <span class="logo__text">
+    Ctrl+k made simple
+  </span>
+</a>
+
+        <div style="font-size: var(--sl-font-large); margin-left: 0.5rem;">
+    v1.12.1
+  </div>
+
+    </div>
+    <sl-icon-button name="x-lg" label="Close" data-action="click->side-nav#close"></sl-icon-button>
+  </div>
+
+  <nav id="side-nav--mobile" slot="" aria-label="Side Nav" tabindex="-1" class="side-nav side-nav--mobile" data-preserve-scroll="">
+  <ul class="side-nav__menu">
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/guides">Guides</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/guides/getting-started/">Getting Started</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/how-tos">How Tos</a></li>
+          <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/match-highlighting/">Match Highlighting</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/how-tos/fuzzy-matching/">Fuzzy Matching</a>
+  </li>
+
+      </ul>
+      <ul class="side-nav__category-menu">
+        <li class="side-nav__category-header"><a class="side-nav__category-link" href="/konnors-ninja-keys/pull/16/references">References</a></li>
+          <li class="side-nav__item is-active">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/readme/">README</a>
+  </li>
+  <li class="side-nav__item ">
+    <a class="side-nav__link" href="/konnors-ninja-keys/pull/16/references/changelog/">Changelog</a>
+  </li>
+
+      </ul>
+  </ul>
+</nav>
+
+  <sl-button slot="footer" type="primary" data-action="click->side-nav#close">Close</sl-button>
+</sl-drawer>
+
+    <bridgetown-ninja-keys search-type="fuzzy" highlight-matches="" endpoint="/konnors-ninja-keys/pull/16/bridgetown_quick_search/index.json"></bridgetown-ninja-keys>
+  
+
+</body></html>
