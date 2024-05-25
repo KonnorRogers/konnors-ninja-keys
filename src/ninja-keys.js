@@ -420,7 +420,7 @@ export class NinjaKeys extends BaseElement {
           hotkeys(action.hotkey, (event) => {
             event.preventDefault();
             if (action.handler) {
-              action.handler(action, event);
+              action.handler(action, event, this._search);
             }
           });
         });
@@ -635,42 +635,59 @@ export class NinjaKeys extends BaseElement {
    * @param {Array<INinjaAction>} flatData
    */
   findMatches (flatData) {
+    // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
+    const searchRegex = this.stringToRegExp(this._search);
+
+    const searchOptions = {
+      searchRegex,
+      searchString: this._search
+    }
+
     return flatData.filter((action) => {
       if (this._search.trim() === "") {
         return action.parent === this.currentRoot && true;
       }
 
-      const { title, keywords, content } = action
+      const { matcher, title, keywords, content } = action
 
-      let matcher = false
+      let isMatch = null
 
-      if (this.searchType === "regex") {
-        // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
-        const regex = this.stringToRegExp(this._search);
+      if (typeof matcher === "function") {
+        isMatch = matcher(action, searchOptions)
+      }
 
-        matcher = Boolean(
-          (title && title.match(regex))
-          || (keywords && keywords.match(regex))
-          || (content && content.match(regex))
+      if (isMatch == null && !this.searchType || this.searchType === "regex") {
+        // @TODO: At some point if we ever want to support sorting based on "boosting" we may need a separate "searchType",
+        // or we could provide "intrinsic" boosts users can override.
+        isMatch = Boolean(
+          (title && title.match(searchRegex))
+          || (keywords && keywords.match(searchRegex))
+          || (content && content.match(searchRegex))
         )
       }
 
-      if (this.searchType === "fuzzy") {
+      if (isMatch == null && this.searchType === "fuzzy") {
         const search = this._search
 
-        matcher = Boolean(
+        // @TODO: At some point if we ever want to support sorting based on "boosting" we may need a separate "searchType"
+        // or we could provide "intrinsic" boosts users can override.
+        isMatch = Boolean(
           (title && hasMatch(search, title))
           || (keywords && hasMatch(search, keywords))
           || (content && hasMatch(search, content))
         )
       }
 
-      if (!this.currentRoot && this._search) {
-        // global search for items on root
-        return matcher;
+      if (isMatch == null) {
+        isMatch = Boolean(isMatch)
       }
 
-      return action.parent === this.currentRoot && matcher;
+      if (!this.currentRoot && this._search) {
+        // global search for items on root
+        return isMatch;
+      }
+
+      return action.parent === this.currentRoot && isMatch;
     });
   }
 
@@ -828,7 +845,7 @@ export class NinjaKeys extends BaseElement {
     this._headerRef.value?.focusSearch();
 
     if (action.handler) {
-      const result = action.handler(action, event);
+      const result = action.handler(action, event, this._search);
       if (!result?.keepOpen) {
         this.close();
       }

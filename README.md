@@ -74,7 +74,7 @@ Mostly for usage in HTML/JS without a build system.
 ```html
 <script
   type="module"
-  src="https://unpkg.com/konnors-ninja-keys?module"
+  src="https://unpkg.com/konnors-ninja-keys/bundle/index.js?module"
 ></script>
 ```
 
@@ -82,9 +82,18 @@ or inside your module scripts
 
 ```html
 <script type="module">
-  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys?module';
+  import {NinjaKeys} from 'https://unpkg.com/konnors-ninja-keys/bundle/index.js?module';
 </script>
 ```
+
+### Importable routes
+
+- `"konnors-ninja-keys/index.js"`
+- `"konnors-ninja-keys/ninja-keys.js"`
+- `"konnors-ninja-keys/ninja-header.js"`
+- `"konnors-ninja-keys/bundle/index.js"`
+- `"konnors-ninja-keys/bundle/ninja-keys.js"`
+- `"konnors-ninja-keys/bundle/ninja-header.js"`
 
 ### Usage
 
@@ -107,6 +116,16 @@ Add the tag to your HTML.
       handler: (_data, _event) => {
         // it's auto register above hotkey with this handler
         alert('Your logic to handle');
+      },
+    },
+    {
+      id: 'Users',
+      title: 'Go to user profile',
+      icon: 'person',
+      matcher: (action, { searchString, searchRegex }) => searchString.match(/.+@.+/),
+      handler: (action, event, searchQuery) => {
+        // simple handler
+        alert(`Visiting user profile: ${searchQuery}`);
       },
     },
     {
@@ -197,7 +216,8 @@ Array of `INinjaAction` - interface properties below
 | id | string | Unique id/text. Will be displayed as breadcrumb in multimenu |
 | title | string | Title of action |
 | hotkey | string(optional) | Shortcut to display and register |
-| handler | (data, event) => void (optional) | Function to execute on select |
+| handler | (action, event) => void (optional) | Function to execute on select |
+| matcher | (action, { searchString, searchRegex }) => boolean | Function to execute on search to override the default matcher. |
 | mdIcon | string(optional) | Material Design font icon name |
 | icon | string(optional) | Html to render as custom icon |
 | parent | string(optional) | If using flat structure use id of actions to make a multilevel menu |
