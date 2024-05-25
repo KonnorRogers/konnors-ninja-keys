@@ -110,6 +110,16 @@ Add the tag to your HTML.
       },
     },
     {
+      id: 'Users',
+      title: 'Go to user profile',
+      icon: 'person',
+      matcher: (action, { searchString, searchRegex }) => searchString.match(/.+@.+/),
+      handler: (action, event, searchQuery) => {
+        // simple handler
+        alert(`Visiting user profile: ${searchQuery}`);
+      },
+    },
+    {
       id: 'Theme',
       title: 'Change theme...',
       icon: 'desktop_windows',
@@ -197,7 +207,8 @@ Array of `INinjaAction` - interface properties below
 | id | string | Unique id/text. Will be displayed as breadcrumb in multimenu |
 | title | string | Title of action |
 | hotkey | string(optional) | Shortcut to display and register |
-| handler | (data, event) => void (optional) | Function to execute on select |
+| handler | (action, event) => void (optional) | Function to execute on select |
+| matcher | (action, { searchString, searchRegex }) => boolean | Function to execute on search to override the default matcher. |
 | mdIcon | string(optional) | Material Design font icon name |
 | icon | string(optional) | Html to render as custom icon |
 | parent | string(optional) | If using flat structure use id of actions to make a multilevel menu |

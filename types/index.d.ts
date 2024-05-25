@@ -13,6 +13,12 @@ export interface INinjaAction {
  section?: string
  href?: string
  attributes?: Record<string, string>
- handler?: (action: INinjaAction, event: KeyboardEvent | CustomEvent<INinjaAction> | undefined) => void | {keepOpen: true};
+ handler?: (action: INinjaAction, event: KeyboardEvent | CustomEvent<INinjaAction> | undefined, searchQuery: string) => void | {keepOpen: true};
+ matcher?: (action: INinjaAction, searchOptions: ISearchOptions) => boolean;
  keepOpen?: boolean
+}
+
+export interface ISearchOptions {
+  searchString: string;
+  searchRegex: RegExp;
 }
