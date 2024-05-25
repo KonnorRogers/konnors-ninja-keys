@@ -736,7 +736,7 @@ export class NinjaKeys extends BaseElement {
           html`<ninja-action
             id=${"ninja-action__" + action.id}
             role="option"
-            exportparts="ninja-action, ninja-selected,ninja-icon, ninja-hotkeys, ninja-hotkey, ninja-action__header, ninja-action__title, ninja-action__content"
+            exportparts="ninja-action, ninja-selected,ninja-icon, ninja-hotkeys, ninja-hotkey, ninja-action__header, ninja-action__title, ninja-action__content, ninja-action__highlight"
             aria-selected=${live(action.id === this._selected?.id)}
             .searchQuery=${this._search}
             .selected=${live(action.id === this._selected?.id)}

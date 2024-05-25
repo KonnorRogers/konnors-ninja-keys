@@ -1,3 +1,11 @@
+## v1.13.0 - 05/25/2024
+
+- feature: `::part(ninja-action__highlight)` part added to `ninja-action`
+- feature: Added additional styling for `content` fields
+- fix: Improve performance for regex highlighting
+- fix: Export types top level
+- fix: `internal/` exports are now accessible to fix an issue with bundlers.
+
 ## v1.12.1 - 05/25/2024
 
 - fix: Fixed "bundle/" not being added to final files published to NPM.

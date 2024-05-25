@@ -28,7 +28,8 @@ export class NinjaAction extends BaseElement {
       }
 
       mark {
-        background-color: Highlight;
+        background-color: var(--ninja-accent-color);
+        border: 2px solid var(--ninja-accent-color);
       }
 
       .ninja-action {
@@ -64,6 +65,9 @@ export class NinjaAction extends BaseElement {
       }
 
       .ninja-action__content {
+        border-top: 1px solid gray;
+        padding-top: 0.5em;
+        font-size: 0.8em;
         width: 100%;
         max-width: 100%;
         overflow: hidden;
@@ -172,6 +176,20 @@ export class NinjaAction extends BaseElement {
      * @type {boolean}
      */
     this.highlightMatches = false
+
+
+    /**
+     * @private
+     * @type {string | Parameters<String["replaceAll"]>[1]}
+     */
+    this.__regexMatchRender = `<mark part="ninja-action__highlight">$&</mark>`
+
+    /**
+     * @private
+     * @type {(str: string) => string}
+     */
+    this.__fuzzyMatchRender = (/** @type {string} */ str) => `<mark part="ninja-action__highlight">${str}</mark>`
+
   }
 
   /**
@@ -316,19 +334,13 @@ export class NinjaAction extends BaseElement {
     const escapeString = this.escapeString(s)
     const escapeQuery = this.escapeString(query)
 
-    /**
-     * @param {string} str
-     */
-    function matchRender (str) {
-      return `<mark part="match-highlight">${str}</mark>`
-    }
 
     if (this.searchType === "regex") {
-      return renderRegexHighlight(escapeQuery, escapeString, matchRender)
+      return renderRegexHighlight(escapeQuery, escapeString, this.__regexMatchRender)
     }
 
     if (this.searchType === "fuzzy") {
-      return renderFuzzyHighlight(escapeQuery, escapeString, matchRender)
+      return renderFuzzyHighlight(escapeQuery, escapeString, this.__fuzzyMatchRender)
     }
 
     return ""
@@ -364,9 +376,9 @@ export class NinjaAction extends BaseElement {
         </div>
 
         ${when(content, () =>
-          html`<div part="ninja-action__content" class="ninja-action__content">
+          html`<small part="ninja-action__content" class="ninja-action__content">
             ${unsafeHTML(content)}
-          </div>`
+          </small>`
         )}
     `
   }
