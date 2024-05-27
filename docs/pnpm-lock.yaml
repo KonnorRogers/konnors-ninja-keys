@@ -21,8 +21,8 @@ importers:
         specifier: ^7.3.0
         version: 7.3.0
       '@konnorr/bridgetown-quick-search':
-        specifier: ^3.10.3
-        version: 3.10.3
+        specifier: ^3.10.4
+        version: 3.10.4
       '@shoelace-style/shoelace':
         specifier: ^2.13.1
         version: 2.13.1(@types/react@18.3.3)
@@ -328,8 +328,8 @@ packages:
     resolution: {integrity: sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==}
     engines: {node: '>= 14'}
 
-  '@konnorr/bridgetown-quick-search@3.10.3':
-    resolution: {integrity: sha512-KzP3NtKtKeLxXEhWy21mfAtVctPngTa9R7+otMRWe4D5og0gloa8MUMVJZ0fVJzIJ7cWN773djrGGNdI35RfAQ==}
+  '@konnorr/bridgetown-quick-search@3.10.4':
+    resolution: {integrity: sha512-BJih2/72YCR5M5osQr0BwmHAF1bKD+6OORvW9H3KbGzyuzmwEctVRxHtUMjY6gwmjYriejNWkZPkeeixAHoHog==}
 
   '@lit-labs/ssr-dom-shim@1.2.0':
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
@@ -1124,7 +1124,7 @@ snapshots:
 
   '@hotwired/turbo@7.3.0': {}
 
-  '@konnorr/bridgetown-quick-search@3.10.3':
+  '@konnorr/bridgetown-quick-search@3.10.4':
     dependencies:
       konnors-ninja-keys: link:..
       lit: 3.1.3
