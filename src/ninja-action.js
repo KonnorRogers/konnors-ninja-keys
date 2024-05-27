@@ -128,6 +128,17 @@ export class NinjaAction extends BaseElement {
   ];
 
   /**
+   * @type {Record<string, string>}
+   */
+  static escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  }
+
+  /**
    * @override
    */
   static properties = {
@@ -317,13 +328,33 @@ export class NinjaAction extends BaseElement {
    * @param {string} str
    */
   escapeString (str) {
+    const ctor = /** @type {typeof NinjaAction} */ (/** @type {unknown} */ (this.constructor))
     // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-html-contexts
     return str
-      .replaceAll(/&/g,   "&amp;")
-      .replaceAll(/</g,   "&lt;")
-      .replaceAll(/>/g,   "&gt;")
-      .replaceAll(/"/g,   "&quot;")
-      .replaceAll(/'/g,   "&#x27;")
+      .replaceAll(/&/g, ctor.escapeMap["&"])
+      .replaceAll(
+        /[<>'"]/g,
+        (tag) => {
+          return ctor.escapeMap[tag] || tag
+        }
+      )
+  }
+
+  /**
+   * Unescapes user content to proper HTML entities
+   * @param {string} str
+   */
+  encodeString (str) {
+    const ctor = /** @type {typeof NinjaAction} */ (/** @type {unknown} */ (this.constructor))
+    // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-html-contexts
+    return str
+      .replaceAll(/&/g, `<span>${ctor.escapeMap["&"]}</span>`)
+      .replaceAll(
+        /[<>'"]/g,
+        (tag) => {
+          return `<span>${ctor.escapeMap[tag] || tag}</span>`
+        }
+      )
   }
 
   /**
@@ -333,7 +364,6 @@ export class NinjaAction extends BaseElement {
   renderMatch (query, s) {
     const escapeString = this.escapeString(s)
     const escapeQuery = this.escapeString(query)
-
 
     if (this.searchType === "regex") {
       return renderRegexHighlight(escapeQuery, escapeString, this.__regexMatchRender)
@@ -376,9 +406,7 @@ export class NinjaAction extends BaseElement {
         </div>
 
         ${when(content, () =>
-          html`<small part="ninja-action__content" class="ninja-action__content">
-            ${unsafeHTML(content)}
-          </small>`
+          html`<small part="ninja-action__content" class="ninja-action__content">${unsafeHTML(content)}</small>`
         )}
     `
   }

@@ -1,3 +1,7 @@
+## v1.13.3 - 05/27/2024
+
+- fix: Search regex will no longer match HTML entities.
+
 ## v1.13.2 - 05/25/2024
 
 - fix: `internal/` exports are now shipped to NPM.
