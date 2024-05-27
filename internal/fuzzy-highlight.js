@@ -15,7 +15,7 @@ export function renderRegexHighlight(query, s, matchRender) {
 
   // Uses negative lookbehind. Dont match off of HTML escape characters.
   // https://regexr.com/80sul
-  const queryRegexp = new RegExp("(?<!(&l?t?|&g?t?|&a?m?p?|&q?u?o?t?))" + escapeStringRegexp(query).source, "g")
+  const queryRegexp = new RegExp("(?<!(&l?t?|&g?t?|&a?m?p?|&q?u?o?t?))" + escapeStringRegexp(query).source + "+", "g")
 
   if (typeof matchRender === "function") {
     return s.replaceAll(queryRegexp, matchRender)

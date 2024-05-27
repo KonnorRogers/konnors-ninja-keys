@@ -1,3 +1,7 @@
+## v1.13.4 - 05/27/2024
+
+- fix: Search regex will now group searches so multiple matches get wrapped in the same `<mark>`
+
 ## v1.13.3 - 05/27/2024
 
 - fix: Search regex will no longer match HTML entities.

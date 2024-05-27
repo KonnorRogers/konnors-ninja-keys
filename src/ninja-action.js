@@ -29,7 +29,7 @@ export class NinjaAction extends BaseElement {
 
       mark {
         background-color: var(--ninja-accent-color);
-        border: 2px solid var(--ninja-accent-color);
+        padding: 1px 3px;
       }
 
       .ninja-action {
