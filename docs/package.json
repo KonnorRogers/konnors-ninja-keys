@@ -29,7 +29,7 @@
     "@shoelace-style/shoelace": "^2.13.1",
     "bridgetown-quick-search": "2.0.0",
     "konnors-ninja-keys": "link:../",
-    "light-pen": "^3.0.1",
+    "light-pen": "^4.1.1",
     "lit": "^2.8.0",
     "web-component-lazy-loader": "^1.0.1"
   },
