@@ -22,3 +22,7 @@ export interface ISearchOptions {
   searchString: string;
   searchRegex: RegExp;
 }
+
+export interface INinjaActionData extends Omit<INinjaAction, 'children'> {
+  children?: (INinjaActionData | string)[];
+}

@@ -27,6 +27,7 @@ const hotkeys = _hotkeys
 
 /** @typedef {import("./ninja-header.js").NinjaHeader} NinjaHeaderElement */
 /** @typedef {import("../types/index.d.ts").INinjaAction} INinjaAction */
+/** @typedef {import("../types/index.d.ts").INinjaActionData} INinjaActionData */
 
 /**
  * @type BaseElement
@@ -370,39 +371,39 @@ export class NinjaKeys extends BaseElement {
 
   /**
    * @private
-   * @param {INinjaAction[]} members
-   * @param {string} [parent]
+   * @param {INinjaActionData[]} data
    * @returns {INinjaAction[]}
    */
-  _flattern(members, parent) {
-    /** @type any[] */
-    let children = [];
+  _flattern(data) {
+    /** @type {INinjaActionData[]} */
+    const flattenedTree = [];
 
-    if (!members) {
-      members = [];
-    }
-    return members
-      .map((mem) => {
-        const alreadyFlatternByUser =
-          mem.children &&
-          mem.children.some((value) => {
-            return typeof value == 'string';
-          });
-        const m = {...mem, parent: mem.parent || parent};
-        if (alreadyFlatternByUser) {
-          return m;
-        } else {
-          if (m.children && m.children.length) {
-            parent = mem.id;
-            children = [...children, ...m.children];
-          }
+    traverse(data);
 
-          // @ts-expect-error ...weird.
-          m.children = m.children ? m.children.map((c) => c.id) : [];
-          return m;
+    /**
+     * @param {INinjaActionData[]} nodes
+     * @param {string} [parent]
+     */
+    function traverse(nodes, parent) {
+      nodes.forEach((node) => {
+        if (parent) node.parent = parent;
+        if (node.children) {
+          const nextNodes = [
+            ...node.children.filter((n) => typeof n !== 'string'),
+          ];
+
+          node.children = node.children.map((child) =>
+            typeof child === 'string' ? child : child.id || ''
+          );
+
+          traverse(nextNodes, node.id);
         }
-      })
-      .concat(children.length ? this._flattern(children, parent) : children);
+
+        flattenedTree.push(node);
+      });
+    }
+
+    return /** @type {INinjaAction[]} */ (flattenedTree);
   }
 
   /**
