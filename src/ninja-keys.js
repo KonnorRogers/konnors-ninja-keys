@@ -410,12 +410,12 @@ export class NinjaKeys extends BaseElement {
    * @param {import("lit").PropertyValues<this>} changedProperties
    */
   update(changedProperties) {
-    if (changedProperties.has('data') && !this.disableHotkeys) {
+    if (changedProperties.has('data')) {
       this._flatData = this._flattern(this.data);
 
-      this._flatData
-        .forEach((action) => {
-          if (!action.hotkey) return
+      if (!this.disableHotkeys) {
+        this._flatData.forEach((action) => {
+          if (!action.hotkey) return;
 
           hotkeys(action.hotkey, (event) => {
             event.preventDefault();
@@ -424,6 +424,7 @@ export class NinjaKeys extends BaseElement {
             }
           });
         });
+      }
     }
     super.update(changedProperties);
   }
