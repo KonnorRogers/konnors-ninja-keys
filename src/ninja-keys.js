@@ -389,9 +389,9 @@ export class NinjaKeys extends BaseElement {
       nodes.forEach((node) => {
         if (parent) node.parent = parent;
         if (node.children) {
-          const nextNodes = [
+          const nextNodes = /** @type {INinjaActionData[]} */ ([
             ...node.children.filter((n) => typeof n !== 'string'),
-          ];
+          ]);
 
           node.children = node.children.map((child) =>
             typeof child === 'string' ? child : child.id || ''
