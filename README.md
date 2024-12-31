@@ -122,7 +122,8 @@ Add the tag to your HTML.
       id: 'Users',
       title: 'Go to user profile',
       icon: 'person',
-      matcher: (action, { searchString, searchRegex }) => searchString.match(/.+@.+/),
+      matcher: (action, {searchString, searchRegex}) =>
+        searchString.match(/.+@.+/),
       handler: (action, event, searchQuery) => {
         // simple handler
         alert(`Visiting user profile: ${searchQuery}`);
@@ -225,8 +226,8 @@ Array of `INinjaAction` - interface properties below
 | children | Array<string>(optional) | If using flat structure then ids of child menu actions. Not required on tree structure |
 | section | string(optional) | Section text. Like a header will be group with other same sections |
 | content | string(optional) | Content text. Allows you to display additional info besides just a title. |
-| href    | string(optional) | When an href is set, under the hood it will render an `<a>` tag.
-| attributes | {}(optional)  | additional attributes to add when using "href". Typically `rel` and `target`.
+| href | string(optional) | When an href is set, under the hood it will render an `<a>` tag.
+| attributes | {}(optional) | additional attributes to add when using "href". Typically `rel` and `target`.
 
 ## Methods
 
@@ -442,4 +443,3 @@ npm run lint
 ## License
 
 Licensed under [the MIT license](./LICENSE).
-
