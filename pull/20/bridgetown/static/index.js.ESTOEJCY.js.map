@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/index.js"],
+  "sourcesContent": ["// @ts-check\nimport {NinjaKeys} from './ninja-keys.js';\n\nexport {NinjaAction} from './ninja-action.js';\nexport {NinjaHeader} from './ninja-header.js';\nexport {NinjaKeys} from './ninja-keys.js';\n\n/**\n * @typedef {import(\"../types/index.d.ts\").INinjaAction} INinjaAction\n * @typedef {import(\"../types/index.d.ts\").ISearchOptions} ISearchOptions\n */\n\nNinjaKeys.define();\n"],
+  "mappings": "2uBAYAA,EAAU,OAAO",
+  "names": ["NinjaKeys"]
+}
