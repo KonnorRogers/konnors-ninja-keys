@@ -247,11 +247,11 @@ DEPENDENCIES
   custom_elements_manifest_parser (~> 0.2.8)
   debug (~> 1.8)
   ffi (= 1.16.2)
-  nokogiri (~> 1.13)
+  nokogiri (~> 1)
   puma (~> 6.0)
   rack-cors (~> 2.0)
   solargraph
   yard (~> 0.9.34)
 
 BUNDLED WITH
-   2.3.5
+   2.6.2
