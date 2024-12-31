@@ -57,7 +57,8 @@ export class NinjaHeader extends BaseElement {
       }
 
       .breadcrumb:focus-visible {
-        background-color: red;
+        background-color: var(--ninja-selected-background);
+        color: var(--ninja-secondary-text-color);
       }
 
       .breadcrumb:last-child {
