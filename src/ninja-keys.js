@@ -12,18 +12,17 @@ import {createRef, ref} from 'lit/directives/ref.js';
 import {classMap} from 'lit/directives/class-map.js';
 import _hotkeys from 'hotkeys-js';
 
-import { NinjaHeader } from './ninja-header.js';
-import { NinjaAction } from './ninja-action.js';
+import {NinjaHeader} from './ninja-header.js';
+import {NinjaAction} from './ninja-action.js';
 import {footerHtml} from './ninja-footer.js';
 import {baseStyles, componentReset} from './base-styles.js';
 
-import * as fzy from "fzy.js"
-import { escapeStringRegexp } from '../internal/escape-string-regexp.js';
+import * as fzy from 'fzy.js';
+import {escapeStringRegexp} from '../internal/escape-string-regexp.js';
 
 /** @type {import("hotkeys-js").Hotkeys} */
 // @ts-expect-error Gets proper types for hotkeys.
-const hotkeys = _hotkeys
-
+const hotkeys = _hotkeys;
 
 /** @typedef {import("./ninja-header.js").NinjaHeader} NinjaHeaderElement */
 /** @typedef {import("../types/index.d.ts").INinjaAction} INinjaAction */
@@ -59,7 +58,7 @@ export class NinjaKeys extends BaseElement {
   static properties = {
     placeholder: {type: String},
     disableHotkeys: {type: Boolean},
-    searchType: {attribute: "search-type"},
+    searchType: {attribute: 'search-type'},
     searchLabel: {attribute: 'search-label'},
     listboxLabel: {attribute: 'listbox-label'},
     hideBreadcrumbs: {type: Boolean},
@@ -81,7 +80,9 @@ export class NinjaKeys extends BaseElement {
       },
     },
     highlightMatches: {
-      type: Boolean, reflect: true, attribute: "highlight-matches"
+      type: Boolean,
+      reflect: true,
+      attribute: 'highlight-matches',
     },
 
     // State
@@ -120,13 +121,13 @@ export class NinjaKeys extends BaseElement {
     /**
      * @type {"regex" | "fuzzy"}
      */
-    this.searchType = "regex"
+    this.searchType = 'regex';
 
     /**
      * Whether or not to turn on match highlighting
      * @type {boolean}
      */
-    this.highlightMatches = false
+    this.highlightMatches = false;
 
     /**
      * Maps to `aria-labelledby` for search input
@@ -268,7 +269,7 @@ export class NinjaKeys extends BaseElement {
         header.expanded = true;
         header.controls = 'actions-list';
       }
-    })
+    });
 
     if (this._actionMatches.length > 0) {
       this._selected = this._actionMatches[0];
@@ -434,24 +435,23 @@ export class NinjaKeys extends BaseElement {
    * @param {Event} event
    * @return {Boolean}
    */
-  shouldNotOpen (event) {
+  shouldNotOpen(event) {
     /**
-      * @type {Element[]}
-      */
+     * @type {Element[]}
+     */
     // @ts-expect-error EventTarget sucks.
-    const composedPath = event.composedPath()
+    const composedPath = event.composedPath();
 
-    const disallowedTags = ['input', 'textarea']
+    const disallowedTags = ['input', 'textarea'];
 
     return composedPath.some((el) => {
-      if (el?.getAttribute?.("contenteditable") === "true") {
-        return true
+      if (el?.getAttribute?.('contenteditable') === 'true') {
+        return true;
       }
 
-      return disallowedTags.includes(el?.tagName?.toLowerCase())
-    })
+      return disallowedTags.includes(el?.tagName?.toLowerCase());
+    });
   }
-
 
   /**
    * @private
@@ -460,7 +460,7 @@ export class NinjaKeys extends BaseElement {
     if (this.openHotkey) {
       hotkeys(this.openHotkey, (event) => {
         if (this.shouldNotOpen(event)) {
-          return
+          return;
         }
 
         event.preventDefault();
@@ -505,7 +505,6 @@ export class NinjaKeys extends BaseElement {
       });
     }
 
-
     if (this.navigationUpHotkey) {
       hotkeys(this.navigationUpHotkey, (event) => {
         if (!this.visible) {
@@ -527,7 +526,7 @@ export class NinjaKeys extends BaseElement {
         }
 
         e.preventDefault();
-        this.visible = false
+        this.visible = false;
         this.close();
       });
     }
@@ -588,36 +587,36 @@ export class NinjaKeys extends BaseElement {
    * Don't use this to pass to templates because I've found it create inconsistent behavior.
    * Use `this.getBreadcrumbs()` instead.
    */
-  get breadcrumbs () {
-    return this.getBreadcrumbs()
+  get breadcrumbs() {
+    return this.getBreadcrumbs();
   }
 
   /**
    * @private
    */
   _goBack() {
-    const breadcrumbs = this.getBreadcrumbs()
+    const breadcrumbs = this.getBreadcrumbs();
     if (breadcrumbs) {
       const parent =
         breadcrumbs.length > 1
           ? breadcrumbs[breadcrumbs.length - 2]
           : undefined;
       this.setParent(parent);
-      return
+      return;
     }
   }
 
   /**
    * @returns {NinjaAction | null | undefined}
    */
-  findActionElement (index = this._selectedIndex) {
-    const id = this._actionMatches[index]?.id
+  findActionElement(index = this._selectedIndex) {
+    const id = this._actionMatches[index]?.id;
 
-    if (id == null) return null
+    if (id == null) return null;
 
-    const query = "#ninja-action__" + id
+    const query = '#ninja-action__' + id;
 
-    return this.shadowRoot?.querySelector(query)
+    return this.shadowRoot?.querySelector(query);
   }
 
   /**
@@ -626,8 +625,8 @@ export class NinjaKeys extends BaseElement {
    * @see {@link https://github.com/ssleptsov/ninja-keys/pull/33}
    * @param {string} str
    */
-  stringToRegExp (str) {
-    return escapeStringRegexp(str)
+  stringToRegExp(str) {
+    return escapeStringRegexp(str);
   }
 
   /**
@@ -636,52 +635,55 @@ export class NinjaKeys extends BaseElement {
    * the flatData.
    * @param {Array<INinjaAction>} flatData
    */
-  findMatches (flatData) {
+  findMatches(flatData) {
     // https://stackoverflow.com/questions/31814535/getting-error-invalid-regular-expression
     const searchRegex = this.stringToRegExp(this._search);
 
     const searchOptions = {
       searchRegex,
-      searchString: this._search
-    }
+      searchString: this._search,
+    };
 
     return flatData.filter((action) => {
-      if (this._search.trim() === "") {
+      if (this._search.trim() === '') {
         return action.parent === this.currentRoot && true;
       }
 
-      const { matcher, title, keywords, content } = action
+      const {matcher, title, keywords, content} = action;
 
-      let isMatch = null
+      let isMatch = null;
 
-      if (typeof matcher === "function") {
-        isMatch = matcher(action, searchOptions)
+      if (typeof matcher === 'function') {
+        isMatch = matcher(action, searchOptions);
       }
 
-      if (isMatch == null && !this.searchType || this.searchType === "regex") {
+      if (
+        (isMatch == null && !this.searchType) ||
+        this.searchType === 'regex'
+      ) {
         // @TODO: At some point if we ever want to support sorting based on "boosting" we may need a separate "searchType",
         // or we could provide "intrinsic" boosts users can override.
         isMatch = Boolean(
-          (title && title.match(searchRegex))
-          || (keywords && keywords.match(searchRegex))
-          || (content && content.match(searchRegex))
-        )
+          (title && title.match(searchRegex)) ||
+            (keywords && keywords.match(searchRegex)) ||
+            (content && content.match(searchRegex))
+        );
       }
 
-      if (isMatch == null && this.searchType === "fuzzy") {
-        const search = this._search
+      if (isMatch == null && this.searchType === 'fuzzy') {
+        const search = this._search;
 
         // @TODO: At some point if we ever want to support sorting based on "boosting" we may need a separate "searchType"
         // or we could provide "intrinsic" boosts users can override.
         isMatch = Boolean(
-          (title && hasMatch(search, title))
-          || (keywords && hasMatch(search, keywords))
-          || (content && hasMatch(search, content))
-        )
+          (title && hasMatch(search, title)) ||
+            (keywords && hasMatch(search, keywords)) ||
+            (content && hasMatch(search, content))
+        );
       }
 
       if (isMatch == null) {
-        isMatch = Boolean(isMatch)
+        isMatch = Boolean(isMatch);
       }
 
       if (!this.currentRoot && this._search) {
@@ -707,10 +709,10 @@ export class NinjaKeys extends BaseElement {
       modal: true,
     };
 
-    let sections
-    let actionMatches = this._flatData
+    let sections;
+    let actionMatches = this._flatData;
 
-    actionMatches = this.findMatches(actionMatches)
+    actionMatches = this.findMatches(actionMatches);
 
     sections = actionMatches.reduce(
       (entryMap, e) =>
@@ -736,7 +738,7 @@ export class NinjaKeys extends BaseElement {
         (action) => action.id,
         (action) =>
           html`<ninja-action
-            id=${"ninja-action__" + action.id}
+            id=${'ninja-action__' + action.id}
             role="option"
             exportparts="ninja-action, ninja-selected,ninja-icon, ninja-hotkeys, ninja-hotkey, ninja-action__header, ninja-action__title, ninja-action__content, ninja-action__highlight"
             aria-selected=${live(action.id === this._selected?.id)}
@@ -768,8 +770,16 @@ export class NinjaKeys extends BaseElement {
     });
 
     return html`
-      <div part="modal-overlay" @click=${this._overlayClick} class=${classMap(menuClasses)}>
-        <div part="modal-content" class=${classMap(classes)} @animationend=${this._onTransitionEnd}>
+      <div
+        part="modal-overlay"
+        @click=${this._overlayClick}
+        class=${classMap(menuClasses)}
+      >
+        <div
+          part="modal-content"
+          class=${classMap(classes)}
+          @animationend=${this._onTransitionEnd}
+        >
           <ninja-header
             part="modal-header"
             exportparts="ninja-input,ninja-input-wrapper"
@@ -853,7 +863,7 @@ export class NinjaKeys extends BaseElement {
       }
     } else {
       // Default behavior for links
-      this.findActionElement(this._selectedIndex)?.forceClick()
+      this.findActionElement(this._selectedIndex)?.forceClick();
     }
     this._bump = true;
   }
@@ -894,6 +904,6 @@ export class NinjaKeys extends BaseElement {
  * @param {string} str
  * @returns {boolean}
  */
-function hasMatch (query, str) {
-  return [query, ...query.split(/\s+/)].some((q) => fzy.hasMatch(q, str))
+function hasMatch(query, str) {
+  return [query, ...query.split(/\s+/)].some((q) => fzy.hasMatch(q, str));
 }

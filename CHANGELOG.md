@@ -82,7 +82,6 @@
 - feat: Add an override for `findMatches` in case a user has their own search function for adding / removing results.
 - fix: remove `white-space: nowrap;` for content blocks to allow them to be 2 lines or more.
 
-
 ## v1.6.0
 
 - feat: add block content to allow for more than just a title to be displayed.

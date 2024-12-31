@@ -1,7 +1,11 @@
 // @ts-check
 import {html} from 'lit';
 
-export const footerHtml = html` <div part="modal-footer" class="modal-footer" slot="footer">
+export const footerHtml = html` <div
+  part="modal-footer"
+  class="modal-footer"
+  slot="footer"
+>
   <span class="help">
     <svg
       version="1.0"

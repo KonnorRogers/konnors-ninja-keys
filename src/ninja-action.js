@@ -3,12 +3,15 @@ import {html, css} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {join} from 'lit/directives/join.js';
-import '@material/mwc-icon/mwc-icon.js'
+import '@material/mwc-icon/mwc-icon.js';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
-import { when } from 'lit/directives/when.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
-import { renderFuzzyHighlight, renderRegexHighlight } from '../internal/fuzzy-highlight.js';
+import {when} from 'lit/directives/when.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
+import {
+  renderFuzzyHighlight,
+  renderRegexHighlight,
+} from '../internal/fuzzy-highlight.js';
 
 export class NinjaAction extends BaseElement {
   /**
@@ -135,8 +138,8 @@ export class NinjaAction extends BaseElement {
     '<': '&lt;',
     '>': '&gt;',
     "'": '&#39;',
-    '"': '&quot;'
-  }
+    '"': '&quot;',
+  };
 
   /**
    * @override
@@ -146,9 +149,9 @@ export class NinjaAction extends BaseElement {
     selected: {type: Boolean},
     hotKeysJoinedView: {type: Boolean},
     content: {},
-    searchType: { attribute: "search-type" },
-    highlightMatches: { type: Boolean, attribute: "highlight-matches" },
-    searchQuery: {state: true, attribute: false}
+    searchType: {attribute: 'search-type'},
+    highlightMatches: {type: Boolean, attribute: 'highlight-matches'},
+    searchQuery: {state: true, attribute: false},
   };
 
   /**
@@ -159,7 +162,7 @@ export class NinjaAction extends BaseElement {
 
     /** @type {import('../types/index.d.ts').INinjaAction} */
     this.action = {
-      title: ""
+      title: '',
     };
 
     /**
@@ -176,31 +179,30 @@ export class NinjaAction extends BaseElement {
     /**
      * @type {string}
      */
-    this.searchQuery = ""
+    this.searchQuery = '';
 
     /**
      * @type {"regex" | "fuzzy"}
      */
-    this.searchType = "regex"
+    this.searchType = 'regex';
 
     /**
      * @type {boolean}
      */
-    this.highlightMatches = false
-
+    this.highlightMatches = false;
 
     /**
      * @private
      * @type {string | Parameters<String["replaceAll"]>[1]}
      */
-    this.__regexMatchRender = `<mark part="ninja-action__highlight">$&</mark>`
+    this.__regexMatchRender = `<mark part="ninja-action__highlight">$&</mark>`;
 
     /**
      * @private
      * @type {(str: string) => string}
      */
-    this.__fuzzyMatchRender = (/** @type {string} */ str) => `<mark part="ninja-action__highlight">${str}</mark>`
-
+    this.__fuzzyMatchRender = (/** @type {string} */ str) =>
+      `<mark part="ninja-action__highlight">${str}</mark>`;
   }
 
   /**
@@ -209,7 +211,7 @@ export class NinjaAction extends BaseElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.setAttribute("aria-selected", "false")
+    this.setAttribute('aria-selected', 'false');
     this.addEventListener('click', this.click);
   }
 
@@ -232,16 +234,16 @@ export class NinjaAction extends BaseElement {
       })
     );
 
-    const anchor = this.shadowRoot?.querySelector("a")
+    const anchor = this.shadowRoot?.querySelector('a');
     if (anchor) {
-      anchor.click()
+      anchor.click();
     }
   }
 
-  forceClick () {
-    const anchor = this.shadowRoot?.querySelector("a")
+  forceClick() {
+    const anchor = this.shadowRoot?.querySelector('a');
     if (anchor) {
-      anchor.click()
+      anchor.click();
     }
   }
 
@@ -252,15 +254,13 @@ export class NinjaAction extends BaseElement {
    */
   updated(changedProperties) {
     if (changedProperties.has('selected')) {
-      this.setAttribute("aria-selected", "true")
+      this.setAttribute('aria-selected', 'true');
       if (this.selected) {
         this.ensureInView();
-        this.setAttribute("aria-selected", "true")
+        this.setAttribute('aria-selected', 'true');
       }
     }
   }
-
-
 
   /**
    * @override
@@ -276,7 +276,7 @@ export class NinjaAction extends BaseElement {
 
     // Render a link
     if (this.action.href) {
-      return this.renderAsLink(classes)
+      return this.renderAsLink(classes);
     }
 
     return html`
@@ -291,18 +291,11 @@ export class NinjaAction extends BaseElement {
   }
 
   /** @param {Record<string, boolean>} classes */
-  renderAsLink (classes) {
-    const attributes = this.action.attributes || {}
+  renderAsLink(classes) {
+    const attributes = this.action.attributes || {};
 
-    const {
-      download,
-      hreflang,
-      ping,
-      referrerpolicy,
-      rel,
-      target,
-      type,
-    } = attributes
+    const {download, hreflang, ping, referrerpolicy, rel, target, type} =
+      attributes;
 
     return html`
       <a
@@ -320,66 +313,74 @@ export class NinjaAction extends BaseElement {
       >
         ${this.renderBody()}
       </a>
-    `
+    `;
   }
 
   /**
    * Escapes user content to proper HTML entities
    * @param {string} str
    */
-  escapeString (str) {
-    const ctor = /** @type {typeof NinjaAction} */ (/** @type {unknown} */ (this.constructor))
+  escapeString(str) {
+    const ctor = /** @type {typeof NinjaAction} */ (
+      /** @type {unknown} */ (this.constructor)
+    );
     // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-html-contexts
     return str
-      .replaceAll(/&/g, ctor.escapeMap["&"])
-      .replaceAll(
-        /[<>'"]/g,
-        (tag) => {
-          return ctor.escapeMap[tag] || tag
-        }
-      )
+      .replaceAll(/&/g, ctor.escapeMap['&'])
+      .replaceAll(/[<>'"]/g, (tag) => {
+        return ctor.escapeMap[tag] || tag;
+      });
   }
 
   /**
    * Unescapes user content to proper HTML entities
    * @param {string} str
    */
-  encodeString (str) {
-    const ctor = /** @type {typeof NinjaAction} */ (/** @type {unknown} */ (this.constructor))
+  encodeString(str) {
+    const ctor = /** @type {typeof NinjaAction} */ (
+      /** @type {unknown} */ (this.constructor)
+    );
     // https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#output-encoding-for-html-contexts
     return str
-      .replaceAll(/&/g, `<span>${ctor.escapeMap["&"]}</span>`)
-      .replaceAll(
-        /[<>'"]/g,
-        (tag) => {
-          return `<span>${ctor.escapeMap[tag] || tag}</span>`
-        }
-      )
+      .replaceAll(/&/g, `<span>${ctor.escapeMap['&']}</span>`)
+      .replaceAll(/[<>'"]/g, (tag) => {
+        return `<span>${ctor.escapeMap[tag] || tag}</span>`;
+      });
   }
 
   /**
    * @param {string} query
    * @param {string} s
    */
-  renderMatch (query, s) {
-    const escapeString = this.escapeString(s)
-    const escapeQuery = this.escapeString(query)
+  renderMatch(query, s) {
+    const escapeString = this.escapeString(s);
+    const escapeQuery = this.escapeString(query);
 
-    if (this.searchType === "regex") {
-      return renderRegexHighlight(escapeQuery, escapeString, this.__regexMatchRender)
+    if (this.searchType === 'regex') {
+      return renderRegexHighlight(
+        escapeQuery,
+        escapeString,
+        this.__regexMatchRender
+      );
     }
 
-    if (this.searchType === "fuzzy") {
-      return renderFuzzyHighlight(escapeQuery, escapeString, this.__fuzzyMatchRender)
+    if (this.searchType === 'fuzzy') {
+      return renderFuzzyHighlight(
+        escapeQuery,
+        escapeString,
+        this.__fuzzyMatchRender
+      );
     }
 
-    return ""
+    return '';
   }
 
-  renderBody () {
+  renderBody() {
     let icon;
     if (this.action.mdIcon) {
-      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon">${this.action.mdIcon}</mwc-icon>`;
+      icon = html`<mwc-icon part="ninja-icon" class="ninja-icon"
+        >${this.action.mdIcon}</mwc-icon
+      >`;
     } else if (this.action.icon) {
       icon = unsafeHTML(`
         <div class="ninja-icon" part="ninja-icon">
@@ -388,30 +389,36 @@ export class NinjaAction extends BaseElement {
       `);
     }
 
-    let { title, content } = this.action
+    let {title, content} = this.action;
 
     if (title && this.highlightMatches) {
-      title = this.renderMatch(this.searchQuery, title)
+      title = this.renderMatch(this.searchQuery, title);
     }
 
     if (content && this.highlightMatches) {
-      content = this.renderMatch(this.searchQuery, content)
+      content = this.renderMatch(this.searchQuery, content);
     }
 
     return html`
-        <div part="ninja-action__header" class="ninja-action__header">
-          ${icon}
-          <div part="ninja-action__title" class="ninja-title">${unsafeHTML(title)}</div>
-          ${this.renderHotkey()}
+      <div part="ninja-action__header" class="ninja-action__header">
+        ${icon}
+        <div part="ninja-action__title" class="ninja-title">
+          ${unsafeHTML(title)}
         </div>
+        ${this.renderHotkey()}
+      </div>
 
-        ${when(content, () =>
-          html`<small part="ninja-action__content" class="ninja-action__content">${unsafeHTML(content)}</small>`
-        )}
-    `
+      ${when(
+        content,
+        () =>
+          html`<small part="ninja-action__content" class="ninja-action__content"
+            >${unsafeHTML(content)}</small
+          >`
+      )}
+    `;
   }
 
-  renderHotkey () {
+  renderHotkey() {
     let hotkey;
     if (this.action.hotkey) {
       if (this.hotKeysJoinedView) {
@@ -422,7 +429,10 @@ export class NinjaAction extends BaseElement {
             '+'
           )}`;
 
-          return html`<div part="ninja-hotkeys" class="ninja-hotkey ninja-hotkeys">
+          return html`<div
+            part="ninja-hotkeys"
+            class="ninja-hotkey ninja-hotkeys"
+          >
             ${joinedKeys}
           </div>`;
         });
@@ -430,13 +440,16 @@ export class NinjaAction extends BaseElement {
         hotkey = this.action.hotkey.split(',').map((hotkeys) => {
           const keys = hotkeys.split('+');
           const keyElements = keys.map(
-            (key) => html`<kbd part="ninja-hotkey" class="ninja-hotkey">${key}</kbd>`
+            (key) =>
+              html`<kbd part="ninja-hotkey" class="ninja-hotkey">${key}</kbd>`
           );
-          return html`<kbd part="ninja-hotkeys" class="ninja-hotkeys">${keyElements}</kbd>`;
+          return html`<kbd part="ninja-hotkeys" class="ninja-hotkeys"
+            >${keyElements}</kbd
+          >`;
         });
       }
     }
 
-    return hotkey
+    return hotkey;
   }
 }

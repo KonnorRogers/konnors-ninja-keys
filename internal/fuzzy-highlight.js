@@ -1,6 +1,5 @@
-import * as fzy from "fzy.js"
-import { escapeStringRegexp } from "./escape-string-regexp.js"
-
+import * as fzy from 'fzy.js';
+import {escapeStringRegexp} from './escape-string-regexp.js';
 
 // Print out our results with matched positions
 //
@@ -11,17 +10,22 @@ import { escapeStringRegexp } from "./escape-string-regexp.js"
  * @param {string | Parameters<String["replaceAll"]>[1]} matchRender
  */
 export function renderRegexHighlight(query, s, matchRender) {
-  if (!query.trim()) return s
+  if (!query.trim()) return s;
 
   // Uses negative lookbehind. Dont match off of HTML escape characters.
   // https://regexr.com/80sul
-  const queryRegexp = new RegExp("(?<!(&l?t?|&g?t?|&a?m?p?|&q?u?o?t?))" + escapeStringRegexp(query).source + "+", "g")
+  const queryRegexp = new RegExp(
+    '(?<!(&l?t?|&g?t?|&a?m?p?|&q?u?o?t?))' +
+      escapeStringRegexp(query).source +
+      '+',
+    'g'
+  );
 
-  if (typeof matchRender === "function") {
-    return s.replaceAll(queryRegexp, matchRender)
+  if (typeof matchRender === 'function') {
+    return s.replaceAll(queryRegexp, matchRender);
   }
 
-  return s.replaceAll(queryRegexp, matchRender)
+  return s.replaceAll(queryRegexp, matchRender);
 }
 
 // Print out our results with matched positions
@@ -33,82 +37,82 @@ export function renderRegexHighlight(query, s, matchRender) {
  * @param {(str: string) => string} matchRender
  */
 export function renderFuzzyHighlight(query, s, matchRender = (str) => str) {
-  if (!s) return ""
-  if (!query) return s
-  const splitBySpaces = query.split(/\s+/)
-  const hasMatch = splitBySpaces.some((word) => fzy.hasMatch(word, s))
+  if (!s) return '';
+  if (!query) return s;
+  const splitBySpaces = query.split(/\s+/);
+  const hasMatch = splitBySpaces.some((word) => fzy.hasMatch(word, s));
 
-  if (!hasMatch) return s
+  if (!hasMatch) return s;
 
-  const stringAry = s.split("")
+  const stringAry = s.split('');
 
   /**
    * @type {number[]}
    */
-  let positions = []
+  let positions = [];
 
-  ;[query, ...splitBySpaces].forEach((word) => {
-    if (!fzy.hasMatch(word, s)) return
+  [query, ...splitBySpaces].forEach((word) => {
+    if (!fzy.hasMatch(word, s)) return;
 
-    positions = positions.concat(fzy.positions(word, s))
-  })
+    positions = positions.concat(fzy.positions(word, s));
+  });
 
-  positions = [...new Set(positions)].sort((a, b) => a - b)
+  positions = [...new Set(positions)].sort((a, b) => a - b);
 
   /**
    * @type {string[]}
    */
-  const finalStrArray = []
+  const finalStrArray = [];
 
   for (let i = 0; i < stringAry.length; i++) {
     if (!positions.includes(i)) {
-      finalStrArray.push(stringAry[i])
-      continue
+      finalStrArray.push(stringAry[i]);
+      continue;
     }
 
     // Handle the case for ranges.
 
-    let endPos = findEndPosition(i, positions)
+    let endPos = findEndPosition(i, positions);
 
-    if (endPos == null) continue
+    if (endPos == null) continue;
 
-    let finalWord = ""
+    let finalWord = '';
 
-    finalWord = matchRender(stringAry.slice(i, endPos + 1).join(""))
+    finalWord = matchRender(stringAry.slice(i, endPos + 1).join(''));
 
-    finalStrArray.push(finalWord)
-    i = endPos
+    finalStrArray.push(finalWord);
+    i = endPos;
   }
 
-  return finalStrArray.join("")
+  return finalStrArray.join('');
 }
 
 /**
  * @param {number} startPosition - The starting position in the stringAry, needs to be converted to a positionIndex
  * @param {number[]} positions
  */
-function findEndPosition (startPosition, positions) {
-  let startIndex = positions.findIndex((num) => num === startPosition)
+function findEndPosition(startPosition, positions) {
+  let startIndex = positions.findIndex((num) => num === startPosition);
 
-  let endPosition = null
+  let endPosition = null;
 
-  if (startIndex === -1) return null
+  if (startIndex === -1) return null;
 
   for (let i = startIndex; i < positions.length; i++) {
-    endPosition = positions[i]
+    endPosition = positions[i];
 
     for (let j = i + 1; j < positions.length; j++) {
-      let nextPosition = positions[j]
+      let nextPosition = positions[j];
 
-      if (nextPosition == null) return endPosition
+      if (nextPosition == null) return endPosition;
 
       if (nextPosition !== endPosition + 1) {
-        return endPosition
+        return endPosition;
       }
 
-      endPosition = positions[j]
+      endPosition = positions[j];
     }
   }
 
-  return endPosition
+  return endPosition;
 }

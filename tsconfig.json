@@ -3,7 +3,7 @@
     "src/**/*.js",
     "internal/**/*.js",
     "types/**/*.d.ts",
-    "tests/**/*.js",
+    "tests/**/*.js"
   ],
   "compilerOptions": {
     "strict": true,

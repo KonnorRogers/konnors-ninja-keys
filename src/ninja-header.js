@@ -176,7 +176,11 @@ export class NinjaHeader extends BaseElement {
 
         ${itemTemplates}
 
-        <button type="button" class="breadcrumb breadcrumb--close" @click=${this._close}>
+        <button
+          type="button"
+          class="breadcrumb breadcrumb--close"
+          @click=${this._close}
+        >
           Cancel
         </button>
       </div>`;
@@ -222,18 +226,28 @@ export class NinjaHeader extends BaseElement {
   }
 
   // This is kinda hacky, but its how we tell it to close us.
-  dispatchEscKey () {
-    document.dispatchEvent(new KeyboardEvent("keydown", {
-      keyCode: 27, which: 27, code: "Escape", key: "Escape",
-      altKey: false, metaKey: false, ctrlKey: false, shiftKey: false,
-      bubbles: true, composed: true, cancelable: false
-    }))
+  dispatchEscKey() {
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        keyCode: 27,
+        which: 27,
+        code: 'Escape',
+        key: 'Escape',
+        altKey: false,
+        metaKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+        bubbles: true,
+        composed: true,
+        cancelable: false,
+      })
+    );
   }
 
   focusSearch() {
     requestAnimationFrame(() => {
       if (this._inputRef && this._inputRef.value) {
-        this._inputRef.value.focus()
+        this._inputRef.value.focus();
       }
     });
   }

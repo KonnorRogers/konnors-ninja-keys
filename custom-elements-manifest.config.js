@@ -1,4 +1,8 @@
-const globs = ['src/**/*.{d.ts,js}', 'internal/**/*.{d.ts,js}', 'types/**/*.d.ts']
+const globs = [
+  'src/**/*.{d.ts,js}',
+  'internal/**/*.{d.ts,js}',
+  'types/**/*.d.ts',
+];
 
 export default {
   /** Globs to analyze */
@@ -8,9 +12,9 @@ export default {
   /** Directory to output CEM to */
   outdir: '.',
   /** Run in dev mode, provides extra logging */
-  dev: process.argv.includes("--verbose"),
+  dev: process.argv.includes('--verbose'),
   /** Run in watch mode, runs on file changes */
-  watch: process.argv.includes("--watch"),
+  watch: process.argv.includes('--watch'),
   /** Include third party custom elements manifests */
   dependencies: true,
   /** Output CEM path to `package.json`, defaults to true */
@@ -38,4 +42,4 @@ export default {
   //   /** You can now pass the typeChecker to your plugins */
   //   expandTypesPlugin({ globs })
   // ],
-}
+};
