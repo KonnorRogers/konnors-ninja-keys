@@ -5,7 +5,7 @@
 
 <!-- <base href="<%= site.config.base_path %>/"> -->
 
-<meta name="description" content="<%= metadata.description %>" />
+<meta name="description" content="<%= metadata.description %>">
 <link rel="modulepreload" href="<%= find_asset "frontend/javascript/index.js" %>">
 <link rel="modulepreload" href="<%= find_asset "frontend/javascript/defer.js" %>">
 <link rel="preload" href="<%= find_asset "frontend/javascript/defer.css" %>" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -13,6 +13,10 @@
 <link rel="stylesheet" data-turbo-track="reload" href="<%= find_asset "frontend/javascript/index.css" %>" />
 <!-- Deferred CSS -->
 <noscript><link rel="stylesheet" href="<%= find_asset "frontend/javascript/defer.css" %>"></noscript>
+
+<!-- Material icons -->
+<link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block"></noscript>
 
 <!-- Entrypoints -->
 <script data-turbo-track="reload" src="<%= find_asset "frontend/javascript/index.js" %>" type="module"></script>

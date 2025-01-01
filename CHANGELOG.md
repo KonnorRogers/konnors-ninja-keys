@@ -1,3 +1,10 @@
+## v1.13.5 - 12/31/2024
+
+- fix: Removed the `.breadcrumb:focus-visible` red background.
+- fix: When `disableHotkeys` is enabled, the command menu now properly populates.
+- fix: Items listed after an item with children were not displayed.
+- fix: when a command keeps menu open, search is now properly cleared.
+
 ## v1.13.4 - 05/27/2024
 
 - fix: Search regex will now group searches so multiple matches get wrapped in the same `<mark>`
