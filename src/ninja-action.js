@@ -234,7 +234,7 @@ export class NinjaAction extends BaseElement {
       })
     );
 
-    this.forceClick()
+    this.forceClick();
   }
 
   forceClick() {
@@ -258,7 +258,7 @@ export class NinjaAction extends BaseElement {
       }
     }
 
-    return super.updated(changedProperties)
+    return super.updated(changedProperties);
   }
 
   /**
@@ -390,7 +390,7 @@ export class NinjaAction extends BaseElement {
 
     let {id, title, content} = this.action;
 
-    title = title || id || ""
+    title = title || id || '';
 
     if (title && this.highlightMatches) {
       title = this.renderMatch(this.searchQuery, title);
