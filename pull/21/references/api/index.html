@@ -1,0 +1,423 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>konnors-ninja-keys</title><meta name="description" content="Documentation for konnors-ninja-keys"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">konnors-ninja-keys</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h2>konnors-ninja-keys</h2></div><div class="tsd-panel tsd-typography"><a id="md:ninja-keys" class="tsd-anchor"></a><h1><a href="#md:ninja-keys">Ninja Keys</a></h1><a id="md:note" class="tsd-anchor"></a><h2><a href="#md:note">NOTE</a></h2><p>This is a fork of <a href="https://github.com/ssleptsov/ninja-keys">https://github.com/ssleptsov/ninja-keys</a> for adding things I (Konnor Rogers)
+wanted.</p>
+<p>Keyboard shortcut interface for your website that works with Vanilla JS, Vue, and React.</p>
+<p><img src="https://img.shields.io/npm/v/konnors-ninja-keys" alt="npm">
+<img src="https://img.shields.io/npm/dw/konnors-ninja-keys" alt="npm"></p>
+<a id="md:demo" class="tsd-anchor"></a><h2><a href="#md:demo">Demo</a></h2><!--
+[https://ninja-keys-demo.vercel.app/](https://ninja-keys-demo.vercel.app/)
+![Demo](./docs/demo-min.gif)
+-->
+
+<a id="md:motivation" class="tsd-anchor"></a><h2><a href="#md:motivation">Motivation</a></h2><p>A lot of applications support a common pattern where the user hits <kbd>⌘</kbd>+<kbd>k</kbd> (or <kbd>ctrl</kbd>+<kbd>k</kbd>) and a search UI dialog appears.
+I&#39;ve recently seen this in Notion, Slack, Linear, Vercel and Algolia, but I&#39;m sure there are plenty more.
+Apple Spotlight, Alfred and the Raycast app also have a similar pattern, but with different shortcuts.
+There are already some libraries built for this, but they are too framework specific, like <a href="https://github.com/livewire-ui/spotlight">Laravel only</a> or <a href="https://github.com/timc1/kbar">React only</a>
+Nevertheless, mine is not a silver bullet and if you need more framework integration, check them out too.</p>
+<p>I needed a keyboard interface for navigation with static websites without any frameworks.
+At the same time, I have a few Vue projects where something like this could be useful,
+so I decided to give it a try for <a href="https://open-wc.org/">Web Components</a> and <a href="https://lit.dev/">Lit Element</a>.</p>
+<a id="md:integrations" class="tsd-anchor"></a><h2><a href="#md:integrations">Integrations</a></h2><ul>
+<li><a href="https://codesandbox.io/s/ninja-keys-demo-vue3-bps5w?file=/public/index.html">Vue 3 Example - Codesandbox</a></li>
+<li><a href="https://codesandbox.io/s/ninja-keys-demo-vue2-b129z">Vue 2 Example - Codesandbox</a></li>
+<li><a href="https://codesandbox.io/s/ninja-keys-demo-reactjs-rlv4b?file=/src/App.js">React Example - Codesandbox</a></li>
+<li><a href="https://github.com/ssleptsov/ninja-keys-demo/blob/master/components/LayoutWrapper.js#L14-L71">React/NextJS</a></li>
+<li><a href="https://codesandbox.io/s/ninja-keys-demo-html-cf9wy?file=/index.html">Static Html - Codesandbox</a></li>
+<li><a href="https://codesandbox.io/s/ninja-keys-demo-svelte-r31l8">Svelte - Codesandbox</a></li>
+<li><a href="https://github.com/wobsoriano/solid-ninja-keys">SolidJS wrapper</a></li>
+</ul>
+<a id="md:features" class="tsd-anchor"></a><h2><a href="#md:features">Features</a></h2><ul>
+<li>Keyboard navigation</li>
+<li>Light and dark theme built in</li>
+<li>Built-in icon support from Material font and custom svg icons</li>
+<li>Nested menu - a tree or flat data structure can be used</li>
+<li>Auto register your shortcuts</li>
+<li>Root search - for example, if you search &quot;Dark,&quot; it will find it within the &quot;Theme&quot; submenu</li>
+<li>CSS variable to customize the view</li>
+<li>Customizable hotkeys to open/close etc. Choose what best fits your website.</li>
+</ul>
+<a id="md:why-the-quotninjaquot-name" class="tsd-anchor"></a><h2><a href="#md:why-the-quotninjaquot-name">Why the &quot;Ninja&quot; name?</a></h2><p>Because it appears from nowhere and executes any actions quickly...
+Or because it allows your users to become keyboard ninjas 🙃</p>
+<a id="md:install-from-npm" class="tsd-anchor"></a><h2><a href="#md:install-from-npm">Install from NPM</a></h2><pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">i</span><span class="hl-1"> </span><span class="hl-2">konnors-ninja-keys</span>
+</code><button>Copy</button></pre>
+<p>Import if you are using webpack, rollup, vite or other build system.</p>
+<pre><code class="language-js"><span class="hl-3">import</span><span class="hl-1"> </span><span class="hl-2">&#39;konnors-ninja-keys&#39;</span><span class="hl-1">;</span>
+</code><button>Copy</button></pre>
+<a id="md:install-from-cdn" class="tsd-anchor"></a><h2><a href="#md:install-from-cdn">Install from CDN</a></h2><p>Mostly for usage in HTML/JS without a build system.</p>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">script</span><br/><span class="hl-6">  </span><span class="hl-7">type</span><span class="hl-6">=</span><span class="hl-8">&quot;module&quot;</span><br/><span class="hl-6">  </span><span class="hl-7">src</span><span class="hl-6">=</span><span class="hl-8">&quot;https://unpkg.com/konnors-ninja-keys/bundle/index.js?module&quot;</span><br/><span class="hl-4">&gt;&lt;/</span><span class="hl-5">script</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<p>or inside your module scripts</p>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">script</span><span class="hl-6"> </span><span class="hl-7">type</span><span class="hl-6">=</span><span class="hl-8">&quot;module&quot;</span><span class="hl-4">&gt;</span><br/><span class="hl-6">  </span><span class="hl-3">import</span><span class="hl-6"> {</span><span class="hl-9">NinjaKeys</span><span class="hl-6">} </span><span class="hl-3">from</span><span class="hl-6"> </span><span class="hl-2">&#39;https://unpkg.com/konnors-ninja-keys/bundle/index.js?module&#39;</span><span class="hl-6">;</span><br/><span class="hl-4">&lt;/</span><span class="hl-5">script</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<a id="md:importable-routes" class="tsd-anchor"></a><h3><a href="#md:importable-routes">Importable routes</a></h3><ul>
+<li><code>&quot;konnors-ninja-keys/index.js&quot;</code></li>
+<li><code>&quot;konnors-ninja-keys/ninja-keys.js&quot;</code></li>
+<li><code>&quot;konnors-ninja-keys/ninja-header.js&quot;</code></li>
+<li><code>&quot;konnors-ninja-keys/bundle/index.js&quot;</code></li>
+<li><code>&quot;konnors-ninja-keys/bundle/ninja-keys.js&quot;</code></li>
+<li><code>&quot;konnors-ninja-keys/bundle/ninja-header.js&quot;</code></li>
+</ul>
+<a id="md:usage" class="tsd-anchor"></a><h3><a href="#md:usage">Usage</a></h3><p>Add the tag to your HTML.</p>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;&lt;/</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">script</span><span class="hl-4">&gt;</span><br/><span class="hl-6">  </span><span class="hl-10">const</span><span class="hl-6"> </span><span class="hl-11">ninja</span><span class="hl-6"> </span><span class="hl-1">=</span><span class="hl-6"> </span><span class="hl-9">document</span><span class="hl-6">.</span><span class="hl-0">querySelector</span><span class="hl-6">(</span><span class="hl-2">&#39;ninja-keys&#39;</span><span class="hl-6">);</span><br/><span class="hl-6">  </span><span class="hl-9">ninja</span><span class="hl-6">.</span><span class="hl-9">data</span><span class="hl-6"> </span><span class="hl-1">=</span><span class="hl-6"> [</span><br/><span class="hl-6">    {</span><br/><span class="hl-6">      </span><span class="hl-9">id:</span><span class="hl-6"> </span><span class="hl-2">&#39;Projects&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">title:</span><span class="hl-6"> </span><span class="hl-2">&#39;Open Projects&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">hotkey:</span><span class="hl-6"> </span><span class="hl-2">&#39;ctrl+N&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">icon:</span><span class="hl-6"> </span><span class="hl-2">&#39;apps&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">section:</span><span class="hl-6"> </span><span class="hl-2">&#39;Projects&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-0">handler</span><span class="hl-9">:</span><span class="hl-6"> (</span><span class="hl-9">_data</span><span class="hl-6">, </span><span class="hl-9">_event</span><span class="hl-6">) </span><span class="hl-10">=&gt;</span><span class="hl-6"> {</span><br/><span class="hl-6">        </span><span class="hl-12">// it&#39;s auto register above hotkey with this handler</span><br/><span class="hl-6">        </span><span class="hl-0">alert</span><span class="hl-6">(</span><span class="hl-2">&#39;Your logic to handle&#39;</span><span class="hl-6">);</span><br/><span class="hl-6">      },</span><br/><span class="hl-6">    },</span><br/><span class="hl-6">    {</span><br/><span class="hl-6">      </span><span class="hl-9">id:</span><span class="hl-6"> </span><span class="hl-2">&#39;Users&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">title:</span><span class="hl-6"> </span><span class="hl-2">&#39;Go to user profile&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">icon:</span><span class="hl-6"> </span><span class="hl-2">&#39;person&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-0">matcher</span><span class="hl-9">:</span><span class="hl-6"> (</span><span class="hl-9">action</span><span class="hl-6">, {</span><span class="hl-9">searchString</span><span class="hl-6">, </span><span class="hl-9">searchRegex</span><span class="hl-6">}) </span><span class="hl-10">=&gt;</span><br/><span class="hl-6">        </span><span class="hl-9">searchString</span><span class="hl-6">.</span><span class="hl-0">match</span><span class="hl-6">(</span><span class="hl-13">/.</span><span class="hl-14">+</span><span class="hl-13">@.</span><span class="hl-14">+</span><span class="hl-13">/</span><span class="hl-6">),</span><br/><span class="hl-6">      </span><span class="hl-0">handler</span><span class="hl-9">:</span><span class="hl-6"> (</span><span class="hl-9">action</span><span class="hl-6">, </span><span class="hl-9">event</span><span class="hl-6">, </span><span class="hl-9">searchQuery</span><span class="hl-6">) </span><span class="hl-10">=&gt;</span><span class="hl-6"> {</span><br/><span class="hl-6">        </span><span class="hl-12">// simple handler</span><br/><span class="hl-6">        </span><span class="hl-0">alert</span><span class="hl-6">(</span><span class="hl-2">`Visiting user profile: </span><span class="hl-10">${</span><span class="hl-9">searchQuery</span><span class="hl-10">}</span><span class="hl-2">`</span><span class="hl-6">);</span><br/><span class="hl-6">      },</span><br/><span class="hl-6">    },</span><br/><span class="hl-6">    {</span><br/><span class="hl-6">      </span><span class="hl-9">id:</span><span class="hl-6"> </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">title:</span><span class="hl-6"> </span><span class="hl-2">&#39;Change theme...&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">icon:</span><span class="hl-6"> </span><span class="hl-2">&#39;desktop_windows&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">children:</span><span class="hl-6"> [</span><span class="hl-2">&#39;Light Theme&#39;</span><span class="hl-6">, </span><span class="hl-2">&#39;Dark Theme&#39;</span><span class="hl-6">, </span><span class="hl-2">&#39;System Theme&#39;</span><span class="hl-6">],</span><br/><span class="hl-6">      </span><span class="hl-9">hotkey:</span><span class="hl-6"> </span><span class="hl-2">&#39;ctrl+T&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-0">handler</span><span class="hl-9">:</span><span class="hl-6"> () </span><span class="hl-10">=&gt;</span><span class="hl-6"> {</span><br/><span class="hl-6">        </span><span class="hl-12">// open menu if closed. Because you can open directly that menu from it&#39;s hotkey</span><br/><span class="hl-6">        </span><span class="hl-9">ninja</span><span class="hl-6">.</span><span class="hl-0">open</span><span class="hl-6">({</span><span class="hl-9">parent:</span><span class="hl-6"> </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-6">});</span><br/><span class="hl-6">        </span><span class="hl-12">// if menu opened that prevent it from closing on select that action, no need if you don&#39;t have child actions</span><br/><span class="hl-6">        </span><span class="hl-3">return</span><span class="hl-6"> {</span><span class="hl-9">keepOpen:</span><span class="hl-6"> </span><span class="hl-10">true</span><span class="hl-6">};</span><br/><span class="hl-6">      },</span><br/><span class="hl-6">    },</span><br/><span class="hl-6">    {</span><br/><span class="hl-6">      </span><span class="hl-9">id:</span><span class="hl-6"> </span><span class="hl-2">&#39;Light Theme&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">title:</span><span class="hl-6"> </span><span class="hl-2">&#39;Change theme to Light&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">icon:</span><span class="hl-6"> </span><span class="hl-2">&#39;light_mode&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">parent:</span><span class="hl-6"> </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-0">handler</span><span class="hl-9">:</span><span class="hl-6"> () </span><span class="hl-10">=&gt;</span><span class="hl-6"> {</span><br/><span class="hl-6">        </span><span class="hl-12">// simple handler</span><br/><span class="hl-6">        </span><span class="hl-9">document</span><span class="hl-6">.</span><span class="hl-9">documentElement</span><span class="hl-6">.</span><span class="hl-9">classList</span><span class="hl-6">.</span><span class="hl-0">remove</span><span class="hl-6">(</span><span class="hl-2">&#39;dark&#39;</span><span class="hl-6">);</span><br/><span class="hl-6">      },</span><br/><span class="hl-6">    },</span><br/><span class="hl-6">    {</span><br/><span class="hl-6">      </span><span class="hl-9">id:</span><span class="hl-6"> </span><span class="hl-2">&#39;Dark Theme&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">title:</span><span class="hl-6"> </span><span class="hl-2">&#39;Change theme to Dark&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">icon:</span><span class="hl-6"> </span><span class="hl-2">&#39;dark_mode&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-9">parent:</span><span class="hl-6"> </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-6">,</span><br/><span class="hl-6">      </span><span class="hl-0">handler</span><span class="hl-9">:</span><span class="hl-6"> () </span><span class="hl-10">=&gt;</span><span class="hl-6"> {</span><br/><span class="hl-6">        </span><span class="hl-12">// simple handler</span><br/><span class="hl-6">        </span><span class="hl-9">document</span><span class="hl-6">.</span><span class="hl-9">documentElement</span><span class="hl-6">.</span><span class="hl-9">classList</span><span class="hl-6">.</span><span class="hl-0">add</span><span class="hl-6">(</span><span class="hl-2">&#39;dark&#39;</span><span class="hl-6">);</span><br/><span class="hl-6">      },</span><br/><span class="hl-6">    },</span><br/><span class="hl-6">  ];</span><br/><span class="hl-4">&lt;/</span><span class="hl-5">script</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<p>Library using flat data structure inside, as in the example above. But you can also use a tree structure as below:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-15">id</span><span class="hl-1">: </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-15">children</span><span class="hl-1">: [</span><br/><span class="hl-1">    { </span><span class="hl-9">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;light&#39;</span><span class="hl-1">, </span><span class="hl-9">title:</span><span class="hl-1"> </span><span class="hl-2">&#39;light_mode&#39;</span><span class="hl-1">, },</span><br/><span class="hl-1">    { </span><span class="hl-9">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;System Theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-9">children:</span><span class="hl-1"> [</span><br/><span class="hl-1">        { </span><span class="hl-9">title:</span><span class="hl-1"> </span><span class="hl-2">&#39;Sub item 1&#39;</span><span class="hl-1"> },</span><br/><span class="hl-1">        { </span><span class="hl-9">title:</span><span class="hl-1"> </span><span class="hl-2">&#39;Sub item 2&#39;</span><span class="hl-1"> }</span><br/><span class="hl-1">      ]</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  ]</span><br/><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:attributes" class="tsd-anchor"></a><h2><a href="#md:attributes">Attributes</a></h2><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>placeholder</td>
+<td>Type a command or search...</td>
+<td>Placeholder for search</td>
+</tr>
+<tr>
+<td>disableHotkeys</td>
+<td>false</td>
+<td>If attribute exist will register all hotkey for all actions</td>
+</tr>
+<tr>
+<td>hideBreadcrumbs</td>
+<td>false</td>
+<td>Hide breadcrumbs on header if true</td>
+</tr>
+<tr>
+<td>openHotkey</td>
+<td>cmd+k,ctrl+k</td>
+<td>Open or close shortcut</td>
+</tr>
+<tr>
+<td>navigationUpHotkey</td>
+<td>up,shift+tab</td>
+<td>Navigation up shortcuts</td>
+</tr>
+<tr>
+<td>navigationDownHotkey</td>
+<td>down,tab</td>
+<td>Navigation down shortcuts</td>
+</tr>
+<tr>
+<td>closeHotkey</td>
+<td>esc</td>
+<td>Close shortcut</td>
+</tr>
+<tr>
+<td>goBackHotkey</td>
+<td>backspace</td>
+<td>Go back on one level if has parent menu</td>
+</tr>
+<tr>
+<td>selectHotkey</td>
+<td>enter</td>
+<td>Select action and execute handler or open submenu</td>
+</tr>
+<tr>
+<td>hotKeysJoinedView</td>
+<td>false</td>
+<td>If exist/true will display hotkeys inside one element</td>
+</tr>
+<tr>
+<td>noAutoLoadMdIcons</td>
+<td>false</td>
+<td>If exist it disable load material icons font on connect</td>
+</tr>
+</tbody></table>
+<a id="md:example" class="tsd-anchor"></a><h4><a href="#md:example">Example</a></h4><pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">ninja-keys</span><br/><span class="hl-1">  </span><span class="hl-7">placeholder</span><span class="hl-1">=</span><span class="hl-8">&quot;Must app is awesome&quot;</span><br/><span class="hl-1">  </span><span class="hl-7">openHotkey</span><span class="hl-1">=</span><span class="hl-8">&quot;cmd+l&quot;</span><br/><span class="hl-1">  </span><span class="hl-7">hideBreadcrumbs</span><br/><span class="hl-4">&gt;&lt;/</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<a id="md:data" class="tsd-anchor"></a><h2><a href="#md:data">Data</a></h2><p>Array of <code>INinjaAction</code> - interface properties below</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>string</td>
+<td>Unique id/text. Will be displayed as breadcrumb in multimenu</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of action</td>
+</tr>
+<tr>
+<td>hotkey</td>
+<td>string(optional)</td>
+<td>Shortcut to display and register</td>
+</tr>
+<tr>
+<td>handler</td>
+<td>(action, event) =&gt; void (optional)</td>
+<td>Function to execute on select</td>
+</tr>
+<tr>
+<td>matcher</td>
+<td>(action, { searchString, searchRegex }) =&gt; boolean</td>
+<td>Function to execute on search to override the default matcher.</td>
+</tr>
+<tr>
+<td>mdIcon</td>
+<td>string(optional)</td>
+<td>Material Design font icon name</td>
+</tr>
+<tr>
+<td>icon</td>
+<td>string(optional)</td>
+<td>Html to render as custom icon</td>
+</tr>
+<tr>
+<td>parent</td>
+<td>string(optional)</td>
+<td>If using flat structure use id of actions to make a multilevel menu</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>string(optional)</td>
+<td>Keywords to use for search</td>
+</tr>
+<tr>
+<td>children</td>
+<td>Array<string>(optional)</td>
+<td>If using flat structure then ids of child menu actions. Not required on tree structure</td>
+</tr>
+<tr>
+<td>section</td>
+<td>string(optional)</td>
+<td>Section text. Like a header will be group with other same sections</td>
+</tr>
+<tr>
+<td>content</td>
+<td>string(optional)</td>
+<td>Content text. Allows you to display additional info besides just a title.</td>
+</tr>
+<tr>
+<td>href</td>
+<td>string(optional)</td>
+<td>When an href is set, under the hood it will render an <code>&lt;a&gt;</code> tag.</td>
+</tr>
+<tr>
+<td>attributes</td>
+<td>{}(optional)</td>
+<td>additional attributes to add when using &quot;href&quot;. Typically <code>rel</code> and <code>target</code>.</td>
+</tr>
+</tbody></table>
+<a id="md:methods" class="tsd-anchor"></a><h2><a href="#md:methods">Methods</a></h2><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Arg</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>open</code></td>
+<td>{ parent?: string }</td>
+<td>Open menu with parent, if null then open root menu</td>
+</tr>
+<tr>
+<td><code>close</code></td>
+<td></td>
+<td>Close menu</td>
+</tr>
+<tr>
+<td><code>setParent</code></td>
+<td>parent?: string</td>
+<td>Navigate to parent menu</td>
+</tr>
+</tbody></table>
+<a id="md:example-1" class="tsd-anchor"></a><h4><a href="#md:example-1">Example</a></h4><pre><code class="language-js"><span class="hl-10">const</span><span class="hl-1"> </span><span class="hl-11">ninja</span><span class="hl-1"> = </span><span class="hl-9">document</span><span class="hl-1">.</span><span class="hl-0">querySelector</span><span class="hl-1">(</span><span class="hl-2">&#39;ninja-keys&#39;</span><span class="hl-1">);</span><br/><span class="hl-9">ninja</span><span class="hl-1">.</span><span class="hl-0">open</span><span class="hl-1">();</span><br/><span class="hl-12">// or</span><br/><span class="hl-9">ninja</span><span class="hl-1">.</span><span class="hl-0">open</span><span class="hl-1">({</span><span class="hl-9">parent:</span><span class="hl-1"> </span><span class="hl-2">&#39;Theme&#39;</span><span class="hl-1">});</span>
+</code><button>Copy</button></pre>
+<a id="md:events" class="tsd-anchor"></a><h3><a href="#md:events">Events</a></h3><p>Component wide events</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Payload</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>change</code></td>
+<td>Emitted when on each change of search input</td>
+<td><code>{ detail: { search: string, actions: Array&lt;NinjaAction&gt; } }</code></td>
+</tr>
+<tr>
+<td><code>selected</code></td>
+<td>Emitted when on user selected action or on submit of input</td>
+<td><code>{ detail: { search: string, action: NinjaAction or undefined }}</code></td>
+</tr>
+</tbody></table>
+<p>Both <code>handler</code> of action and component event <code>selected</code> emitted when user submit form or select item.</p>
+<p>But event <code>selected</code> can be used to handle edge cases, so it&#39;s not recommended to write each action logic here. It’s better to use the action <code>handler</code> property.</p>
+<p>For example, if a user enters a search query and there is an empty list, listening to this event you can handle that.</p>
+<pre><code class="language-js"><span class="hl-9">ninja</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&#39;change&#39;</span><span class="hl-1">, (</span><span class="hl-9">event</span><span class="hl-1">) </span><span class="hl-10">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-9">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;ninja on change&#39;</span><span class="hl-1">, </span><span class="hl-9">event</span><span class="hl-1">.</span><span class="hl-9">detail</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-12">// detail = {search: &#39;your search query&#39;, actions: Array&lt;NinjaAction&gt;}</span><br/><span class="hl-1">});</span><br/><span class="hl-9">ninja</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&#39;selected&#39;</span><span class="hl-1">, (</span><span class="hl-9">event</span><span class="hl-1">) </span><span class="hl-10">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-9">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;ninja on selected&#39;</span><span class="hl-1">, </span><span class="hl-9">event</span><span class="hl-1">.</span><span class="hl-9">detail</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-12">// detail = {search: &#39;your search query&#39;, action: NinjaAction | undefined }</span><br/><span class="hl-1">  </span><span class="hl-3">if</span><span class="hl-1"> (</span><span class="hl-9">event</span><span class="hl-1">.</span><span class="hl-9">detail</span><span class="hl-1">.</span><span class="hl-9">action</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-12">// perform API search for example</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">});</span>
+</code><button>Copy</button></pre>
+<a id="md:themes" class="tsd-anchor"></a><h2><a href="#md:themes">Themes</a></h2><p>Component supports a dark theme out-of-box. You just need to add a class.</p>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">ninja-keys</span><span class="hl-1"> </span><span class="hl-7">class</span><span class="hl-1">=</span><span class="hl-8">&quot;dark&quot;</span><span class="hl-4">&gt;&lt;/</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<p>If you need more style control, use any of the CSS variables below.</p>
+<a id="md:css-variables" class="tsd-anchor"></a><h3><a href="#md:css-variables">CSS variables</a></h3><table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>--ninja-width</td>
+<td>640px;</td>
+</tr>
+<tr>
+<td>--ninja-backdrop-filter</td>
+<td>none;</td>
+</tr>
+<tr>
+<td>--ninja-overflow-background</td>
+<td>rgba(255, 255, 255, 0.5);</td>
+</tr>
+<tr>
+<td>--ninja-text-color</td>
+<td>rgb(60, 65, 73);</td>
+</tr>
+<tr>
+<td>--ninja-font-size</td>
+<td>16px;</td>
+</tr>
+<tr>
+<td>--ninja-top</td>
+<td>20%;</td>
+</tr>
+<tr>
+<td>--ninja-key-border-radius</td>
+<td>0.25em</td>
+</tr>
+<tr>
+<td>--ninja-accent-color</td>
+<td>rgb(110, 94, 210);</td>
+</tr>
+<tr>
+<td>--ninja-secondary-background-color</td>
+<td>rgb(239, 241, 244);</td>
+</tr>
+<tr>
+<td>--ninja-secondary-text-color</td>
+<td>rgb(107, 111, 118);</td>
+</tr>
+<tr>
+<td>--ninja-selected-background</td>
+<td>rgb(248, 249, 251);</td>
+</tr>
+<tr>
+<td>--ninja-icon-color</td>
+<td>var(--ninja-secondary-text-color);</td>
+</tr>
+<tr>
+<td>--ninja-icon-size</td>
+<td>1.2em;</td>
+</tr>
+<tr>
+<td>--ninja-separate-border</td>
+<td>1px solid var(--ninja-secondary-background-color);</td>
+</tr>
+<tr>
+<td>--ninja-modal-background</td>
+<td>#fff;</td>
+</tr>
+<tr>
+<td>--ninja-modal-shadow</td>
+<td>rgb(0 0 0 / 50%) 0px 16px 70px;</td>
+</tr>
+<tr>
+<td>--ninja-actions-height</td>
+<td>300px;</td>
+</tr>
+<tr>
+<td>--ninja-group-text-color</td>
+<td>rgb(144, 149, 157);</td>
+</tr>
+<tr>
+<td>--ninja-footer-background</td>
+<td>rgba(242, 242, 242, 0.4);</td>
+</tr>
+<tr>
+<td>--ninja-placeholder-color</td>
+<td>#8e8e8e</td>
+</tr>
+<tr>
+<td>--ninja-z-index</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<a id="md:example-2" class="tsd-anchor"></a><h4><a href="#md:example-2">Example</a></h4><pre><code class="language-css"><span class="hl-5">ninja-keys</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-7">--ninja-width</span><span class="hl-1">: </span><span class="hl-16">400px</span><span class="hl-1">;</span><br/><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:css-shadow-parts" class="tsd-anchor"></a><h3><a href="#md:css-shadow-parts">CSS Shadow Parts</a></h3><p>Allowing you to style specific elements from your style.
+Because styles are encapsulated by Shadow DOM, it will be annoying to create css variables for all properties.
+That&#39;s why you can use <code>::part</code> to make a custom look for the component.
+It&#39;s supported by <a href="https://caniuse.com/mdn-css_selectors_part">all modern browsers</a></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>actions-list</td>
+<td>Element that wraps all child elements.</td>
+</tr>
+<tr>
+<td>ninja-action</td>
+<td>Single action</td>
+</tr>
+<tr>
+<td>ninja-selected</td>
+<td>Selected action</td>
+</tr>
+<tr>
+<td>ninja-input</td>
+<td>Input element</td>
+</tr>
+<tr>
+<td>ninja-input-wrapper</td>
+<td>Wrapper element around div, useful for advanced styles</td>
+</tr>
+<tr>
+<td>ninja-content</td>
+<td>Wrapper element around content</td>
+</tr>
+</tbody></table>
+<a id="md:example-style-using-parts" class="tsd-anchor"></a><h4><a href="#md:example-style-using-parts">Example style using parts</a></h4><pre><code class="language-css"><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">actions-list</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">padding</span><span class="hl-1">: </span><span class="hl-16">8px</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">ninja-action</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">border-radius</span><span class="hl-1">: </span><span class="hl-16">8px</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-7">border-left</span><span class="hl-1">: </span><span class="hl-17">none</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">ninja-selected</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">background</span><span class="hl-1">: </span><span class="hl-0">rgba</span><span class="hl-1">(</span><span class="hl-16">51</span><span class="hl-1">, </span><span class="hl-16">51</span><span class="hl-1">, </span><span class="hl-16">51</span><span class="hl-1">, </span><span class="hl-16">0.1</span><span class="hl-1">);</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">ninja-input</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">color</span><span class="hl-1">: </span><span class="hl-17">#14b8a6</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">ninja-input</span><span class="hl-1">)</span><span class="hl-18">::placeholder</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-7">color</span><span class="hl-1">: </span><span class="hl-17">#f43f5e</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">ninja-input-wrapper</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">background</span><span class="hl-1">: </span><span class="hl-0">rgba</span><span class="hl-1">(</span><span class="hl-16">244</span><span class="hl-1">, </span><span class="hl-16">63</span><span class="hl-1">, </span><span class="hl-16">93</span><span class="hl-1">, </span><span class="hl-16">0.3</span><span class="hl-1">);</span><br/><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:icons" class="tsd-anchor"></a><h3><a href="#md:icons">Icons</a></h3><p>By default, components use icons from <a href="https://fonts.google.com/icons">https://fonts.google.com/icons</a></p>
+<p>For example, you can just set <code>mdIcon</code> to <code>light_mode</code> to render a sun icon.</p>
+<p>To add Material icons for your website, you need to add them to your HTML, for example</p>
+<pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">link</span><br/><span class="hl-1">  </span><span class="hl-7">href</span><span class="hl-1">=</span><span class="hl-8">&quot;https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block&quot;</span><br/><span class="hl-1">  </span><span class="hl-7">rel</span><span class="hl-1">=</span><span class="hl-8">&quot;stylesheet&quot;</span><br/><span class="hl-4">/&gt;</span>
+</code><button>Copy</button></pre>
+<p>If you want custom icons, you can use <code>svg</code> or <code>img</code> to insert it with an <code>icon</code> property for action with <code>ninja-icon</code> class.
+Example:</p>
+<pre><code class="language-js"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-15">title</span><span class="hl-1">: </span><span class="hl-2">&#39;Search projects...&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-15">icon</span><span class="hl-1">: </span><span class="hl-2">`&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; class=&quot;ninja-icon&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot; stroke=&quot;currentColor&quot;&gt;</span><br/><span class="hl-2">    &lt;path stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; stroke-width=&quot;2&quot; d=&quot;M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z&quot; /&gt;</span><br/><span class="hl-2">  &lt;/svg&gt;`</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-15">section</span><span class="hl-1">: </span><span class="hl-2">&#39;Projects&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">},</span>
+</code><button>Copy</button></pre>
+<p>You can also change the width and font using CSS variables</p>
+<pre><code class="language-css"><span class="hl-5">ninja-keys</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-7">--ninja-icon-size</span><span class="hl-1">: </span><span class="hl-16">1em</span><span class="hl-1">;</span><br/><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:change-or-hide-footer" class="tsd-anchor"></a><h3><a href="#md:change-or-hide-footer">Change or hide footer</a></h3><pre><code class="language-html"><span class="hl-4">&lt;</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;</span><br/><span class="hl-1">  </span><span class="hl-4">&lt;</span><span class="hl-5">div</span><span class="hl-1"> </span><span class="hl-7">slot</span><span class="hl-1">=</span><span class="hl-8">&quot;footer&quot;</span><span class="hl-4">&gt;</span><span class="hl-1">You can use a custom footer or empty div to hide it</span><span class="hl-4">&lt;/</span><span class="hl-5">div</span><span class="hl-4">&gt;</span><br/><span class="hl-4">&lt;/</span><span class="hl-5">ninja-keys</span><span class="hl-4">&gt;</span>
+</code><button>Copy</button></pre>
+<a id="md:creating-a-full-height--full-width-modal" class="tsd-anchor"></a><h2><a href="#md:creating-a-full-height--full-width-modal">Creating a full-height / full-width modal.</a></h2><pre><code class="language-css"><span class="hl-5">ninja-keys</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-7">--ninja-top</span><span class="hl-1">: </span><span class="hl-16">0px</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-7">--ninja-width</span><span class="hl-1">: </span><span class="hl-16">100vw</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-7">--ninja-actions-height</span><span class="hl-1">: </span><span class="hl-16">100%</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">ninja-keys</span><span class="hl-1">::part(</span><span class="hl-5">modal-content</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-7">height</span><span class="hl-1">: </span><span class="hl-16">100%</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-7">border-radius</span><span class="hl-1">: </span><span class="hl-16">0px</span><span class="hl-1">;</span><br/><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:dev-server" class="tsd-anchor"></a><h2><a href="#md:dev-server">Dev Server</a></h2><pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">start</span>
+</code><button>Copy</button></pre>
+<a id="md:linting" class="tsd-anchor"></a><h2><a href="#md:linting">Linting</a></h2><p>To lint the project run:</p>
+<pre><code class="language-bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">lint</span>
+</code><button>Copy</button></pre>
+<a id="md:formatting" class="tsd-anchor"></a><h2><a href="#md:formatting">Formatting</a></h2><p><a href="https://prettier.io/">Prettier</a> is used for code formatting. It has been pre-configured according to the Lit&#39;s style.</p>
+<a id="md:license" class="tsd-anchor"></a><h2><a href="#md:license">License</a></h2><p>Licensed under <a href="./LICENSE">the MIT license</a>.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-index-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><h4 class="uppercase">Member Visibility</h4><form><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div><div class="tsd-theme-toggle"><h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:ninja-keys"><span>Ninja <wbr/>Keys</span></a><ul><li><a href="#md:note"><span>NOTE</span></a></li><li><a href="#md:demo"><span>Demo</span></a></li><li><a href="#md:motivation"><span>Motivation</span></a></li><li><a href="#md:integrations"><span>Integrations</span></a></li><li><a href="#md:features"><span>Features</span></a></li><li><a href="#md:why-the-quotninjaquot-name"><span>Why the &quot;<wbr/>Ninja&quot; name?</span></a></li><li><a href="#md:install-from-npm"><span>Install from NPM</span></a></li><li><a href="#md:install-from-cdn"><span>Install from CDN</span></a></li><li><ul><li><a href="#md:importable-routes"><span>Importable routes</span></a></li><li><a href="#md:usage"><span>Usage</span></a></li></ul></li><li><a href="#md:attributes"><span>Attributes</span></a></li><li><ul><li><ul><li><a href="#md:example"><span>Example</span></a></li></ul></li></ul></li><li><a href="#md:data"><span>Data</span></a></li><li><a href="#md:methods"><span>Methods</span></a></li><li><ul><li><ul><li><a href="#md:example-1"><span>Example</span></a></li></ul></li><li><a href="#md:events"><span>Events</span></a></li></ul></li><li><a href="#md:themes"><span>Themes</span></a></li><li><ul><li><a href="#md:css-variables"><span>CSS variables</span></a></li><li><ul><li><a href="#md:example-2"><span>Example</span></a></li></ul></li><li><a href="#md:css-shadow-parts"><span>CSS <wbr/>Shadow <wbr/>Parts</span></a></li><li><ul><li><a href="#md:example-style-using-parts"><span>Example style using parts</span></a></li></ul></li><li><a href="#md:icons"><span>Icons</span></a></li><li><a href="#md:change-or-hide-footer"><span>Change or hide footer</span></a></li></ul></li><li><a href="#md:creating-a-full-height--full-width-modal"><span>Creating a full-<wbr/>height / full-<wbr/>width modal.</span></a></li><li><a href="#md:dev-server"><span>Dev <wbr/>Server</span></a></li><li><a href="#md:linting"><span>Linting</span></a></li><li><a href="#md:formatting"><span>Formatting</span></a></li><li><a href="#md:license"><span>License</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>konnors-ninja-keys</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
