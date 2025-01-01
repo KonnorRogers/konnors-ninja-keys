@@ -7,7 +7,6 @@ export interface INinjaAction {
   id?: string;
   hotkey?: string;
   icon?: string;
-  mdIcon?: string;
   parent?: string;
   children?: Array<string>;
   section?: string;

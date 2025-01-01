@@ -96,11 +96,11 @@
     ]
   },
   "dependencies": {
-    "@material/mwc-icon": "^0.25.3",
+    "@material/mwc-icon": "^0.27.0",
     "@open-wc/scoped-elements": "^3.0.5",
     "fzy.js": "^0.4.1",
-    "hotkeys-js": "3.10.2",
-    "lit": "^2.7.4",
+    "hotkeys-js": "3.13.9",
+    "lit": "^3.2.1",
     "web-component-define": "^2.0.11"
   },
   "devDependencies": {

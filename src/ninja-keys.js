@@ -850,9 +850,9 @@ export class NinjaKeys extends BaseElement {
 
     if (action.children && action.children?.length > 0) {
       this.currentRoot = action.id;
-      this._search = '';
     }
 
+    this._search = '';
     this._headerRef.value?.setSearch('');
     this._headerRef.value?.focusSearch();
 

@@ -3,7 +3,7 @@ import {html, css} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {join} from 'lit/directives/join.js';
-import '@material/mwc-icon/mwc-icon.js';
+import '@material/mwc-icon';
 import {componentReset} from './base-styles.js';
 import {BaseElement} from './base-element.js';
 import {when} from 'lit/directives/when.js';
@@ -234,10 +234,7 @@ export class NinjaAction extends BaseElement {
       })
     );
 
-    const anchor = this.shadowRoot?.querySelector('a');
-    if (anchor) {
-      anchor.click();
-    }
+    this.forceClick()
   }
 
   forceClick() {
@@ -260,6 +257,8 @@ export class NinjaAction extends BaseElement {
         this.setAttribute('aria-selected', 'true');
       }
     }
+
+    return super.updated(changedProperties)
   }
 
   /**
@@ -389,10 +388,16 @@ export class NinjaAction extends BaseElement {
       `);
     }
 
-    let {title, content} = this.action;
+    let {id, title, content} = this.action;
+
+    title = title || id || ""
 
     if (title && this.highlightMatches) {
       title = this.renderMatch(this.searchQuery, title);
+    }
+
+    if (id && this.highlightMatches) {
+      id = this.renderMatch(this.searchQuery, id);
     }
 
     if (content && this.highlightMatches) {
