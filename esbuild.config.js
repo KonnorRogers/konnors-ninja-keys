@@ -73,6 +73,17 @@ function BuildTimer() {
       plugins: [BuildTimer()],
       chunkNames: 'chunks/[name]-[hash]',
     },
+    {
+      ...defaultConfig,
+      entryPoints: {index: entries['index']},
+      outfile: 'bundle/all.js',
+      format: 'esm',
+      target: 'es2017',
+      external: [],
+      splitting: false,
+      bundle: true,
+      minify: false,
+    },
   ];
 
   if (!watchMode) {
