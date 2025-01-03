@@ -28,6 +28,10 @@
     "./bundle/ninja-header.js": {
       "import": "./bundle/ninja-header.js",
       "types": "./src/ninja-header.d.ts"
+    },
+    "./bundle/all.js": {
+      "import": "./bundle/all.js",
+      "types": "./src/index.d.ts"
     }
   },
   "scripts": {
