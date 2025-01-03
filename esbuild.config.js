@@ -35,7 +35,7 @@ function BuildTimer() {
   };
 }
 
-(async function () {
+;(async function () {
   /**
    * @type {import("esbuild").BuildOptions["entryPoints"]}
    */
@@ -72,6 +72,17 @@ function BuildTimer() {
       minify: false,
       plugins: [BuildTimer()],
       chunkNames: 'chunks/[name]-[hash]',
+    },
+    {
+      ...defaultConfig,
+      entryPoints: {index: entries["index"]},
+      outfile: 'bundle/all.js',
+      format: 'esm',
+      target: 'es2017',
+      external: [],
+      splitting: false,
+      bundle: true,
+      minify: false,
     },
   ];
 

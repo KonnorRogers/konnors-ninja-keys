@@ -1,5 +1,6 @@
-## v1.13.5 - 12/31/2024
+## v1.14.0 - 01/02/2025
 
+- feat: Added `bundle/all.js` for a single entrypoint file with no dependencies and no extra chunks / imports / http requests. Useful for things like importmaps.
 - fix: Removed the `.breadcrumb:focus-visible` red background.
 - fix: When `disableHotkeys` is enabled, the command menu now properly populates.
 - fix: Items listed after an item with children were not displayed.
